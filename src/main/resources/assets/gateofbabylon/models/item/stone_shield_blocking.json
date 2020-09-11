@@ -1,0 +1,7 @@
+{
+  "parent": "gateofbabylon:item/base_shield_blocking",
+  "textures": {
+    "layer0": "gateofbabylon:item/shield/stone_shield",
+    "particle": "gateofbabylon:item/shield/stone_shield"
+  }
+}

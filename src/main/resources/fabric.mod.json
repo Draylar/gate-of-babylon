@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "gate-of-babylon",
+  "version": "${version}",
+  "name": "Gate Of Babylon",
+  "description": "Adds in a large number of weapons & tools.",
+  "authors": [
+    "Draylar"
+  ],
+  "license": "CC0-1.0",
+  "icon": "assets/gate-of-babylon/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "draylar.gateofbabylon.GateOfBabylon"
+    ],
+    "client": [
+      "draylar.gateofbabylon.GateOfBabylonClient"
+    ]
+  },
+  "mixins": [
+    "gate-of-babylon.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.8.2+build.194",
+    "fabric": "*",
+    "minecraft": ">=1.16.2"
+  }
+}

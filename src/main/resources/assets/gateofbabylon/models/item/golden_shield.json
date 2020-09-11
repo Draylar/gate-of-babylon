@@ -1,0 +1,15 @@
+{
+  "parent": "gateofbabylon:item/base_shield",
+  "textures": {
+    "layer0": "gateofbabylon:item/shield/golden_shield",
+    "particle": "gateofbabylon:item/shield/golden_shield"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "blocking": 1
+      },
+      "model": "gateofbabylon:item/golden_shield_blocking"
+    }
+  ]
+}

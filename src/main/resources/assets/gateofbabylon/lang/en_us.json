@@ -1,0 +1,48 @@
+{
+  "itemGroup.gateofbabylon.group": "Gate of Babylon",
+
+  "enchantment.gateofbabylon.lunging": "Lunging",
+
+  "item.gateofbabylon.extended_stick": "Extended Stick",
+
+  "item.gateofbabylon.stone_shield": "Stone Shield",
+  "item.gateofbabylon.iron_shield": "Iron Shield",
+  "item.gateofbabylon.golden_shield": "Golden Shield",
+  "item.gateofbabylon.diamond_shield": "Diamond Shield",
+  "item.gateofbabylon.netherite_shield": "Netherite Shield",
+
+  "item.gateofbabylon.wooden_dagger": "Wooden Dagger",
+  "item.gateofbabylon.stone_dagger": "Stone Dagger",
+  "item.gateofbabylon.iron_dagger": "Iron Dagger",
+  "item.gateofbabylon.golden_dagger": "Golden Dagger",
+  "item.gateofbabylon.diamond_dagger": "Diamond Dagger",
+  "item.gateofbabylon.netherite_dagger": "Netherite Dagger",
+
+  "item.gateofbabylon.wooden_spear": "Wooden Spear",
+  "item.gateofbabylon.stone_spear": "Stone Spear",
+  "item.gateofbabylon.iron_spear": "Iron Spear",
+  "item.gateofbabylon.golden_spear": "Golden Spear",
+  "item.gateofbabylon.diamond_spear": "Diamond Spear",
+  "item.gateofbabylon.netherite_spear": "Netherite Spear",
+
+  "item.gateofbabylon.wooden_broadsword": "Wooden Broadsword",
+  "item.gateofbabylon.stone_broadsword": "Stone Broadsword",
+  "item.gateofbabylon.iron_broadsword": "Iron Broadsword",
+  "item.gateofbabylon.golden_broadsword": "Golden Broadsword",
+  "item.gateofbabylon.diamond_broadsword": "Diamond Broadsword",
+  "item.gateofbabylon.netherite_broadsword": "Netherite Broadsword",
+
+  "item.gateofbabylon.wooden_rapier": "Wooden Rapier",
+  "item.gateofbabylon.stone_rapier": "Stone Rapier",
+  "item.gateofbabylon.iron_rapier": "Iron Rapier",
+  "item.gateofbabylon.golden_rapier": "Golden Rapier",
+  "item.gateofbabylon.diamond_rapier": "Diamond Rapier",
+  "item.gateofbabylon.netherite_rapier": "Netherite Rapier",
+
+  "item.gateofbabylon.wooden_haladie": "Wooden Haladie",
+  "item.gateofbabylon.stone_haladie": "Stone Haladie",
+  "item.gateofbabylon.iron_haladie": "Iron Haladie",
+  "item.gateofbabylon.golden_haladie": "Golden Haladie",
+  "item.gateofbabylon.diamond_haladie": "Diamond Haladie",
+  "item.gateofbabylon.netherite_haladie": "Netherite Haladie"
+}

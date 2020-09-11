@@ -1,0 +1,15 @@
+{
+  "parent": "gateofbabylon:item/base_shield",
+  "textures": {
+    "layer0": "gateofbabylon:item/shield/netherite_shield",
+    "particle": "gateofbabylon:item/shield/netherite_shield"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "blocking": 1
+      },
+      "model": "gateofbabylon:item/netherite_shield_blocking"
+    }
+  ]
+}

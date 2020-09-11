@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "draylar.gateofbabylon.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
