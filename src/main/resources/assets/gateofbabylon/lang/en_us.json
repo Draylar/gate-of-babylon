@@ -2,6 +2,11 @@
   "itemGroup.gateofbabylon.group": "Gate of Babylon",
 
   "enchantment.gateofbabylon.lunging": "Lunging",
+  "enchantment.gateofbabylon.smashing": "Smashing",
+  "enchantment.gateofbabylon.thunder_slash": "Thunder Slash",
+  "enchantment.gateofbabylon.flame_slash": "Flame Slash",
+  "enchantment.gateofbabylon.god_slash": "God Slash",
+  "enchantment.gateofbabylon.quickdraw": "Quick Draw",
 
   "item.gateofbabylon.extended_stick": "Extended Stick",
 
@@ -39,6 +44,26 @@
   "item.gateofbabylon.diamond_rapier": "Diamond Rapier",
   "item.gateofbabylon.netherite_rapier": "Netherite Rapier",
 
+  "item.gateofbabylon.wooden_waraxe": "Wooden Waraxe",
+  "item.gateofbabylon.stone_waraxe": "Stone Waraxe",
+  "item.gateofbabylon.iron_waraxe": "Iron Waraxe",
+  "item.gateofbabylon.golden_waraxe": "Golden Waraxe",
+  "item.gateofbabylon.diamond_waraxe": "Diamond Waraxe",
+  "item.gateofbabylon.netherite_waraxe": "Netherite Waraxe",
+  
+  "item.gateofbabylon.wooden_katana": "Wooden Katana",
+  "item.gateofbabylon.stone_katana": "Stone Katana",
+  "item.gateofbabylon.iron_katana": "Iron Katana",
+  "item.gateofbabylon.golden_katana": "Golden Katana",
+  "item.gateofbabylon.diamond_katana": "Diamond Katana",
+  "item.gateofbabylon.netherite_katana": "Netherite Katana",
+
+  "item.gateofbabylon.stone_bow": "Stone Bow",
+  "item.gateofbabylon.iron_bow": "Iron Bow",
+  "item.gateofbabylon.golden_bow": "Golden Bow",
+  "item.gateofbabylon.diamond_bow": "Diamond Bow",
+  "item.gateofbabylon.netherite_bow": "Netherite Bow",
+  
   "item.gateofbabylon.wooden_haladie": "Wooden Haladie",
   "item.gateofbabylon.stone_haladie": "Stone Haladie",
   "item.gateofbabylon.iron_haladie": "Iron Haladie",

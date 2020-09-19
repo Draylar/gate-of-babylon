@@ -3,9 +3,14 @@
   "package": "draylar.gateofbabylon.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-
+    "FallingBlockEntityAccessor",
+    "FallingBlockEntityMixin",
+    "MobEntityMixin",
+    "PlayerEntityMixin"
   ],
   "client": [
+    "DrawableHelperAccessor",
+    "InGameHudMixin"
   ],
   "injectors": {
     "defaultRequire": 1

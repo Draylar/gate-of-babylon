@@ -1,0 +1,6 @@
+{
+  "parent": "item/bow",
+  "textures": {
+    "layer0": "gateofbabylon:item/bow/diamond_bow_pulling_1"
+  }
+}

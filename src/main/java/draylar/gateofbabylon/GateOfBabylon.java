@@ -1,11 +1,9 @@
 package draylar.gateofbabylon;
 
-import draylar.gateofbabylon.registry.GOBBlocks;
-import draylar.gateofbabylon.registry.GOBEnchantments;
-import draylar.gateofbabylon.registry.GOBEntities;
-import draylar.gateofbabylon.registry.GOBItems;
+import draylar.gateofbabylon.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
@@ -24,5 +22,6 @@ public class GateOfBabylon implements ModInitializer {
         GOBEnchantments.init();
         GOBEntities.init();
         GOBBlocks.init();
+        GOBSounds.init();
     }
 }

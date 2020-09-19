@@ -1,0 +1,8 @@
+{
+  "katana_swoop": {
+    "subtitle": "*Teleports behind you*",
+    "sounds": [
+      "gateofbabylon:katana_swoop"
+    ]
+  }
+}

@@ -58,11 +58,31 @@ public class GOBItems {
     public static final HaladieItem DIAMOND_HALADIE = register("diamond_haladie", new HaladieItem(ToolMaterials.DIAMOND, 5, -2.9f));
     public static final HaladieItem NETHERITE_HALADIE = register("netherite_haladie", new HaladieItem(ToolMaterials.NETHERITE, 5, -2.9f));
 
-    public static final CustomShieldItem STONE_SHIELD = register("stone_shield", new CustomShieldItem(new Item.Settings().maxDamage(336).group(GateOfBabylon.GROUP)));
-    public static final CustomShieldItem IRON_SHIELD = register("iron_shield", new CustomShieldItem(new Item.Settings().maxDamage(336).group(GateOfBabylon.GROUP)));
-    public static final CustomShieldItem GOLDEN_SHIELD = register("golden_shield", new CustomShieldItem(new Item.Settings().maxDamage(336).group(GateOfBabylon.GROUP)));
-    public static final CustomShieldItem DIAMOND_SHIELD = register("diamond_shield", new CustomShieldItem(new Item.Settings().maxDamage(336).group(GateOfBabylon.GROUP)));
-    public static final CustomShieldItem NETHERITE_SHIELD = register("netherite_shield", new CustomShieldItem(new Item.Settings().maxDamage(336).group(GateOfBabylon.GROUP)));
+    public static final WaraxeItem WOODEN_WARAXE = register("wooden_waraxe", new WaraxeItem(ToolMaterials.WOOD, 6, .5f));
+    public static final WaraxeItem STONE_WARAXE = register("stone_waraxe", new WaraxeItem(ToolMaterials.STONE, 8, .5f));
+    public static final WaraxeItem IRON_WARAXE = register("iron_waraxe", new WaraxeItem(ToolMaterials.IRON, 11, .5f));
+    public static final WaraxeItem GOLDEN_WARAXE = register("golden_waraxe", new WaraxeItem(ToolMaterials.GOLD,11, .5f));
+    public static final WaraxeItem DIAMOND_WARAXE = register("diamond_waraxe", new WaraxeItem(ToolMaterials.DIAMOND, 13, .5f));
+    public static final WaraxeItem NETHERITE_WARAXE = register("netherite_waraxe", new WaraxeItem(ToolMaterials.NETHERITE, 15, .5f));
+
+    public static final KatanaItem WOODEN_KATANA = register("wooden_katana", new KatanaItem(ToolMaterials.WOOD, 4, 1.6f));
+    public static final KatanaItem STONE_KATANA = register("stone_katana", new KatanaItem(ToolMaterials.STONE, 6, 1.6f));
+    public static final KatanaItem IRON_KATANA = register("iron_katana", new KatanaItem(ToolMaterials.IRON, 8, 1.7f));
+    public static final KatanaItem GOLDEN_KATANA = register("golden_katana", new KatanaItem(ToolMaterials.GOLD,8, 1.7f));
+    public static final KatanaItem DIAMOND_KATANA = register("diamond_katana", new KatanaItem(ToolMaterials.DIAMOND, 11, 1.7f));
+    public static final KatanaItem NETHERITE_KATANA = register("netherite_katana", new KatanaItem(ToolMaterials.NETHERITE, 13, 1.7f));
+
+    public static final CustomBowItem STONE_BOW = register("stone_bow", new CustomBowItem(ToolMaterials.STONE, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1).maxDamage(425), 30.0F));
+    public static final CustomBowItem IRON_BOW = register("iron_bow", new CustomBowItem(ToolMaterials.IRON, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1).maxDamage(750), 25.0F));
+    public static final CustomBowItem GOLDEN_BOW = register("golden_bow", new CustomBowItem(ToolMaterials.GOLD, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1).maxDamage(150), 10.0F));
+    public static final CustomBowItem DIAMOND_BOW = register("diamond_bow", new CustomBowItem(ToolMaterials.DIAMOND, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1).maxDamage(1561), 20.0F));
+    public static final CustomBowItem NETHERITE_BOW = register("netherite_bow", new CustomBowItem(ToolMaterials.NETHERITE, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1).maxDamage(2031), 25.0F));
+
+    public static final CustomShieldItem STONE_SHIELD = register("stone_shield", new CustomShieldItem(new Item.Settings().maxDamage(425).group(GateOfBabylon.GROUP)));
+    public static final CustomShieldItem IRON_SHIELD = register("iron_shield", new CustomShieldItem(new Item.Settings().maxDamage(750).group(GateOfBabylon.GROUP)));
+    public static final CustomShieldItem GOLDEN_SHIELD = register("golden_shield", new CustomShieldItem(new Item.Settings().maxDamage(150).group(GateOfBabylon.GROUP)));
+    public static final CustomShieldItem DIAMOND_SHIELD = register("diamond_shield", new CustomShieldItem(new Item.Settings().maxDamage(1561).group(GateOfBabylon.GROUP)));
+    public static final CustomShieldItem NETHERITE_SHIELD = register("netherite_shield", new CustomShieldItem(new Item.Settings().maxDamage(2031).group(GateOfBabylon.GROUP)));
 
     public static final Item EXTENDED_STICK = register("extended_stick", new Item(new Item.Settings().group(GateOfBabylon.GROUP)));
 
@@ -71,17 +91,7 @@ public class GOBItems {
     }
 
     public static void init() {
-        FabricModelPredicateProviderRegistry.register(STONE_SHIELD, new Identifier("blocking"), (stack, world, entity)
-                -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F);
-
-        FabricModelPredicateProviderRegistry.register(IRON_SHIELD, new Identifier("blocking"), (stack, world, entity)
-                -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F);
-
-        FabricModelPredicateProviderRegistry.register(GOLDEN_SHIELD, new Identifier("blocking"), (stack, world, entity)
-                -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F);
-
-        FabricModelPredicateProviderRegistry.register(DIAMOND_SHIELD, new Identifier("blocking"), (stack, world, entity)
-                -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F);
+        // NO-OP
     }
 
     private GOBItems() {

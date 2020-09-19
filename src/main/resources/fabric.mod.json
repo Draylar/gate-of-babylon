@@ -7,8 +7,11 @@
   "authors": [
     "Draylar"
   ],
+  "contributors": [
+    "MORTADA KILLER 0"
+  ],
   "license": "MIT",
-  "icon": "assets/gate-of-babylon/icon.png",
+  "icon": "assets/gateofbabylon/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
