@@ -1,5 +1,6 @@
 package draylar.gateofbabylon.enchantment;
 
+import draylar.gateofbabylon.api.ValidatingEnchantment;
 import draylar.gateofbabylon.item.KatanaItem;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
@@ -10,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.sound.SoundEvent;
 
-public class KatanaSlashEnchantment extends Enchantment {
+public class KatanaSlashEnchantment extends Enchantment implements ValidatingEnchantment {
 
     private final SoundEvent sound;
     private final ParticleEffect particle;

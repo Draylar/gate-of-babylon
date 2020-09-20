@@ -1,0 +1,6 @@
+{
+  "parent": "item/bow",
+  "textures": {
+    "layer0": "gateofbabylon:item/bow/netherite_bow_pulling_0"
+  }
+}

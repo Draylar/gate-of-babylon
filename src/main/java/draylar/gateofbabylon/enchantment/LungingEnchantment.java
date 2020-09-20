@@ -1,12 +1,13 @@
 package draylar.gateofbabylon.enchantment;
 
+import draylar.gateofbabylon.api.ValidatingEnchantment;
 import draylar.gateofbabylon.item.RapierItem;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 
-public class LungingEnchantment extends Enchantment {
+public class LungingEnchantment extends Enchantment implements ValidatingEnchantment {
 
     public LungingEnchantment() {
         super(Rarity.UNCOMMON, EnchantmentTarget.WEAPON, new EquipmentSlot[] {

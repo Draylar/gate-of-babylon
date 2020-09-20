@@ -34,10 +34,10 @@ public class RapierItem extends SwordItem {
 
         if (!world.isClient) {
             // get Lunging bonus (1 = 2x, 2 = 3x, 3, = 4x)
-            int enchantmentBonus = EnchantmentHelper.getEquipmentLevel(GOBEnchantments.LUNGING, user) + 1;
+            float bonus = 1 + EnchantmentHelper.getEquipmentLevel(GOBEnchantments.LUNGING, user) * .3f;
 
             // move player
-            Vec3d rotation = user.getRotationVector().multiply(enchantmentBonus);
+            Vec3d rotation = user.getRotationVector().multiply(bonus);
             user.addVelocity(rotation.x, rotation.y, rotation.z);
             user.velocityModified = true;
         }

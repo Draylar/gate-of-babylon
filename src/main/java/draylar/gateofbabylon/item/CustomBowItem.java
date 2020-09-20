@@ -1,5 +1,6 @@
 package draylar.gateofbabylon.item;
 
+import draylar.gateofbabylon.api.ProjectileManipulator;
 import draylar.gateofbabylon.registry.GOBEnchantments;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -7,6 +8,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.*;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleType;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
@@ -16,16 +19,29 @@ public class CustomBowItem extends BowItem {
 
     private final ToolMaterial material;
     private final float maxDrawTime;
+    private final ParticleEffect type;
 
     public CustomBowItem(ToolMaterial material, Settings settings, float maxDrawTime) {
         super(settings);
         this.material = material;
         this.maxDrawTime = maxDrawTime;
+        type = null;
+    }
+
+    public CustomBowItem(ToolMaterial material, Settings settings, float maxDrawTime, ParticleEffect particles) {
+        super(settings);
+        this.material = material;
+        this.maxDrawTime = maxDrawTime;
+        type = particles;
     }
 
     public float getMaxDrawTime(ItemStack bow) {
         int quickDrawLevel = EnchantmentHelper.getLevel(GOBEnchantments.QUICKDRAW, bow);
         return (float) Math.max(0, maxDrawTime - quickDrawLevel * 3.3);
+    }
+
+    public ParticleEffect getArrowParticles() {
+        return type;
     }
 
     @Override
@@ -50,6 +66,7 @@ public class CustomBowItem extends BowItem {
                         ArrowItem arrowItem = (ArrowItem) (arrowStack.getItem() instanceof ArrowItem ? arrowStack.getItem() : Items.ARROW);
                         PersistentProjectileEntity arrowEntity = arrowItem.createArrow(world, arrowStack, playerEntity);
                         arrowEntity.setProperties(playerEntity, playerEntity.pitch, playerEntity.yaw, 0.0F, pullProgress * 3.0F, 1.0F);
+                        ((ProjectileManipulator) arrowEntity).setOrigin(stack);
 
                         // Make Arrow crit if pull progress is fully complete
                         if (pullProgress == 1.0F) {
