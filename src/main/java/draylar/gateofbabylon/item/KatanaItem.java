@@ -1,24 +1,18 @@
 package draylar.gateofbabylon.item;
 
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
 import draylar.gateofbabylon.GateOfBabylon;
 import draylar.gateofbabylon.enchantment.KatanaSlashEnchantment;
 import draylar.gateofbabylon.registry.GOBSounds;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolItem;
+import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
@@ -32,7 +26,6 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.Heightmap;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 
@@ -41,23 +34,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class KatanaItem extends ToolItem {
+public class KatanaItem extends SwordItem {
 
-    private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
     private final float attackDamage;
 
     public KatanaItem(ToolMaterial material, float effectiveDamage, float effectiveSpeed) {
-        super(material, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1));
-
-        effectiveDamage = effectiveDamage - 1;
-        effectiveSpeed = -4 + effectiveSpeed;
-
+        super(material, (int) effectiveDamage - 1, -4 + effectiveSpeed, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1));
         attackDamage = effectiveDamage;
-
-        ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier", effectiveDamage, EntityAttributeModifier.Operation.ADDITION));
-        builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", effectiveSpeed, EntityAttributeModifier.Operation.ADDITION));
-        this.attributeModifiers = builder.build();
     }
 
     @Override
@@ -68,11 +51,6 @@ public class KatanaItem extends ToolItem {
     @Override
     public int getMaxUseTime(ItemStack stack) {
         return 72000;
-    }
-
-    @Override
-    public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
-        return slot == EquipmentSlot.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(slot);
     }
 
     @Override
@@ -140,9 +118,13 @@ public class KatanaItem extends ToolItem {
                         });
                     }
 
+                    int down = 1;
+                    if(!world.getBlockState(new BlockPos(rayTrace.getPos().x, rayTrace.getPos().y - 1, rayTrace.getPos().z)).isAir()) {
+                        down = 0;
+                    }
+
                     // Teleport forwards
-                    BlockPos foundPos = new BlockPos(rayTrace.getPos());
-                    user.requestTeleport(rayTrace.getPos().getX(), world.getTopY(Heightmap.Type.MOTION_BLOCKING, foundPos.getX(), foundPos.getZ()), rayTrace.getPos().getZ());
+                    user.requestTeleport(rayTrace.getPos().getX(), rayTrace.getPos().getY() - down, rayTrace.getPos().getZ());
                 }
 
                 player.getItemCooldownManager().set(this, 20 * 10); // 10 second cd

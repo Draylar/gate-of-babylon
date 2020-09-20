@@ -1,6 +1,6 @@
 package draylar.gateofbabylon.enchantment;
 
-import net.minecraft.client.particle.Particle;
+import draylar.gateofbabylon.item.KatanaItem;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
@@ -21,10 +21,15 @@ public class KatanaSlashEnchantment extends Enchantment {
     }
 
     public KatanaSlashEnchantment(SoundEvent sound, ParticleEffect particle, HitExecutor onHit) {
-        super(Rarity.VERY_RARE, EnchantmentTarget.WEAPON, new EquipmentSlot[] { EquipmentSlot.MAINHAND });
+        super(Rarity.UNCOMMON, EnchantmentTarget.WEAPON, new EquipmentSlot[] { EquipmentSlot.MAINHAND });
         this.sound = sound;
         this.particle = particle;
         this.onHit = onHit;
+    }
+
+    @Override
+    public boolean isAcceptableItem(ItemStack stack) {
+        return stack.getItem() instanceof KatanaItem;
     }
 
     @Override
