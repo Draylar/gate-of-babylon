@@ -105,7 +105,7 @@ public class KatanaItem extends SwordItem {
 
                         // check for small box around the current position for enemies
                         world.getEntitiesByClass(HostileEntity.class, new Box(currentPos.add(-2, -2, -2), currentPos.add(2, 2, 2)), entity -> !hitEntities.contains(entity.getUuid())).forEach(entity -> {
-                            entity.damage(DamageSource.player((PlayerEntity) user), getAttackDamage());
+                            entity.damage(DamageSource.player((PlayerEntity) user), getAttackDamage() / 2);
 
                             if(enchantment != null) {
                                 enchantment.onHit(entity, player, stack);
