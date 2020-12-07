@@ -1,0 +1,73 @@
+{
+  "itemGroup.gateofbabylon.group": "Gate of Babylon",
+
+  "enchantment.gateofbabylon.lunging": "Précipitation",
+  "enchantment.gateofbabylon.smashing": "Écrasement",
+  "enchantment.gateofbabylon.thunder_slash": "Taillade éclair",
+  "enchantment.gateofbabylon.flame_slash": "Taillade enflammée",
+  "enchantment.gateofbabylon.god_slash": "Taillade divine",
+  "enchantment.gateofbabylon.quickdraw": "Dégaine rapide",
+
+  "item.gateofbabylon.extended_stick": "Bâton étendu",
+
+  "item.gateofbabylon.stone_shield": "Bouclier en pierre",
+  "item.gateofbabylon.iron_shield": "Bouclier en fer",
+  "item.gateofbabylon.golden_shield": "Bouclier en or",
+  "item.gateofbabylon.diamond_shield": "Bouclier en diamant",
+  "item.gateofbabylon.netherite_shield": "Bouclier en Netherite",
+
+  "item.gateofbabylon.wooden_dagger": "Dague en bois",
+  "item.gateofbabylon.stone_dagger": "Dague en pierre",
+  "item.gateofbabylon.iron_dagger": "Dague en fer",
+  "item.gateofbabylon.golden_dagger": "Dague en or",
+  "item.gateofbabylon.diamond_dagger": "Dague en diamant",
+  "item.gateofbabylon.netherite_dagger": "Dague en Netherite",
+
+  "item.gateofbabylon.wooden_spear": "Lance en bois",
+  "item.gateofbabylon.stone_spear": "Lance en pierre",
+  "item.gateofbabylon.iron_spear": "Lance en fer",
+  "item.gateofbabylon.golden_spear": "Lance en or",
+  "item.gateofbabylon.diamond_spear": "Lance en diamant",
+  "item.gateofbabylon.netherite_spear": "Lance en Netherite",
+
+  "item.gateofbabylon.wooden_broadsword": "Glaive en bois",
+  "item.gateofbabylon.stone_broadsword": "Glaive en pierre",
+  "item.gateofbabylon.iron_broadsword": "Glaive en fer",
+  "item.gateofbabylon.golden_broadsword": "Glaive en or",
+  "item.gateofbabylon.diamond_broadsword": "Glaive en diamant",
+  "item.gateofbabylon.netherite_broadsword": "Glaive en Netherite",
+
+  "item.gateofbabylon.wooden_rapier": "Rapière en bois",
+  "item.gateofbabylon.stone_rapier": "Rapière en pierre",
+  "item.gateofbabylon.iron_rapier": "Rapière en fer",
+  "item.gateofbabylon.golden_rapier": "Rapière en or",
+  "item.gateofbabylon.diamond_rapier": "Rapière en diamant",
+  "item.gateofbabylon.netherite_rapier": "Rapière en Netherite",
+
+  "item.gateofbabylon.wooden_waraxe": "Hache de guerre en bois",
+  "item.gateofbabylon.stone_waraxe": "Hache de guerre en pierre",
+  "item.gateofbabylon.iron_waraxe": "Hache de guerre en fer",
+  "item.gateofbabylon.golden_waraxe": "Hache de guerre en or",
+  "item.gateofbabylon.diamond_waraxe": "Hache de guerre en diamant",
+  "item.gateofbabylon.netherite_waraxe": "Hache de guerre en Netherite",
+  
+  "item.gateofbabylon.wooden_katana": "Katana en bois",
+  "item.gateofbabylon.stone_katana": "Katana en pierre",
+  "item.gateofbabylon.iron_katana": "Katana en fer",
+  "item.gateofbabylon.golden_katana": "Katana en or",
+  "item.gateofbabylon.diamond_katana": "Katana en diamant",
+  "item.gateofbabylon.netherite_katana": "Katana en Netherite",
+
+  "item.gateofbabylon.stone_bow": "Arc en bois",
+  "item.gateofbabylon.iron_bow": "Arc en fer",
+  "item.gateofbabylon.golden_bow": "Arc en or",
+  "item.gateofbabylon.diamond_bow": "Arc en diamant",
+  "item.gateofbabylon.netherite_bow": "Arc en Netherite",
+  
+  "item.gateofbabylon.wooden_haladie": "Haladie en bois",
+  "item.gateofbabylon.stone_haladie": "Haladie en pierre",
+  "item.gateofbabylon.iron_haladie": "Haladie en fer",
+  "item.gateofbabylon.golden_haladie": "Haladie en or",
+  "item.gateofbabylon.diamond_haladie": "Haladie en diamant",
+  "item.gateofbabylon.netherite_haladie": "Haladie en Netherite"
+}
