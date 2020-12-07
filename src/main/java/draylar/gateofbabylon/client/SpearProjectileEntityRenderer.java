@@ -1,6 +1,7 @@
 package draylar.gateofbabylon.client;
 
 import draylar.gateofbabylon.entity.SpearProjectileEntity;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
@@ -9,8 +10,10 @@ import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 
 public class SpearProjectileEntityRenderer extends EntityRenderer<SpearProjectileEntity> {
 
@@ -35,11 +38,20 @@ public class SpearProjectileEntityRenderer extends EntityRenderer<SpearProjectil
     }
 
     @Override
-    public void render(SpearProjectileEntity entity, float yaw, float tickDelta, MatrixStack stack, VertexConsumerProvider vertexConsumers, int light) {
-        stack.push();
-        this.itemRenderer.renderItem(entity.getStack(), ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, stack, vertexConsumers);
-        stack.pop();
-        super.render(entity, yaw, tickDelta, stack, vertexConsumers, light);
+    public void render(SpearProjectileEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
+        if (entity.age >= 2 || this.dispatcher.camera.getFocusedEntity().squaredDistanceTo(entity) >= 12.25D) {
+            matrices.push();
+            matrices.scale(1.5F, 1.5F, 1.5F);
+
+            matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(MathHelper.lerp(tickDelta, entity.prevYaw, entity.yaw) - 90.0F));
+            matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(MathHelper.lerp(tickDelta, entity.prevPitch, entity.pitch) + 45.0F));
+            matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(180));
+
+            MinecraftClient.getInstance().getItemRenderer().renderItem(entity.getStack(), ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers);
+
+            matrices.pop();
+            super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
+        }
     }
 
     @Override

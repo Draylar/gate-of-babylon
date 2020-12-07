@@ -18,7 +18,7 @@ public class GOBEntities {
             FabricEntityTypeBuilder
                     .<SpearProjectileEntity>create(SpawnGroup.MISC, (SpearProjectileEntity::new))
                     .trackable(128, 4)
-                    .dimensions(EntityDimensions.fixed(2, .1f)).build());
+                    .dimensions(EntityDimensions.fixed(.5f, .5f)).build());
 
     private static <T extends Entity> EntityType<T> register(String name, EntityType<T> entity) {
         return Registry.register(Registry.ENTITY_TYPE, GateOfBabylon.id(name), entity);
