@@ -8,6 +8,7 @@
     "FallingBlockEntityMixin",
     "MobEntityMixin",
     "PersistentProjectileEntityMixin",
+    "PlayerEntityLungeMixin",
     "PlayerEntityMixin"
   ],
   "client": [

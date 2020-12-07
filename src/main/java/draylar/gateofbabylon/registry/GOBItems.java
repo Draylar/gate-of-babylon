@@ -35,7 +35,7 @@ public class GOBItems {
     public static final SpearItem WOODEN_SPEAR = register("wooden_spear", new SpearItem(ToolMaterials.WOOD, 3.0f, 1.4f));
     public static final SpearItem STONE_SPEAR = register("stone_spear", new SpearItem(ToolMaterials.STONE, 4.0f, 1.4f));
     public static final SpearItem IRON_SPEAR = register("iron_spear", new SpearItem(ToolMaterials.IRON, 6.0f, 1.3f));
-    public static final SpearItem GOLDEN_SPEAR = register("golden_spear", new SpearItem(ToolMaterials.GOLD, 5.0f, 1.2f));
+    public static final SpearItem GOLDEN_SPEAR = register("golden_spear", new SpearItem(ToolMaterials.GOLD, 3.0f, 1.2f));
     public static final SpearItem DIAMOND_SPEAR = register("diamond_spear", new SpearItem( ToolMaterials.DIAMOND, 7.0f, 1.1f));
     public static final SpearItem NETHERITE_SPEAR = register("netherite_spear", new SpearItem(ToolMaterials.NETHERITE, 7.0f, 1.1f));
 
@@ -57,23 +57,23 @@ public class GOBItems {
     public static final HaladieItem WOODEN_HALADIE = register("wooden_haladie", new HaladieItem(ToolMaterials.WOOD, 2, -2.6f));
     public static final HaladieItem STONE_HALADIE = register("stone_haladie", new HaladieItem(ToolMaterials.STONE, 2, -2.6f));
     public static final HaladieItem IRON_HALADIE = register("iron_haladie", new HaladieItem(ToolMaterials.IRON, 3, -2.7f));
-    public static final HaladieItem GOLDEN_HALADIE = register("golden_haladie", new HaladieItem(ToolMaterials.GOLD,4, -2.8f));
+    public static final HaladieItem GOLDEN_HALADIE = register("golden_haladie", new HaladieItem(ToolMaterials.GOLD,2, -2.8f));
     public static final HaladieItem DIAMOND_HALADIE = register("diamond_haladie", new HaladieItem(ToolMaterials.DIAMOND, 5, -2.9f));
     public static final HaladieItem NETHERITE_HALADIE = register("netherite_haladie", new HaladieItem(ToolMaterials.NETHERITE, 5, -2.9f));
 
     public static final WaraxeItem WOODEN_WARAXE = register("wooden_waraxe", new WaraxeItem(ToolMaterials.WOOD, 6, .5f));
     public static final WaraxeItem STONE_WARAXE = register("stone_waraxe", new WaraxeItem(ToolMaterials.STONE, 8, .5f));
     public static final WaraxeItem IRON_WARAXE = register("iron_waraxe", new WaraxeItem(ToolMaterials.IRON, 11, .5f));
-    public static final WaraxeItem GOLDEN_WARAXE = register("golden_waraxe", new WaraxeItem(ToolMaterials.GOLD,11, .5f));
+    public static final WaraxeItem GOLDEN_WARAXE = register("golden_waraxe", new WaraxeItem(ToolMaterials.GOLD,6, .5f));
     public static final WaraxeItem DIAMOND_WARAXE = register("diamond_waraxe", new WaraxeItem(ToolMaterials.DIAMOND, 13, .5f));
     public static final WaraxeItem NETHERITE_WARAXE = register("netherite_waraxe", new WaraxeItem(ToolMaterials.NETHERITE, 15, .5f));
 
-    public static final KatanaItem WOODEN_KATANA = register("wooden_katana", new KatanaItem(ToolMaterials.WOOD, 4, 1.6f));
-    public static final KatanaItem STONE_KATANA = register("stone_katana", new KatanaItem(ToolMaterials.STONE, 6, 1.6f));
-    public static final KatanaItem IRON_KATANA = register("iron_katana", new KatanaItem(ToolMaterials.IRON, 8, 1.7f));
-    public static final KatanaItem GOLDEN_KATANA = register("golden_katana", new KatanaItem(ToolMaterials.GOLD,8, 1.7f));
-    public static final KatanaItem DIAMOND_KATANA = register("diamond_katana", new KatanaItem(ToolMaterials.DIAMOND, 11, 1.7f));
-    public static final KatanaItem NETHERITE_KATANA = register("netherite_katana", new KatanaItem(ToolMaterials.NETHERITE, 13, 1.7f));
+    public static final KatanaItem WOODEN_KATANA = register("wooden_katana", new KatanaItem(ToolMaterials.WOOD, 4, 1.7f));
+    public static final KatanaItem STONE_KATANA = register("stone_katana", new KatanaItem(ToolMaterials.STONE, 5, 1.7f));
+    public static final KatanaItem IRON_KATANA = register("iron_katana", new KatanaItem(ToolMaterials.IRON, 7, 1.8f));
+    public static final KatanaItem GOLDEN_KATANA = register("golden_katana", new KatanaItem(ToolMaterials.GOLD,4, 1.8f));
+    public static final KatanaItem DIAMOND_KATANA = register("diamond_katana", new KatanaItem(ToolMaterials.DIAMOND, 10, 1.8f));
+    public static final KatanaItem NETHERITE_KATANA = register("netherite_katana", new KatanaItem(ToolMaterials.NETHERITE, 12, 1.8f));
 
     public static final CustomBowItem STONE_BOW = register("stone_bow", new CustomBowItem(ToolMaterials.STONE, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1).maxDamage(425), 30.0F));
     public static final CustomBowItem IRON_BOW = register("iron_bow", new CustomBowItem(ToolMaterials.IRON, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1).maxDamage(750), 25.0F));

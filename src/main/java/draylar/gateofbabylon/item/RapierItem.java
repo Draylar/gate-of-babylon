@@ -1,6 +1,8 @@
 package draylar.gateofbabylon.item;
 
 import draylar.gateofbabylon.GateOfBabylon;
+import draylar.gateofbabylon.api.LungeManipulator;
+import draylar.gateofbabylon.mixin.PlayerEntityLungeMixin;
 import draylar.gateofbabylon.registry.GOBEnchantments;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
@@ -29,20 +31,26 @@ public class RapierItem extends SwordItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
-        world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.NEUTRAL, 0.05F, 1.75F / (RANDOM.nextFloat() * 0.4F + 0.8F));
-        user.getItemCooldownManager().set(this, 40);
 
-        if (!world.isClient) {
-            // get Lunging bonus (1 = 2x, 2 = 3x, 3, = 4x)
-            float bonus = 1 + EnchantmentHelper.getEquipmentLevel(GOBEnchantments.LUNGING, user) * .3f;
+        if(((LungeManipulator) user).canLunge()) {
+            world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.NEUTRAL, 0.05F, 1.75F / (RANDOM.nextFloat() * 0.4F + 0.8F));
+            user.getItemCooldownManager().set(this, 40);
 
-            // move player
-            Vec3d rotation = user.getRotationVector().multiply(bonus);
-            user.addVelocity(rotation.x, rotation.y, rotation.z);
-            user.velocityModified = true;
+            if (!world.isClient) {
+                // get Lunging bonus (1 = 2x, 2 = 3x, 3, = 4x)
+                float bonus = 1 + EnchantmentHelper.getEquipmentLevel(GOBEnchantments.LUNGING, user) * .3f;
+
+                // move player
+                Vec3d rotation = user.getRotationVector().multiply(bonus);
+                user.addVelocity(rotation.x, rotation.y, rotation.z);
+                user.velocityModified = true;
+            }
+
+            ((LungeManipulator) user).setLunged();
+            user.incrementStat(Stats.USED.getOrCreateStat(this));
+            return TypedActionResult.success(itemStack);
         }
 
-        user.incrementStat(Stats.USED.getOrCreateStat(this));
-        return TypedActionResult.success(itemStack);
+        return TypedActionResult.pass(itemStack);
     }
 }
