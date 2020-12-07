@@ -1,0 +1,74 @@
+  
+{
+  "itemGroup.gateofbabylon.group": "王之财宝",
+
+  "enchantment.gateofbabylon.lunging": "刺击",
+  "enchantment.gateofbabylon.smashing": "猛击",
+  "enchantment.gateofbabylon.thunder_slash": "雷击",
+  "enchantment.gateofbabylon.flame_slash": "炎斩",
+  "enchantment.gateofbabylon.god_slash": "弑神斩",
+  "enchantment.gateofbabylon.quickdraw": "快速拉弓",
+
+  "item.gateofbabylon.extended_stick": "长棍",
+
+  "item.gateofbabylon.stone_shield": "石盾牌",
+  "item.gateofbabylon.iron_shield": "铁盾牌",
+  "item.gateofbabylon.golden_shield": "金盾牌",
+  "item.gateofbabylon.diamond_shield": "钻石盾牌",
+  "item.gateofbabylon.netherite_shield": "下界合金盾牌",
+
+  "item.gateofbabylon.wooden_dagger": "木匕首",
+  "item.gateofbabylon.stone_dagger": "石匕首",
+  "item.gateofbabylon.iron_dagger": "铁匕首",
+  "item.gateofbabylon.golden_dagger": "金匕首",
+  "item.gateofbabylon.diamond_dagger": "钻石匕首",
+  "item.gateofbabylon.netherite_dagger": "下界合金匕首",
+
+  "item.gateofbabylon.wooden_spear": "木矛",
+  "item.gateofbabylon.stone_spear": "石矛",
+  "item.gateofbabylon.iron_spear": "铁矛",
+  "item.gateofbabylon.golden_spear": "金矛",
+  "item.gateofbabylon.diamond_spear": "钻石矛",
+  "item.gateofbabylon.netherite_spear": "下界合金矛",
+
+  "item.gateofbabylon.wooden_broadsword": "木阔剑",
+  "item.gateofbabylon.stone_broadsword": "石阔剑",
+  "item.gateofbabylon.iron_broadsword": "铁阔剑",
+  "item.gateofbabylon.golden_broadsword": "金阔剑",
+  "item.gateofbabylon.diamond_broadsword": "钻石阔剑",
+  "item.gateofbabylon.netherite_broadsword": "下界合金阔剑",
+
+  "item.gateofbabylon.wooden_rapier": "木西洋剑",
+  "item.gateofbabylon.stone_rapier": "石西洋剑",
+  "item.gateofbabylon.iron_rapier": "铁西洋剑",
+  "item.gateofbabylon.golden_rapier": "金西洋剑",
+  "item.gateofbabylon.diamond_rapier": "钻石西洋剑",
+  "item.gateofbabylon.netherite_rapier": "下界合金西洋剑",
+
+  "item.gateofbabylon.wooden_waraxe": "木战斧",
+  "item.gateofbabylon.stone_waraxe": "石战斧",
+  "item.gateofbabylon.iron_waraxe": "铁战斧",
+  "item.gateofbabylon.golden_waraxe": "金战斧",
+  "item.gateofbabylon.diamond_waraxe": "钻石战斧",
+  "item.gateofbabylon.netherite_waraxe": "下界合金战斧",
+  
+  "item.gateofbabylon.wooden_katana": "木武士刀",
+  "item.gateofbabylon.stone_katana": "石武士刀",
+  "item.gateofbabylon.iron_katana": "铁武士刀",
+  "item.gateofbabylon.golden_katana": "金武士刀",
+  "item.gateofbabylon.diamond_katana": "钻石武士刀",
+  "item.gateofbabylon.netherite_katana": "下界合金武士刀",
+
+  "item.gateofbabylon.stone_bow": "石弓",
+  "item.gateofbabylon.iron_bow": "铁弓",
+  "item.gateofbabylon.golden_bow": "金弓",
+  "item.gateofbabylon.diamond_bow": "钻石弓",
+  "item.gateofbabylon.netherite_bow": "下界合金弓",
+  
+  "item.gateofbabylon.wooden_haladie": "木双刃剑",
+  "item.gateofbabylon.stone_haladie": "石双刃剑",
+  "item.gateofbabylon.iron_haladie": "铁双刃剑",
+  "item.gateofbabylon.golden_haladie": "金双刃剑",
+  "item.gateofbabylon.diamond_haladie": "钻石双刃剑",
+  "item.gateofbabylon.netherite_haladie": "下界合金双刃剑"
+}
