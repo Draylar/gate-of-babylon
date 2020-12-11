@@ -15,7 +15,7 @@ public class KatanaSlashEnchantment extends Enchantment implements ValidatingEnc
 
     private final SoundEvent sound;
     private final ParticleEffect particle;
-    private final HitExecutor onHit;
+    protected final HitExecutor onHit;
 
     public KatanaSlashEnchantment(SoundEvent sound, ParticleEffect particle) {
         this(sound, particle, (entity, player, stack) -> {});
