@@ -18,6 +18,7 @@ public class GateOfBabylon implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        GOBEffects.init();
         GOBItems.init();
         GOBEnchantments.init();
         GOBEntities.init();
