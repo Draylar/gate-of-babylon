@@ -18,7 +18,7 @@ public class GOBEnchantments {
     public static final SmashingEnchantment SMASHING = register("smashing", new SmashingEnchantment());
     public static final DragonSlashEnchantment DRAGON_SLASH = register("dragon_slash", new DragonSlashEnchantment());
     public static final ThunderSlashEnchantment THUNDER_SLASH = register("thunder_slash", new ThunderSlashEnchantment());
-    public static final KatanaSlashEnchantment FLAME_SLASH = register("flame_slash", new KatanaSlashEnchantment(SoundEvents.BLOCK_FIRE_AMBIENT, ParticleTypes.FLAME, (target, source, stack) -> target.setOnFireFor(5)));
+    public static final KatanaSlashEnchantment FLAME_SLASH = register("flame_slash", new KatanaSlashEnchantment(SoundEvents.BLOCK_FIRE_AMBIENT, ParticleTypes.FLAME, (target, source, stack) -> target.setOnFireFor(6)));
     public static final QuickDrawEnchantment QUICKDRAW = register("quickdraw", new QuickDrawEnchantment());
 
     private static <T extends Enchantment> T register(String name, T enchantment) {

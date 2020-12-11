@@ -13,7 +13,7 @@ public class ThunderSlashEnchantment extends KatanaSlashEnchantment {
     
     public ThunderSlashEnchantment() {
         super(SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER, ParticleTypes.CLOUD, (target, source, stack) -> {
-            if (target.world instanceof ServerWorld && target.world.isThundering()) {
+            if (target.world instanceof ServerWorld) {
                 BlockPos blockPos = target.getBlockPos();
                 if (target.world.isSkyVisible(blockPos)) {
                     LightningEntity lightningEntity = (LightningEntity)EntityType.LIGHTNING_BOLT.create(target.world);

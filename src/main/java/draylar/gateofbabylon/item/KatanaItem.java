@@ -108,9 +108,9 @@ public class KatanaItem extends SwordItem {
 
                         if(enchantment != null) {
                             if (enchantment instanceof DragonSlashEnchantment) {
-                                DragonSlashBreathEntity cloud = new DragonSlashBreathEntity(world, currentPos.getX(), currentPos.getY(), currentPos.getZ());
+                                DragonSlashBreathEntity cloud = new DragonSlashBreathEntity(world, currentPos.getX(), currentPos.getY() + .2, currentPos.getZ());
                                 cloud.setOwner(user);
-                                cloud.setRadius(0.5F);
+                                cloud.setRadius(0.75F);
                                 cloud.setDuration(60);
                                 cloud.setParticleType(ParticleTypes.DRAGON_BREATH);
                                 cloud.addEffect(new StatusEffectInstance(GOBEffects.DRAGON_SLASH_EFFECT));
