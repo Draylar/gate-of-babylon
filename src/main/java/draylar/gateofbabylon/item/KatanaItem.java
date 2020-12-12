@@ -107,6 +107,7 @@ public class KatanaItem extends SwordItem {
                         currentPos = currentPos.add(addPerBlock);
 
                         if(enchantment != null) {
+                            // Create Dragon Breath clouds along path if enchantment is had
                             if (enchantment instanceof DragonSlashEnchantment) {
                                 DragonSlashBreathEntity cloud = new DragonSlashBreathEntity(world, currentPos.getX(), currentPos.getY() + .2, currentPos.getZ());
                                 cloud.setOwner(user);
@@ -122,6 +123,7 @@ public class KatanaItem extends SwordItem {
 
                         // check for small box around the current position for enemies
                         world.getEntitiesByClass(MobEntity.class, new Box(currentPos.add(-2, -2, -2), currentPos.add(2, 2, 2)), entity -> !hitEntities.contains(entity.getUuid())).forEach(entity -> {
+                            // Triggers for entities that aren't tameable, or that aren't tamed, or that aren't owned by the owner of the breath
                             if (!(entity instanceof TameableEntity) || !((TameableEntity) entity).isTamed() || !((TameableEntity) entity).getOwnerUuid().equals(player.getUuid())) {
                                 entity.damage(DamageSource.player((PlayerEntity) user), getAttackDamage() / 2);
 
