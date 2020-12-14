@@ -140,7 +140,7 @@ public class KatanaItem extends SwordItem {
                     }
 
                     // Teleport forwards
-                    user.requestTeleport(rayTrace.getPos().getX(), rayTrace.getPos().getY() + .5, rayTrace.getPos().getZ());
+                    user.requestTeleport(rayTrace.getPos().getX() - distanceVec.normalize().getX(), rayTrace.getPos().getY() + .5, rayTrace.getPos().getZ() - distanceVec.normalize().getZ());
                 }
 
                 player.getItemCooldownManager().set(this, 20 * 10); // 10 second cd
