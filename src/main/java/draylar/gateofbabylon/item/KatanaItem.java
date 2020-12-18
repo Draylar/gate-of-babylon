@@ -1,14 +1,21 @@
 package draylar.gateofbabylon.item;
 
 import draylar.gateofbabylon.GateOfBabylon;
+import draylar.gateofbabylon.enchantment.DragonSlashEnchantment;
 import draylar.gateofbabylon.enchantment.KatanaSlashEnchantment;
+import draylar.gateofbabylon.entity.DragonSlashBreathEntity;
+import draylar.gateofbabylon.registry.GOBEffects;
 import draylar.gateofbabylon.registry.GOBSounds;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -100,31 +107,40 @@ public class KatanaItem extends SwordItem {
                         currentPos = currentPos.add(addPerBlock);
 
                         if(enchantment != null) {
-                            serverWorld.spawnParticles(enchantment.getParticle(), currentPos.getX(), currentPos.getY() + .5, currentPos.getZ(), 5, 0, 0, 0, .1);
+                            // Create Dragon Breath clouds along path if enchantment is had
+                            if (enchantment instanceof DragonSlashEnchantment) {
+                                DragonSlashBreathEntity cloud = new DragonSlashBreathEntity(world, currentPos.getX(), currentPos.getY() + .2, currentPos.getZ());
+                                cloud.setOwner(user);
+                                cloud.setRadius(0.75F);
+                                cloud.setDuration(60);
+                                cloud.setParticleType(ParticleTypes.DRAGON_BREATH);
+                                cloud.addEffect(new StatusEffectInstance(GOBEffects.DRAGON_SLASH_EFFECT));
+                                world.spawnEntity(cloud);
+                            } else {
+                                serverWorld.spawnParticles(enchantment.getParticle(), currentPos.getX(), currentPos.getY() + .5, currentPos.getZ(), 5, 0, 0, 0, .1);
+                            }
                         }
 
                         // check for small box around the current position for enemies
-                        world.getEntitiesByClass(HostileEntity.class, new Box(currentPos.add(-2, -2, -2), currentPos.add(2, 2, 2)), entity -> !hitEntities.contains(entity.getUuid())).forEach(entity -> {
-                            entity.damage(DamageSource.player((PlayerEntity) user), getAttackDamage() / 2);
+                        world.getEntitiesByClass(MobEntity.class, new Box(currentPos.add(-2, -2, -2), currentPos.add(2, 2, 2)), entity -> !hitEntities.contains(entity.getUuid())).forEach(entity -> {
+                            // Triggers for entities that aren't tameable, or that aren't tamed, or that aren't owned by the owner of the breath
+                            if (!(entity instanceof TameableEntity) || !((TameableEntity) entity).isTamed() || !((TameableEntity) entity).getOwnerUuid().equals(player.getUuid())) {
+                                entity.damage(DamageSource.player((PlayerEntity) user), getAttackDamage() / 2);
 
-                            if(enchantment != null) {
-                                enchantment.onHit(entity, player, stack);
+                                if(enchantment != null) {
+                                    enchantment.onHit(entity, player, stack);
+                                }
+
+                                world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), GOBSounds.KATANA_SWOOP, SoundCategory.PLAYERS, 2F, 1.5F + (float) world.random.nextDouble() * .5f);
+                                world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 0.5F, 1.5F + (float) world.random.nextDouble() * .5f);
+                                serverWorld.spawnParticles(ParticleTypes.PORTAL, entity.getX(), entity.getY() + .5, entity.getZ(), 25, 0, 0, 0, .1);
+                                hitEntities.add(entity.getUuid());
                             }
-
-                            world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), GOBSounds.KATANA_SWOOP, SoundCategory.PLAYERS, 2F, 1.5F + (float) world.random.nextDouble() * .5f);
-                            world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 0.5F, 1.5F + (float) world.random.nextDouble() * .5f);
-                            serverWorld.spawnParticles(ParticleTypes.PORTAL, entity.getX(), entity.getY() + .5, entity.getZ(), 25, 0, 0, 0, .1);
-                            hitEntities.add(entity.getUuid());
                         });
                     }
 
-                    int down = 1;
-                    if(!world.getBlockState(new BlockPos(rayTrace.getPos().x, rayTrace.getPos().y - 1, rayTrace.getPos().z)).isAir()) {
-                        down = 0;
-                    }
-
                     // Teleport forwards
-                    user.requestTeleport(rayTrace.getPos().getX(), rayTrace.getPos().getY() - down, rayTrace.getPos().getZ());
+                    user.requestTeleport(rayTrace.getPos().getX() - distanceVec.normalize().getX(), rayTrace.getPos().getY() + .5, rayTrace.getPos().getZ() - distanceVec.normalize().getZ());
                 }
 
                 player.getItemCooldownManager().set(this, 20 * 10); // 10 second cd
@@ -151,7 +167,7 @@ public class KatanaItem extends SwordItem {
     public HitResult raycast(Entity from, double maxDistance, float tickDelta, boolean includeFluids) {
         Vec3d cameraPosVec = from.getCameraPosVec(tickDelta);
         Vec3d rotationVec = from.getRotationVec(tickDelta);
-        Vec3d vec3d3 = cameraPosVec.add(rotationVec.x * maxDistance, 0 * maxDistance, rotationVec.z * maxDistance);
+        Vec3d vec3d3 = cameraPosVec.add(rotationVec.x * maxDistance, 0 * maxDistance - 1.5, rotationVec.z * maxDistance);
         return from.world.raycast(new RaycastContext(cameraPosVec, vec3d3, RaycastContext.ShapeType.OUTLINE, includeFluids ? RaycastContext.FluidHandling.ANY : RaycastContext.FluidHandling.NONE, from));
     }
 }

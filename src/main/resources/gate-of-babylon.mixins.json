@@ -3,6 +3,8 @@
   "package": "draylar.gateofbabylon.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "AreaEffectCloudEntityMixin",
+    "AreaEffectCloudEntityAccessor",
     "EnchantmentHelperMixin",
     "FallingBlockEntityAccessor",
     "FallingBlockEntityMixin",
