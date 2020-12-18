@@ -107,7 +107,7 @@ public class KatanaItem extends SwordItem {
                         currentPos = currentPos.add(addPerBlock);
 
                         if(enchantment != null) {
-                            // Create Dragon Breath clouds along path if enchantment is had
+                            // Create Dragon Breath clouds along path if enchantment is present
                             if (enchantment instanceof DragonSlashEnchantment) {
                                 DragonSlashBreathEntity cloud = new DragonSlashBreathEntity(world, currentPos.getX(), currentPos.getY() + .2, currentPos.getZ());
                                 cloud.setOwner(user);

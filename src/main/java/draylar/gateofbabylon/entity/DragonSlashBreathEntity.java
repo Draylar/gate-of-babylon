@@ -9,7 +9,7 @@ import com.google.common.collect.Lists;
 
 import net.minecraft.entity.AreaEffectCloudEntity;
 import draylar.gateofbabylon.mixin.AreaEffectCloudEntityAccessor;
-import draylar.gateofbabylon.access.AreaEffectCloudEntityAccess;
+import draylar.gateofbabylon.impl.AreaEffectCloudTicker;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -21,13 +21,14 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class DragonSlashBreathEntity extends AreaEffectCloudEntity {
+
    public DragonSlashBreathEntity(World world, double x, double y, double z) {
       super(world, x, y, z);
    }
    
    @Override
    public void tick() {
-      ((AreaEffectCloudEntityAccess)this).superTick();
+      ((AreaEffectCloudTicker)this).superTick();
       boolean bl = this.isWaiting();
       float f = this.getRadius();
       if (this.world.isClient) {

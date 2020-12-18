@@ -6,6 +6,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.util.registry.Registry;
 
 public class GOBEffects {
+
     public static final DragonSlashEffect DRAGON_SLASH_EFFECT = register("dragon_slash", new DragonSlashEffect());
 
     private static <T extends StatusEffect> T register(String name, T effect) {
