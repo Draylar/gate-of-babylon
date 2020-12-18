@@ -46,7 +46,7 @@ public class KatanaItem extends SwordItem {
     private final float attackDamage;
 
     public KatanaItem(ToolMaterial material, float effectiveDamage, float effectiveSpeed) {
-        super(material, (int) effectiveDamage - 1, -4 + effectiveSpeed, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1));
+        super(material, (int) (effectiveDamage - material.getAttackDamage() - 1), -4 + effectiveSpeed, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1));
         attackDamage = effectiveDamage;
     }
 
@@ -87,9 +87,9 @@ public class KatanaItem extends SwordItem {
                     HitResult rayTrace = raycast(user, 16, 0, false);
 
                     // Play SFX
-                    world.playSound(null, user.getX(), user.getY(), user.getZ(), GOBSounds.KATANA_SWOOP, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                    world.playSound(null, user.getX(), user.getY(), user.getZ(), GOBSounds.KATANA_SWOOP, SoundCategory.PLAYERS, 0.5F, 1.0F);
                     if(enchantment != null) {
-                        world.playSound(null, user.getX(), user.getY(), user.getZ(), enchantment.getSound(), SoundCategory.PLAYERS, 2.0F, 0.25F);
+                        world.playSound(null, user.getX(), user.getY(), user.getZ(), enchantment.getSound(), SoundCategory.PLAYERS, .5F, 0.25F);
                     }
 
                     // calculate line from player to target
@@ -125,11 +125,13 @@ public class KatanaItem extends SwordItem {
                         world.getEntitiesByClass(MobEntity.class, new Box(currentPos.add(-2, -2, -2), currentPos.add(2, 2, 2)), entity -> !hitEntities.contains(entity.getUuid())).forEach(entity -> {
                             // Triggers for entities that aren't tameable, or that aren't tamed, or that aren't owned by the owner of the breath
                             if (!(entity instanceof TameableEntity) || !((TameableEntity) entity).isTamed() || !((TameableEntity) entity).getOwnerUuid().equals(player.getUuid())) {
-                                entity.damage(DamageSource.player((PlayerEntity) user), getAttackDamage() / 2);
-
+                                // Apply enchantment effects
                                 if(enchantment != null) {
                                     enchantment.onHit(entity, player, stack);
                                 }
+
+                                // Damage entity with 75% of stack's power
+                                entity.damage(DamageSource.player((PlayerEntity) user), .75f * EnchantmentHelper.getAttackDamage(stack, entity.getGroup()) + attackDamage);
 
                                 world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), GOBSounds.KATANA_SWOOP, SoundCategory.PLAYERS, 2F, 1.5F + (float) world.random.nextDouble() * .5f);
                                 world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 0.5F, 1.5F + (float) world.random.nextDouble() * .5f);
