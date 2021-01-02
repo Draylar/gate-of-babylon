@@ -1,0 +1,74 @@
+{
+  "itemGroup.gateofbabylon.group": "Gate of Babylon",
+
+  "enchantment.gateofbabylon.lunging": "Ausfallen",
+  "enchantment.gateofbabylon.smashing": "Zertrümmerung",
+  "enchantment.gateofbabylon.thunder_slash": "Donnerschnitt",
+  "enchantment.gateofbabylon.flame_slash": "Flammenschnitt",
+  "enchantment.gateofbabylon.dragon_slash": "Drachenschnitt",
+  "enchantment.gateofbabylon.vampire_slash": "Vampirschnitt",
+  "enchantment.gateofbabylon.quickdraw": "Schnelles Ziehen",
+
+  "item.gateofbabylon.extended_stick": "Verlängerter Stock",
+
+  "item.gateofbabylon.stone_shield": "Steinschild",
+  "item.gateofbabylon.iron_shield": "Eisenschild",
+  "item.gateofbabylon.golden_shield": "Goldschild",
+  "item.gateofbabylon.diamond_shield": "Diamantschild",
+  "item.gateofbabylon.netherite_shield": "Netheritschild",
+
+  "item.gateofbabylon.wooden_dagger": "Holzdolch",
+  "item.gateofbabylon.stone_dagger": "Steindolch",
+  "item.gateofbabylon.iron_dagger": "Eisendolch",
+  "item.gateofbabylon.golden_dagger": "Golddolch",
+  "item.gateofbabylon.diamond_dagger": "Diamantdolch",
+  "item.gateofbabylon.netherite_dagger": "Netheritdolch",
+
+  "item.gateofbabylon.wooden_spear": "Holzspeer",
+  "item.gateofbabylon.stone_spear": "Steinspeer",
+  "item.gateofbabylon.iron_spear": "Eisenspeer",
+  "item.gateofbabylon.golden_spear": "Goldspeer",
+  "item.gateofbabylon.diamond_spear": "Diamantspeer",
+  "item.gateofbabylon.netherite_spear": "Netheritspeer",
+
+  "item.gateofbabylon.wooden_broadsword": "Holzbreitschwert",
+  "item.gateofbabylon.stone_broadsword": "Steinbreitschwert",
+  "item.gateofbabylon.iron_broadsword": "Eisenbreitschwert",
+  "item.gateofbabylon.golden_broadsword": "Goldbreitschwert",
+  "item.gateofbabylon.diamond_broadsword": "Diamantbreitschwert",
+  "item.gateofbabylon.netherite_broadsword": "Netheritbreitschwert",
+
+  "item.gateofbabylon.wooden_rapier": "Holzrapier",
+  "item.gateofbabylon.stone_rapier": "Steinrapier",
+  "item.gateofbabylon.iron_rapier": "Eisenrapier",
+  "item.gateofbabylon.golden_rapier": "Goldrapier",
+  "item.gateofbabylon.diamond_rapier": "Diamantrapier",
+  "item.gateofbabylon.netherite_rapier": "Netheritrapier",
+
+  "item.gateofbabylon.wooden_waraxe": "Holzkriegsbeil",
+  "item.gateofbabylon.stone_waraxe": "Steinkriegsbeil",
+  "item.gateofbabylon.iron_waraxe": "Eisenkriegsbeil",
+  "item.gateofbabylon.golden_waraxe": "Goldkriegsbeil",
+  "item.gateofbabylon.diamond_waraxe": "Diamantkriegsbeil",
+  "item.gateofbabylon.netherite_waraxe": "Netheritkriegsbeil",
+  
+  "item.gateofbabylon.wooden_katana": "Holzkatana",
+  "item.gateofbabylon.stone_katana": "Steinkatana",
+  "item.gateofbabylon.iron_katana": "Eisenkatana",
+  "item.gateofbabylon.golden_katana": "Goldkatana",
+  "item.gateofbabylon.diamond_katana": "Diamantkatana",
+  "item.gateofbabylon.netherite_katana": "Netheritkatana",
+
+  "item.gateofbabylon.stone_bow": "Steinbogen",
+  "item.gateofbabylon.iron_bow": "Eisenbogen",
+  "item.gateofbabylon.golden_bow": "Goldbogen",
+  "item.gateofbabylon.diamond_bow": "Diamantbogen",
+  "item.gateofbabylon.netherite_bow": "Netheritbogen",
+  
+  "item.gateofbabylon.wooden_haladie": "Holzhaladie",
+  "item.gateofbabylon.stone_haladie": "Steinhaladie",
+  "item.gateofbabylon.iron_haladie": "Eisenhaladie",
+  "item.gateofbabylon.golden_haladie": "Goldhaladie",
+  "item.gateofbabylon.diamond_haladie": "Diamanthaladie",
+  "item.gateofbabylon.netherite_haladie": "Netherithaladie"
+}
