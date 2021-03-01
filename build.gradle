@@ -25,10 +25,6 @@ dependencies {
     modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
     modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    // Polymorph for intentional recipe conflicts
-    modImplementation 'com.github.TheIllusiveC4:Polymorph:1.16.x-fabric-SNAPSHOT'
-    include 'com.github.TheIllusiveC4:Polymorph:1.16.x-fabric-SNAPSHOT'
-
     // Dev QOL utilities
     modCompile "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
     modCompile "io.github.prospector:modmenu:1.14+"
