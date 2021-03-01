@@ -2,6 +2,7 @@ package draylar.gateofbabylon.item;
 
 import draylar.gateofbabylon.api.ProjectileManipulator;
 import draylar.gateofbabylon.registry.GOBEnchantments;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
@@ -9,29 +10,38 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.*;
 import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleType;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class CustomBowItem extends BowItem {
 
     private final ToolMaterial material;
     private final float maxDrawTime;
     private final ParticleEffect type;
+    private final double damageModifier;
 
-    public CustomBowItem(ToolMaterial material, Settings settings, float maxDrawTime) {
+    public CustomBowItem(ToolMaterial material, Settings settings, float maxDrawTime, double damageModifier) {
         super(settings);
         this.material = material;
         this.maxDrawTime = maxDrawTime;
+        this.damageModifier = damageModifier;
         type = null;
     }
 
-    public CustomBowItem(ToolMaterial material, Settings settings, float maxDrawTime, ParticleEffect particles) {
+    public CustomBowItem(ToolMaterial material, Settings settings, float maxDrawTime, double damageModifier, ParticleEffect particles) {
         super(settings);
         this.material = material;
         this.maxDrawTime = maxDrawTime;
+        this.damageModifier = damageModifier;
         type = particles;
     }
 
@@ -76,7 +86,7 @@ public class CustomBowItem extends BowItem {
                         // Apply damage from power enchantment
                         int j = EnchantmentHelper.getLevel(Enchantments.POWER, stack);
                         if (j > 0) {
-                            arrowEntity.setDamage(arrowEntity.getDamage() + (double) j * 0.5D + 0.5D);
+                            arrowEntity.setDamage(damageModifier * (arrowEntity.getDamage() + (double) j * 0.5D + 0.5D));
                         }
 
                         // Apply punch knockback
@@ -136,5 +146,14 @@ public class CustomBowItem extends BowItem {
     @Override
     public boolean canRepair(ItemStack stack, ItemStack ingredient) {
         return this.material.getRepairIngredient().test(ingredient) || super.canRepair(stack, ingredient);
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        super.appendTooltip(stack, world, tooltip, context);
+        tooltip.add(LiteralText.EMPTY);
+        tooltip.add(new TranslatableText("gateofbabylon.bow_stats").formatted(Formatting.GRAY));
+        tooltip.add(new LiteralText(" ").append(new TranslatableText("gateofbabylon.bow_damage", damageModifier).formatted(Formatting.DARK_GREEN)));
+        tooltip.add(new LiteralText(" ").append(new TranslatableText("gateofbabylon.bow_draw_speed", (double) maxDrawTime / 20).formatted(Formatting.DARK_GREEN)));
     }
 }

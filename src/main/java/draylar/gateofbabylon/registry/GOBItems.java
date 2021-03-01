@@ -75,11 +75,11 @@ public class GOBItems {
     public static final KatanaItem DIAMOND_KATANA = register("diamond_katana", new KatanaItem(ToolMaterials.DIAMOND, 11, 1.8f));
     public static final KatanaItem NETHERITE_KATANA = register("netherite_katana", new KatanaItem(ToolMaterials.NETHERITE, 13, 1.8f));
 
-    public static final CustomBowItem STONE_BOW = register("stone_bow", new CustomBowItem(ToolMaterials.STONE, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1).maxDamage(425), 30.0F));
-    public static final CustomBowItem IRON_BOW = register("iron_bow", new CustomBowItem(ToolMaterials.IRON, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1).maxDamage(750), 25.0F));
-    public static final CustomBowItem GOLDEN_BOW = register("golden_bow", new CustomBowItem(ToolMaterials.GOLD, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1).maxDamage(150), 10.0F, new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.GOLD_BLOCK.getDefaultState())));
-    public static final CustomBowItem DIAMOND_BOW = register("diamond_bow", new CustomBowItem(ToolMaterials.DIAMOND, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1).maxDamage(1561), 20.0F, new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.DIAMOND_BLOCK.getDefaultState())));
-    public static final CustomBowItem NETHERITE_BOW = register("netherite_bow", new CustomBowItem(ToolMaterials.NETHERITE, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1).maxDamage(2031), 25.0F, ParticleTypes.SOUL_FIRE_FLAME));
+    public static final CustomBowItem STONE_BOW = register("stone_bow", new CustomBowItem(ToolMaterials.STONE, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1).maxDamage(425), 30.0F, 1.0));
+    public static final CustomBowItem IRON_BOW = register("iron_bow", new CustomBowItem(ToolMaterials.IRON, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1).maxDamage(750), 25.0F, 1.1));
+    public static final CustomBowItem GOLDEN_BOW = register("golden_bow", new CustomBowItem(ToolMaterials.GOLD, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1).maxDamage(150), 10.0F, 1.0, new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.GOLD_BLOCK.getDefaultState())));
+    public static final CustomBowItem DIAMOND_BOW = register("diamond_bow", new CustomBowItem(ToolMaterials.DIAMOND, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1).maxDamage(1561), 20.0F, 1.25, new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.DIAMOND_BLOCK.getDefaultState())));
+    public static final CustomBowItem NETHERITE_BOW = register("netherite_bow", new CustomBowItem(ToolMaterials.NETHERITE, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1).maxDamage(2031), 15.0F, 1.5, ParticleTypes.SOUL_FIRE_FLAME));
 
     public static final CustomShieldItem STONE_SHIELD = register("stone_shield", new CustomShieldItem(new Item.Settings().maxDamage(425).group(GateOfBabylon.GROUP)));
     public static final CustomShieldItem IRON_SHIELD = register("iron_shield", new CustomShieldItem(new Item.Settings().maxDamage(750).group(GateOfBabylon.GROUP)));

@@ -1,5 +1,8 @@
 {
   "itemGroup.gateofbabylon.group": "Gate of Babylon",
+  "gateofbabylon.bow_stats": "Bow Stats:",
+  "gateofbabylon.bow_damage": "%dx Damage",
+  "gateofbabylon.bow_draw_speed": "%ds Draw Speed",
 
   "enchantment.gateofbabylon.lunging": "Lunging",
   "enchantment.gateofbabylon.smashing": "Smashing",
