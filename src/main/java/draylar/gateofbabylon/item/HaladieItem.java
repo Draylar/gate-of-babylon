@@ -1,13 +1,14 @@
 package draylar.gateofbabylon.item;
 
 import draylar.gateofbabylon.GateOfBabylon;
+import draylar.gateofbabylon.api.EnchantmentHandler;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 
-public class HaladieItem extends SwordItem {
+public class HaladieItem extends SwordItem implements EnchantmentHandler {
 
     public HaladieItem(ToolMaterial material, int attackDamage, float attackSpeed) {
         super(material, attackDamage, attackSpeed, new Item.Settings().group(GateOfBabylon.GROUP));

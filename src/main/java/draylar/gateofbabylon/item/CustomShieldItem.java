@@ -1,5 +1,6 @@
 package draylar.gateofbabylon.item;
 
+import draylar.gateofbabylon.api.EnchantmentHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.DispenserBlock;
@@ -16,7 +17,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class CustomShieldItem extends ShieldItem {
+public class CustomShieldItem extends ShieldItem implements EnchantmentHandler {
 
     public CustomShieldItem(Item.Settings settings) {
         super(settings);

@@ -6,6 +6,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
@@ -138,48 +139,59 @@ public class SpearProjectileEntity extends PersistentProjectileEntity {
 
     @Override
     public void onEntityHit(EntityHitResult entityHitResult) {
-        Entity entity = entityHitResult.getEntity();
-        float f = 8.0F;
-        if (entity instanceof LivingEntity) {
-            LivingEntity livingEntity = (LivingEntity)entity;
-            f += EnchantmentHelper.getAttackDamage(this.stack, livingEntity.getGroup());
+        Entity target = entityHitResult.getEntity();
+        float damage = 8.0F;
+
+        // Calculate damage bonuses for enchantments (Sharpness, Bane, Smite, etc.)
+        if (target instanceof LivingEntity) {
+            LivingEntity livingEntity = (LivingEntity)target;
+            damage += EnchantmentHelper.getAttackDamage(this.stack, livingEntity.getGroup());
         }
 
-        Entity entity2 = this.getOwner();
-        DamageSource damageSource = DamageSource.trident(this, (Entity)(entity2 == null ? this : entity2));
+        Entity spearOwner = this.getOwner();
+        DamageSource damageSource = DamageSource.trident(this, (spearOwner == null ? this : spearOwner));
         this.dealtDamage = true;
-        SoundEvent soundEvent = SoundEvents.ITEM_TRIDENT_HIT;
-        if (entity.damage(damageSource, f)) {
-            if (entity.getType() == EntityType.ENDERMAN) {
+        SoundEvent hitSound = SoundEvents.ITEM_TRIDENT_HIT;
+        if (target.damage(damageSource, damage)) {
+            if (target.getType() == EntityType.ENDERMAN) {
                 return;
             }
 
-            if (entity instanceof LivingEntity) {
-                LivingEntity livingEntity2 = (LivingEntity)entity;
-                if (entity2 instanceof LivingEntity) {
-                    EnchantmentHelper.onUserDamaged(livingEntity2, entity2);
-                    EnchantmentHelper.onTargetDamaged((LivingEntity)entity2, livingEntity2);
+            if (target instanceof LivingEntity) {
+                LivingEntity livingTarget = (LivingEntity)target;
+                if (spearOwner instanceof LivingEntity) {
+                    EnchantmentHelper.onUserDamaged(livingTarget, spearOwner);
+                    EnchantmentHelper.onTargetDamaged((LivingEntity)spearOwner, livingTarget);
                 }
 
-                this.onHit(livingEntity2);
+                this.onHit(livingTarget);
             }
         }
+
+        // apply fire aspect to targets if valid
+        int fireAspectLevel = EnchantmentHelper.getLevel(Enchantments.FIRE_ASPECT, stack);
+        if(fireAspectLevel > 0) {
+            target.setOnFireFor(fireAspectLevel * 4);
+        }
+
 
         this.setVelocity(this.getVelocity().multiply(-0.01D, -0.1D, -0.01D));
-        float g = 1.0F;
+        float volume = 1.0F;
+
+        // Handle channeling
         if (this.world instanceof ServerWorld && this.world.isThundering() && EnchantmentHelper.hasChanneling(this.stack)) {
-            BlockPos blockPos = entity.getBlockPos();
+            BlockPos blockPos = target.getBlockPos();
             if (this.world.isSkyVisible(blockPos)) {
-                LightningEntity lightningEntity = (LightningEntity)EntityType.LIGHTNING_BOLT.create(this.world);
+                LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(this.world);
                 lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(blockPos));
-                lightningEntity.setChanneler(entity2 instanceof ServerPlayerEntity ? (ServerPlayerEntity)entity2 : null);
+                lightningEntity.setChanneler(spearOwner instanceof ServerPlayerEntity ? (ServerPlayerEntity)spearOwner : null);
                 this.world.spawnEntity(lightningEntity);
-                soundEvent = SoundEvents.ITEM_TRIDENT_THUNDER;
-                g = 5.0F;
+                hitSound = SoundEvents.ITEM_TRIDENT_THUNDER;
+                volume = 5.0F;
             }
         }
 
-        this.playSound(soundEvent, g, 1.0F);
+        this.playSound(hitSound, volume, 1.0F);
     }
 
     @Override

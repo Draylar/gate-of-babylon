@@ -1,6 +1,7 @@
 package draylar.gateofbabylon.item;
 
 import draylar.gateofbabylon.GateOfBabylon;
+import draylar.gateofbabylon.api.EnchantmentHandler;
 import draylar.gateofbabylon.enchantment.DragonSlashEnchantment;
 import draylar.gateofbabylon.enchantment.KatanaSlashEnchantment;
 import draylar.gateofbabylon.entity.DragonSlashBreathEntity;
@@ -8,12 +9,10 @@ import draylar.gateofbabylon.registry.GOBEffects;
 import draylar.gateofbabylon.registry.GOBSounds;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -30,7 +29,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
@@ -41,7 +39,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class KatanaItem extends SwordItem {
+public class KatanaItem extends SwordItem implements EnchantmentHandler {
 
     private final float attackDamage;
 

@@ -3,7 +3,11 @@ package draylar.gateofbabylon.item;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import draylar.gateofbabylon.GateOfBabylon;
+import draylar.gateofbabylon.api.EnchantmentHandler;
 import draylar.gateofbabylon.entity.SpearProjectileEntity;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentTarget;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -23,7 +27,10 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
-public class SpearItem extends ToolItem {
+import java.util.Arrays;
+import java.util.List;
+
+public class SpearItem extends ToolItem implements EnchantmentHandler {
 
     private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 
@@ -102,5 +109,15 @@ public class SpearItem extends ToolItem {
                 player.incrementStat(Stats.USED.getOrCreateStat(this));
             }
         }
+    }
+
+    @Override
+    public List<EnchantmentTarget> getEnchantmentTypes() {
+        return Arrays.asList(EnchantmentTarget.WEAPON, EnchantmentTarget.TRIDENT);
+    }
+
+    @Override
+    public boolean isInvalid(Enchantment enchantment) {
+        return enchantment == Enchantments.SWEEPING;
     }
 }

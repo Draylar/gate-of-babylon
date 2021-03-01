@@ -1,5 +1,6 @@
 package draylar.gateofbabylon.item;
 
+import draylar.gateofbabylon.api.EnchantmentHandler;
 import draylar.gateofbabylon.api.ProjectileManipulator;
 import draylar.gateofbabylon.registry.GOBEnchantments;
 import net.minecraft.client.item.TooltipContext;
@@ -22,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class CustomBowItem extends BowItem {
+public class CustomBowItem extends BowItem implements EnchantmentHandler {
 
     private final ToolMaterial material;
     private final float maxDrawTime;

@@ -1,8 +1,8 @@
 package draylar.gateofbabylon.item;
 
 import draylar.gateofbabylon.GateOfBabylon;
+import draylar.gateofbabylon.api.EnchantmentHandler;
 import draylar.gateofbabylon.api.LungeManipulator;
-import draylar.gateofbabylon.mixin.PlayerEntityLungeMixin;
 import draylar.gateofbabylon.registry.GOBEnchantments;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,7 +18,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class RapierItem extends SwordItem {
+public class RapierItem extends SwordItem implements EnchantmentHandler {
 
     public RapierItem(ToolMaterial material, int attackDamage, float attackSpeed) {
         super(material, attackDamage, attackSpeed, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1));

@@ -1,6 +1,7 @@
 package draylar.gateofbabylon.item;
 
 import draylar.gateofbabylon.GateOfBabylon;
+import draylar.gateofbabylon.api.EnchantmentHandler;
 import draylar.gateofbabylon.mixin.FallingBlockEntityAccessor;
 import draylar.gateofbabylon.registry.GOBEnchantments;
 import net.minecraft.block.BlockState;
@@ -26,7 +27,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class WaraxeItem extends AxeItem {
+public class WaraxeItem extends AxeItem implements EnchantmentHandler {
 
     public WaraxeItem(ToolMaterial material, float attackDamage, float attackSpeed, Settings settings) {
         super(material, attackDamage, attackSpeed, settings);

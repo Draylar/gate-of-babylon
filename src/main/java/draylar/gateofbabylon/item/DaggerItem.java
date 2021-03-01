@@ -1,11 +1,12 @@
 package draylar.gateofbabylon.item;
 
 import draylar.gateofbabylon.GateOfBabylon;
+import draylar.gateofbabylon.api.EnchantmentHandler;
 import net.minecraft.item.Item;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 
-public class DaggerItem extends SwordItem {
+public class DaggerItem extends SwordItem implements EnchantmentHandler {
 
     public DaggerItem(ToolMaterial material, int attackDamage, float functionalSpeed) {
         super(material, attackDamage, -4 + functionalSpeed, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1));
