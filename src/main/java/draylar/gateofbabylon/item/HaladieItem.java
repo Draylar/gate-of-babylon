@@ -13,6 +13,10 @@ public class HaladieItem extends SwordItem {
         super(material, attackDamage, attackSpeed, new Item.Settings().group(GateOfBabylon.GROUP));
     }
 
+    public HaladieItem(ToolMaterial material, float effectiveDamage, float effectiveSpeed) {
+        super(material, (int) (effectiveDamage - material.getAttackDamage() - 1), -4 + effectiveSpeed, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1));
+    }
+
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         return super.postHit(stack, target, attacker);
