@@ -130,8 +130,8 @@ public class KatanaItem extends SwordItem {
                                     enchantment.onHit(entity, player, stack);
                                 }
 
-                                // Damage entity with 75% of stack's power
-                                entity.damage(DamageSource.player((PlayerEntity) user), .75f * EnchantmentHelper.getAttackDamage(stack, entity.getGroup()) + attackDamage);
+                                // Damage entity with stack's power
+                                entity.damage(DamageSource.player((PlayerEntity) user), 1.25f * (EnchantmentHelper.getAttackDamage(stack, entity.getGroup()) + attackDamage));
 
                                 world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), GOBSounds.KATANA_SWOOP, SoundCategory.PLAYERS, 2F, 1.5F + (float) world.random.nextDouble() * .5f);
                                 world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 0.5F, 1.5F + (float) world.random.nextDouble() * .5f);
