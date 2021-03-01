@@ -68,12 +68,12 @@ public class GOBItems {
     public static final WaraxeItem DIAMOND_WARAXE = register("diamond_waraxe", new WaraxeItem(ToolMaterials.DIAMOND, 13, .5f));
     public static final WaraxeItem NETHERITE_WARAXE = register("netherite_waraxe", new WaraxeItem(ToolMaterials.NETHERITE, 15, .5f));
 
-    public static final KatanaItem WOODEN_KATANA = register("wooden_katana", new KatanaItem(ToolMaterials.WOOD, 5, 1.7f));
-    public static final KatanaItem STONE_KATANA = register("stone_katana", new KatanaItem(ToolMaterials.STONE, 6, 1.7f));
-    public static final KatanaItem IRON_KATANA = register("iron_katana", new KatanaItem(ToolMaterials.IRON, 8, 1.8f));
-    public static final KatanaItem GOLDEN_KATANA = register("golden_katana", new KatanaItem(ToolMaterials.GOLD,5, 1.8f));
-    public static final KatanaItem DIAMOND_KATANA = register("diamond_katana", new KatanaItem(ToolMaterials.DIAMOND, 11, 1.8f));
-    public static final KatanaItem NETHERITE_KATANA = register("netherite_katana", new KatanaItem(ToolMaterials.NETHERITE, 13, 1.8f));
+    public static final KatanaItem WOODEN_KATANA = register("wooden_katana", new KatanaItem(ToolMaterials.WOOD, 5, 1.3f));
+    public static final KatanaItem STONE_KATANA = register("stone_katana", new KatanaItem(ToolMaterials.STONE, 6, 1.3f));
+    public static final KatanaItem IRON_KATANA = register("iron_katana", new KatanaItem(ToolMaterials.IRON, 8, 1.4f));
+    public static final KatanaItem GOLDEN_KATANA = register("golden_katana", new KatanaItem(ToolMaterials.GOLD,5, 1.4f));
+    public static final KatanaItem DIAMOND_KATANA = register("diamond_katana", new KatanaItem(ToolMaterials.DIAMOND, 8, 1.4f));
+    public static final KatanaItem NETHERITE_KATANA = register("netherite_katana", new KatanaItem(ToolMaterials.NETHERITE, 9, 1.5f));
 
     public static final CustomBowItem STONE_BOW = register("stone_bow", new CustomBowItem(ToolMaterials.STONE, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1).maxDamage(425), 30.0F, 1.0));
     public static final CustomBowItem IRON_BOW = register("iron_bow", new CustomBowItem(ToolMaterials.IRON, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1).maxDamage(750), 25.0F, 1.1));
