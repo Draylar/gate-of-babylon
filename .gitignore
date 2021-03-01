@@ -1,3 +1,9 @@
 # Project exclude paths
 /.gradle/
 /out/
+/build/
+/.idea/
+/logs/
+/run/
+/balancing.md
+/gate-of-babylon.iml
