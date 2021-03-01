@@ -64,7 +64,7 @@ public class KatanaItem extends SwordItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
 
-        if (itemStack.getDamage() >= itemStack.getMaxDamage() - 1) {
+        if (itemStack.getDamage() >= itemStack.getMaxDamage() - 1 || user.isSneaking()) {
             return TypedActionResult.fail(itemStack);
         } else {
             user.setCurrentHand(hand);
