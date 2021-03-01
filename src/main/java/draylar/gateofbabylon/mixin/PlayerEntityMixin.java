@@ -1,8 +1,11 @@
 package draylar.gateofbabylon.mixin;
 
+import draylar.gateofbabylon.api.DoubleAttackHelper;
 import draylar.gateofbabylon.item.CustomShieldItem;
+import draylar.gateofbabylon.item.HaladieItem;
 import draylar.gateofbabylon.registry.GOBItems;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -10,6 +13,7 @@ import net.minecraft.entity.player.ItemCooldownManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.Stats;
@@ -18,10 +22,12 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.TimerTask;
 import java.util.function.Consumer;
 
 @Mixin(PlayerEntity.class)
@@ -30,6 +36,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     @Shadow public abstract void incrementStat(Stat<?> stat);
 
     @Shadow public abstract ItemCooldownManager getItemCooldownManager();
+
+    @Shadow public abstract void attack(Entity target);
 
     private PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
@@ -69,8 +77,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         }
     }
 
-
-
     @Inject(
             method = "disableShield",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/ItemCooldownManager;set(Lnet/minecraft/item/Item;I)V")
@@ -81,5 +87,26 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         this.getItemCooldownManager().set(GOBItems.GOLDEN_SHIELD, 100);
         this.getItemCooldownManager().set(GOBItems.DIAMOND_SHIELD, 100);
         this.getItemCooldownManager().set(GOBItems.NETHERITE_SHIELD, 100);
+    }
+
+    @Unique
+    private boolean gob_hasHaladieAttacked = false;
+
+    @Inject(
+            method = "attack",
+            at = @At("RETURN"))
+    private void onAttack(Entity target, CallbackInfo ci) {
+        // If we are holding a Haladie, enter double-attack logic.
+        if(getMainHandStack().getItem() instanceof HaladieItem && !world.isClient) {
+            // If we have NOT already attacked, reset the enemies i-frames and attack again.
+            if(!gob_hasHaladieAttacked) {
+                target.timeUntilRegen = 0;
+                gob_hasHaladieAttacked = true;
+                DoubleAttackHelper.queueDoubleAttack((ServerPlayerEntity) (Object) this, target);
+                return;
+            }
+        }
+
+        gob_hasHaladieAttacked = false;
     }
 }

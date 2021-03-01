@@ -59,7 +59,7 @@ public class GOBItems {
     public static final HaladieItem IRON_HALADIE = register("iron_haladie", new HaladieItem(ToolMaterials.IRON, 3, -2.7f));
     public static final HaladieItem GOLDEN_HALADIE = register("golden_haladie", new HaladieItem(ToolMaterials.GOLD,2, -2.8f));
     public static final HaladieItem DIAMOND_HALADIE = register("diamond_haladie", new HaladieItem(ToolMaterials.DIAMOND, 5, -2.9f));
-    public static final HaladieItem NETHERITE_HALADIE = register("netherite_haladie", new HaladieItem(ToolMaterials.NETHERITE, 5, -2.9f));
+    public static final HaladieItem NETHERITE_HALADIE = register("netherite_haladie", new HaladieItem(ToolMaterials.NETHERITE, 6, -2.9f));
 
     public static final WaraxeItem WOODEN_WARAXE = register("wooden_waraxe", new WaraxeItem(ToolMaterials.WOOD, 6, .5f));
     public static final WaraxeItem STONE_WARAXE = register("stone_waraxe", new WaraxeItem(ToolMaterials.STONE, 8, .5f));
