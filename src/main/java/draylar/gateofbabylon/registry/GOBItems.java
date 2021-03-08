@@ -87,6 +87,13 @@ public class GOBItems {
     public static final CustomShieldItem DIAMOND_SHIELD = register("diamond_shield", new CustomShieldItem(new Item.Settings().maxDamage(1561).group(GateOfBabylon.GROUP)));
     public static final CustomShieldItem NETHERITE_SHIELD = register("netherite_shield", new CustomShieldItem(new Item.Settings().maxDamage(2031).group(GateOfBabylon.GROUP)));
 
+    // Yo-Yos are fun ranged weapons.
+    public static final YoyoItem WOODEN_YOYO = register("wooden_yoyo", new YoyoItem(new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1), ToolMaterials.WOOD));
+    public static final YoyoItem IRON_YOYO = register("stone_yoyo", new YoyoItem(new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1), ToolMaterials.IRON));
+    public static final YoyoItem GOLDEN_YOYO = register("iron_yoyo", new YoyoItem(new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1), ToolMaterials.GOLD));
+    public static final YoyoItem DIAMOND_YOYO = register("diamond_yoyo", new YoyoItem(new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1), ToolMaterials.DIAMOND));
+    public static final YoyoItem NETHERITE_YOYO = register("netherite_yoyo", new YoyoItem(new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1), ToolMaterials.NETHERITE));
+
     public static final Item EXTENDED_STICK = register("extended_stick", new Item(new Item.Settings().group(GateOfBabylon.GROUP)));
 
     private static <T extends Item> T register(String name, T item) {
