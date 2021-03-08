@@ -17,6 +17,13 @@ repositories {
     maven { url "http://server.bbkr.space/artifactory/libs-release" }
     maven { url 'https://jitpack.io' }
     maven { url 'https://maven.fabricmc.net' }
+
+    maven {
+        url "https://maven.jamieswhiteshirt.com/libs-release"
+        content {
+            includeGroup "com.jamieswhiteshirt"
+        }
+    }
 }
 
 dependencies {
@@ -28,6 +35,8 @@ dependencies {
     // Dev QOL utilities
     modCompile "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
     modCompile "io.github.prospector:modmenu:1.14+"
+
+    include modImplementation("com.jamieswhiteshirt:reach-entity-attributes:1.1.0")
 }
 
 processResources {
