@@ -5,6 +5,7 @@
   "mixins": [
     "AreaEffectCloudEntityAccessor",
     "AreaEffectCloudEntityMixin",
+    "BlockSoundGroupAccessor",
     "ClientPlayerEntityYoyoUsageMixin",
     "EnchantmentHelperMixin",
     "EnchantmentMixin",

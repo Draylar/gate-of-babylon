@@ -3,6 +3,7 @@ package draylar.gateofbabylon.entity;
 import draylar.gateofbabylon.GateOfBabylon;
 import draylar.gateofbabylon.item.BoomerangItem;
 import draylar.gateofbabylon.item.YoyoItem;
+import draylar.gateofbabylon.mixin.BlockSoundGroupAccessor;
 import draylar.gateofbabylon.registry.GOBEntities;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
@@ -117,7 +118,7 @@ public class BoomerangEntity extends Entity {
                     BlockPos p = new BlockPos(target);
                     BlockState blockState = world.getBlockState(p);
                     if (!blockState.isAir()) {
-                        world.playSound(null, getX(), getY(), getZ(), blockState.getSoundGroup().getHitSound(), SoundCategory.PLAYERS, 0.5f, 1.0f);
+                        world.playSound(null, getX(), getY(), getZ(), ((BlockSoundGroupAccessor) blockState.getSoundGroup()).getHitSound(), SoundCategory.PLAYERS, 0.5f, 1.0f);
                     }
 
                     if (blockState.getMaterial().isReplaceable()) {

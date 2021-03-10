@@ -2,7 +2,7 @@ package draylar.gateofbabylon.item;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import draylar.gateofbabylon.GateOfBabylon;
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import draylar.gateofbabylon.api.EnchantmentHandler;
 import draylar.gateofbabylon.entity.SpearProjectileEntity;
 import net.minecraft.enchantment.Enchantment;
@@ -29,21 +29,19 @@ import net.minecraft.world.World;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class SpearItem extends ToolItem implements EnchantmentHandler {
 
-    private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
+    public static final UUID INCREASE_UUID = UUID.fromString("7b0363d1-7818-44cc-a605-b2847a065548");
+    private final float effectiveDamage;
+    private final float effectiveSpeed;
 
     public SpearItem(ToolMaterial material, float effectiveDamage, float effectiveSpeed, Item.Settings settings) {
         super(material, settings);
 
-        effectiveDamage = effectiveDamage - 1;
-        effectiveSpeed = -4 + effectiveSpeed;
-
-        ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier", effectiveDamage, EntityAttributeModifier.Operation.ADDITION));
-        builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", effectiveSpeed, EntityAttributeModifier.Operation.ADDITION));
-        this.attributeModifiers = builder.build();
+        this.effectiveDamage = effectiveDamage - 1;
+        this.effectiveSpeed = -4 + effectiveSpeed;
     }
 
     @Override
@@ -60,11 +58,6 @@ public class SpearItem extends ToolItem implements EnchantmentHandler {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         stack.damage(1, attacker, e -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
         return true;
-    }
-
-    @Override
-    public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
-        return slot == EquipmentSlot.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(slot);
     }
 
     @Override
@@ -119,5 +112,21 @@ public class SpearItem extends ToolItem implements EnchantmentHandler {
     @Override
     public boolean isInvalid(Enchantment enchantment) {
         return enchantment == Enchantments.SWEEPING;
+    }
+
+    @Override
+    public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
+        ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
+        Multimap<EntityAttribute, EntityAttributeModifier> modifiers = super.getAttributeModifiers(slot);
+        builder.putAll(modifiers);
+
+        if(slot == EquipmentSlot.MAINHAND) {
+            builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier", effectiveDamage, EntityAttributeModifier.Operation.ADDITION));
+            builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", effectiveSpeed, EntityAttributeModifier.Operation.ADDITION));
+            builder.put(ReachEntityAttributes.REACH, new EntityAttributeModifier(INCREASE_UUID, "Spear reach increase", 1f, EntityAttributeModifier.Operation.ADDITION));
+            builder.put(ReachEntityAttributes.ATTACK_RANGE, new EntityAttributeModifier(INCREASE_UUID, "Spear reach increase", 1f, EntityAttributeModifier.Operation.ADDITION));
+        }
+
+        return builder.build();
     }
 }
