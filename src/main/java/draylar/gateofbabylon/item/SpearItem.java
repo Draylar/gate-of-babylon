@@ -34,8 +34,8 @@ public class SpearItem extends ToolItem implements EnchantmentHandler {
 
     private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 
-    public SpearItem(ToolMaterial material, float effectiveDamage, float effectiveSpeed) {
-        super(material, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1));
+    public SpearItem(ToolMaterial material, float effectiveDamage, float effectiveSpeed, Item.Settings settings) {
+        super(material, settings);
 
         effectiveDamage = effectiveDamage - 1;
         effectiveSpeed = -4 + effectiveSpeed;

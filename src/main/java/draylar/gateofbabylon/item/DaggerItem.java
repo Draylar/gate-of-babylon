@@ -19,8 +19,8 @@ public class DaggerItem extends SwordItem implements EnchantmentHandler {
 
     public static final UUID REDUCTION_UUID = UUID.fromString("7b0363d1-7818-44cc-a605-b2847a065548");
 
-    public DaggerItem(ToolMaterial material, float effectiveDamage, float effectiveSpeed) {
-        super(material, (int) (effectiveDamage - material.getAttackDamage() - 1), -4 + effectiveSpeed, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1));
+    public DaggerItem(ToolMaterial material, float effectiveDamage, float effectiveSpeed, Item.Settings settings) {
+        super(material, (int) (effectiveDamage - material.getAttackDamage() - 1), -4 + effectiveSpeed, settings);
     }
 
     @Override

@@ -43,8 +43,8 @@ public class KatanaItem extends SwordItem implements EnchantmentHandler {
 
     private final float attackDamage;
 
-    public KatanaItem(ToolMaterial material, float effectiveDamage, float effectiveSpeed) {
-        super(material, (int) (effectiveDamage - material.getAttackDamage() - 1), -4 + effectiveSpeed, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1));
+    public KatanaItem(ToolMaterial material, float effectiveDamage, float effectiveSpeed, Item.Settings settings) {
+        super(material, (int) (effectiveDamage - material.getAttackDamage() - 1), -4 + effectiveSpeed, settings);
         attackDamage = effectiveDamage;
     }
 

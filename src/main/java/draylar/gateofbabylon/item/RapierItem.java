@@ -20,12 +20,8 @@ import net.minecraft.world.World;
 
 public class RapierItem extends SwordItem implements EnchantmentHandler {
 
-    public RapierItem(ToolMaterial material, int attackDamage, float attackSpeed) {
-        super(material, attackDamage, attackSpeed, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1));
-    }
-
-    public RapierItem(ToolMaterial material, float effectiveDamage, float effectiveSpeed) {
-        super(material, (int) (effectiveDamage - material.getAttackDamage() - 1), -4 + effectiveSpeed, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1));
+    public RapierItem(ToolMaterial material, float effectiveDamage, float effectiveSpeed, Item.Settings settings) {
+        super(material, (int) (effectiveDamage - material.getAttackDamage() - 1), -4 + effectiveSpeed, settings);
     }
 
     @Override
