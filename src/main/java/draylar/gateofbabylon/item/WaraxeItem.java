@@ -29,12 +29,8 @@ import net.minecraft.world.World;
 
 public class WaraxeItem extends AxeItem implements EnchantmentHandler {
 
-    public WaraxeItem(ToolMaterial material, float attackDamage, float attackSpeed, Settings settings) {
-        super(material, attackDamage, attackSpeed, settings);
-    }
-
-    public WaraxeItem(ToolMaterial material, float effectiveDamage, float effectiveSpeed) {
-        super(material, (int) (effectiveDamage - material.getAttackDamage() - 1), -4 + effectiveSpeed, new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1));
+    public WaraxeItem(ToolMaterial material, float effectiveDamage, float effectiveSpeed, Item.Settings settings) {
+        super(material, (int) (effectiveDamage - material.getAttackDamage() - 1), -4 + effectiveSpeed, settings);
     }
 
     @Override
