@@ -1,0 +1,7 @@
+{
+  "parent": "gateofbabylon:item/base_yoyo",
+  "textures": {
+    "outer": "minecraft:block/iron_block",
+    "center": "minecraft:block/white_terracotta"
+  }
+}

@@ -88,11 +88,27 @@ public class GOBItems {
     public static final CustomShieldItem NETHERITE_SHIELD = register("netherite_shield", new CustomShieldItem(new Item.Settings().maxDamage(2031).group(GateOfBabylon.GROUP)));
 
     // Yo-Yos are fun ranged weapons.
+    // When the item is used, a projectile is released, which will follow the player's cursor position.
+    // Depending on the Yo-Yo's stats and enchantments, the range, damage, and effects of the Yo-Yo will change.
+    // When the item is used and a Yo-Yo is extended, it will be retracted.
+    // A Yo-Yo loses durability when it hurts an entity.
     public static final YoyoItem WOODEN_YOYO = register("wooden_yoyo", new YoyoItem(new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1), ToolMaterials.WOOD));
-    public static final YoyoItem IRON_YOYO = register("stone_yoyo", new YoyoItem(new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1), ToolMaterials.IRON));
-    public static final YoyoItem GOLDEN_YOYO = register("iron_yoyo", new YoyoItem(new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1), ToolMaterials.GOLD));
+    public static final YoyoItem STONE_YOYO = register("stone_yoyo", new YoyoItem(new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1), ToolMaterials.STONE));
+    public static final YoyoItem IRON_YOYO = register("iron_yoyo", new YoyoItem(new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1), ToolMaterials.IRON));
+    public static final YoyoItem GOLDEN_YOYO = register("golden_yoyo", new YoyoItem(new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1), ToolMaterials.GOLD));
     public static final YoyoItem DIAMOND_YOYO = register("diamond_yoyo", new YoyoItem(new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1), ToolMaterials.DIAMOND));
     public static final YoyoItem NETHERITE_YOYO = register("netherite_yoyo", new YoyoItem(new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1), ToolMaterials.NETHERITE));
+
+    // Boomerangs are high-skill medium-ranged weapons.
+    // Upon using a boomerang item, a boomerang projectile will be launched out from the player.
+    // This projectile travels in a straight line and will bounce back as soon as it hits a block or an entity.
+    // If the boomerang has piercing, it will go through mobs until it reaches its maximum distance, and then return.
+    public static final BoomerangItem WOODEN_BOOMERANG = register("wooden_boomerang", new BoomerangItem(new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1)));
+    public static final BoomerangItem STONE_BOOMERANG = register("stone_boomerang", new BoomerangItem(new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1)));
+    public static final BoomerangItem IRON_BOOMERANG = register("iron_boomerang", new BoomerangItem(new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1)));
+    public static final BoomerangItem GOLDEN_BOOMERANG = register("golden_boomerang", new BoomerangItem(new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1)));
+    public static final BoomerangItem DIAMOND_BOOMERANG = register("diamond_boomerang", new BoomerangItem(new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1)));
+    public static final BoomerangItem NETHERITE_BOOMERANG = register("netherite_boomerang", new BoomerangItem(new Item.Settings().group(GateOfBabylon.GROUP).maxCount(1)));
 
     public static final Item EXTENDED_STICK = register("extended_stick", new Item(new Item.Settings().group(GateOfBabylon.GROUP)));
 

@@ -26,7 +26,8 @@ public class GOBEntities {
             FabricEntityTypeBuilder
                 .<YoyoEntity>create(SpawnGroup.MISC, YoyoEntity::new)
                     .trackRangeBlocks(128)
-                    .trackedUpdateRate(16)
+                    .trackedUpdateRate(1)
+                    .forceTrackedVelocityUpdates(true)
                 .dimensions(EntityDimensions.fixed(.25f, .25f)).build());
 
     private static <T extends Entity> EntityType<T> register(String name, EntityType<T> entity) {

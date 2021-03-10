@@ -5,6 +5,7 @@
   "mixins": [
     "AreaEffectCloudEntityAccessor",
     "AreaEffectCloudEntityMixin",
+    "ClientPlayerEntityYoyoUsageMixin",
     "EnchantmentHelperMixin",
     "EnchantmentMixin",
     "FallingBlockEntityAccessor",

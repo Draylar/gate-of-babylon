@@ -8,6 +8,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
@@ -19,14 +20,17 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -57,7 +61,11 @@ public class YoyoEntity extends Entity {
     public void tick() {
         super.tick();
 
-        // LOGICAL MOVEMENT SIDE
+        lastRenderX = prevX;
+        lastRenderY = prevY;
+        lastRenderZ = prevZ;
+
+        // :)
         if(!world.isClient) {
             if(dataTracker.get(OWNER).isPresent()) {
                 PlayerEntity owner = world.getPlayerByUuid(dataTracker.get(OWNER).get());
@@ -82,7 +90,32 @@ public class YoyoEntity extends Entity {
         // collision
         if(!world.isClient) {
             world.getEntitiesByClass(LivingEntity.class, new Box(getX() - .25f, getY() - .25f, getZ() - .25f, getX() + .25f, getY() + .25f, getZ() + .25f), entity -> true).forEach(this::onCollision);
+
+            // calculate distance between player and yoyo
+            if(getOwner().isPresent()) {
+                PlayerEntity owner = world.getPlayerByUuid(getOwner().get());
+
+                if(owner != null) {
+                    Vec3d rotationVector = owner.getRotationVector();
+                    Vec3d yoyoPosition = getPos();
+                    Vec3d target = yoyoPosition.add(rotationVector);
+
+                    BlockPos p = new BlockPos(target);
+                    BlockState blockState = world.getBlockState(p);
+                    if(!blockState.isAir()) {
+                        world.playSound(null, getX(), getY(), getZ(), blockState.getSoundGroup().getHitSound(), SoundCategory.PLAYERS, 0.5f, 1.0f);
+                    }
+
+                    if(blockState.getMaterial().isReplaceable()) {
+                        world.breakBlock(p, true);
+                    }
+                }
+            }
         }
+
+        lastRenderX = getX();
+        lastRenderY = getY();
+        lastRenderZ = getZ();
     }
 
     @Override
@@ -124,6 +157,7 @@ public class YoyoEntity extends Entity {
         ItemStack stack = getStack();
 
         if(stack.getItem() instanceof YoyoItem) {
+            world.playSound(null, getX(), getY(), getZ(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 0.5f, 1.0f);
             float attackDamage = ((YoyoItem) stack.getItem()).getMaterial().getAttackDamage() + EnchantmentHelper.getAttackDamage(stack, entity.getGroup());
             entity.damage(DamageSource.GENERIC, attackDamage);
 

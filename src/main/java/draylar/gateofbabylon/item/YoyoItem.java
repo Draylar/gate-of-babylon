@@ -2,6 +2,7 @@ package draylar.gateofbabylon.item;
 
 import draylar.gateofbabylon.entity.YoyoEntity;
 import draylar.gateofbabylon.registry.GOBEntities;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -57,7 +58,30 @@ public class YoyoItem extends Item {
             yoyo.deploy();
         }
 
+        user.setCurrentHand(hand);
         return TypedActionResult.success(user.getStackInHand(hand));
+    }
+
+    @Override
+    public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
+        super.onStoppedUsing(stack, world, user, remainingUseTicks);
+
+        // Stop using yoyo
+        List<YoyoEntity> found = new ArrayList<>(world.getEntitiesByClass(
+                YoyoEntity.class,
+                new Box(user.getBlockPos().add(-25, -25, -25), user.getBlockPos().add(25, 25, 25)),
+                yoyo -> yoyo.isAlive() && yoyo.getOwner().isPresent() && yoyo.getOwner().get().equals(user.getUuid())));
+
+        // Yoyo was found, remove it and stop early.
+        if(!found.isEmpty()) {
+            found.forEach(yoyo -> {
+                yoyo.retract();
+
+                // TOOD: retract instead of removing instantly?
+                yoyo.remove();
+                yoyo.kill();
+            });
+        }
     }
 
     public ToolMaterial getMaterial() {

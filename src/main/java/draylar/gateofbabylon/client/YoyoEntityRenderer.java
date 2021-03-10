@@ -1,19 +1,20 @@
 package draylar.gateofbabylon.client;
 
+import draylar.gateofbabylon.GateOfBabylon;
+import draylar.gateofbabylon.GateOfBabylonClient;
 import draylar.gateofbabylon.entity.YoyoEntity;
+import draylar.gateofbabylon.registry.GOBItems;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRenderer;
-import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -21,10 +22,23 @@ import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.LightType;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
 public class YoyoEntityRenderer extends EntityRenderer<YoyoEntity> {
+
+    private static final Map<Item, ModelIdentifier> ITEM_TO_MODEL = new HashMap<>();
+
+    static {
+        ITEM_TO_MODEL.put(GOBItems.WOODEN_YOYO, GateOfBabylonClient.wooden);
+        ITEM_TO_MODEL.put(GOBItems.STONE_YOYO, GateOfBabylonClient.stone);
+        ITEM_TO_MODEL.put(GOBItems.IRON_YOYO, GateOfBabylonClient.iron);
+        ITEM_TO_MODEL.put(GOBItems.GOLDEN_YOYO, GateOfBabylonClient.golden);
+        ITEM_TO_MODEL.put(GOBItems.DIAMOND_YOYO, GateOfBabylonClient.diamond);
+        ITEM_TO_MODEL.put(GOBItems.NETHERITE_YOYO, GateOfBabylonClient.netherite);
+    }
 
     public YoyoEntityRenderer(EntityRenderDispatcher dispatcher) {
         super(dispatcher);
@@ -32,22 +46,28 @@ public class YoyoEntityRenderer extends EntityRenderer<YoyoEntity> {
 
     @Override
     public void render(YoyoEntity yoyo, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
-        matrices.push();
+        // push new translations
         matrices.push();
 
         float lerpedAge = MathHelper.lerp(tickDelta, yoyo.age - 1, yoyo.age);
-        matrices.multiply(Vector3f.POSITIVE_Z.getRadialQuaternion(lerpedAge));
 
         // render yoyo block
-        MinecraftClient.getInstance().getItemRenderer()
-                .renderItem(
-                        yoyo.getStack().isEmpty() ? new ItemStack(Items.DIRT) : yoyo.getStack(),
-                        ModelTransformation.Mode.FIXED,
-                        light,
-                        OverlayTexture.DEFAULT_UV,
-                        matrices,
-                        vertexConsumers
-                );
+        matrices.push();
+
+        matrices.translate(0, .15, 0);
+        matrices.multiply(dispatcher.getRotation());
+//        matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(90));
+        matrices.multiply(Vector3f.POSITIVE_X.getRadialQuaternion(lerpedAge));
+
+        BakedModel model = MinecraftClient.getInstance().getBakedModelManager().getModel(ITEM_TO_MODEL.get(yoyo.getStack().getItem()));
+
+        if(model != null) {
+            MatrixStack.Entry entry = matrices.peek();
+            VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getSolid());
+            model.getQuads(null, null, yoyo.world.random).forEach(quad -> {
+                consumer.quad(entry, quad, 1.0f, 1.0f, 1.0f, light, OverlayTexture.DEFAULT_UV);
+            });
+        }
 
         matrices.pop();
 
@@ -123,12 +143,12 @@ public class YoyoEntityRenderer extends EntityRenderer<YoyoEntity> {
         float u = g > 0.0F ? g * s * s : g - g * (1.0F - s) * (1.0F - s);
         float v = h * s;
         if (!bl) {
-            vertexConsumer.vertex(matrix4f, t + n, u + j - k, v - o).color(p, q, r, 1.0F).light(i).next();
+            vertexConsumer.vertex(matrix4f, t + n, u + j - k, v - o).color(1.0f, 1.0f, 1.0f, 1.0F).light(i).next();
         }
 
-        vertexConsumer.vertex(matrix4f, t - n, u + k, v + o).color(p, q, r, 1.0F).light(i).next();
+        vertexConsumer.vertex(matrix4f, t - n, u + k, v + o).color(1.0f, 1.0f, 1.0f, 1.0F).light(i).next();
         if (bl) {
-            vertexConsumer.vertex(matrix4f, t + n, u + j - k, v - o).color(p, q, r, 1.0F).light(i).next();
+            vertexConsumer.vertex(matrix4f, t + n, u + j - k, v - o).color(1.0f, 1.0f, 1.0f, 1.0F).light(i).next();
         }
 
     }

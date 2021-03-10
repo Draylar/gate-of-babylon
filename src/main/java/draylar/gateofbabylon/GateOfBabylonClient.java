@@ -1,6 +1,7 @@
 package draylar.gateofbabylon;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.datafixers.util.Pair;
 import draylar.gateofbabylon.client.SpearProjectileEntityRenderer;
 import draylar.gateofbabylon.client.YoyoEntityRenderer;
 import draylar.gateofbabylon.entity.SpearProjectileEntity;
@@ -12,20 +13,41 @@ import draylar.gateofbabylon.registry.GOBItems;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.model.Model;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.client.render.model.ModelBakeSettings;
+import net.minecraft.client.render.model.ModelLoader;
+import net.minecraft.client.render.model.UnbakedModel;
+import net.minecraft.client.texture.Sprite;
+import net.minecraft.client.util.ModelIdentifier;
+import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Set;
+import java.util.function.Function;
+
 @Environment(EnvType.CLIENT)
 public class GateOfBabylonClient implements ClientModInitializer {
+
+    public static final ModelIdentifier diamond = new ModelIdentifier(GateOfBabylon.id("world_diamond_yoyo"), "inventory");
+    public static final ModelIdentifier netherite = new ModelIdentifier(GateOfBabylon.id("world_netherite_yoyo"), "inventory");
+    public static final ModelIdentifier golden = new ModelIdentifier(GateOfBabylon.id("world_golden_yoyo"), "inventory");
+    public static final ModelIdentifier iron = new ModelIdentifier(GateOfBabylon.id("world_iron_yoyo"), "inventory");
+    public static final ModelIdentifier stone = new ModelIdentifier(GateOfBabylon.id("world_stone_yoyo"), "inventory");
+    public static final ModelIdentifier wooden = new ModelIdentifier(GateOfBabylon.id("world_wooden_yoyo"), "inventory");
 
     @Override
     public void onInitializeClient() {
@@ -83,6 +105,16 @@ public class GateOfBabylonClient implements ClientModInitializer {
 
         FabricModelPredicateProviderRegistry.register(GOBItems.NETHERITE_SHIELD, new Identifier("blocking"), (stack, world, entity)
                 -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F);
+
+        // register models
+        ModelLoadingRegistry.INSTANCE.registerAppender(((resourceManager, consumer) -> {
+            consumer.accept(diamond);
+            consumer.accept(netherite);
+            consumer.accept(golden);
+            consumer.accept(iron);
+            consumer.accept(stone);
+            consumer.accept(wooden);
+        }));
     }
 
     public static void registerBowPredicates(CustomBowItem bow) {
