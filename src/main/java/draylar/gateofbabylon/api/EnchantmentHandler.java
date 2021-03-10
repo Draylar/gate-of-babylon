@@ -14,4 +14,6 @@ public interface EnchantmentHandler {
     default boolean isInvalid(Enchantment enchantment) {
         return false;
     }
+
+    default boolean isExplicitlyValid(Enchantment enchantment) { return false; }
 }

@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "  X",
-    "XX ",
-    "#X "
+    " ##",
+    "XX#",
+    "XX "
   ],
   "key": {
     "#": {
-      "item": "minecraft:stick"
+      "item": "minecraft:string"
     },
     "X": {
       "item": "minecraft:cobblestone"
     }
   },
   "result": {
-    "item": "gateofbabylon:stone_broadsword"
+    "item": "gateofbabylon:stone_yoyo"
   }
 }

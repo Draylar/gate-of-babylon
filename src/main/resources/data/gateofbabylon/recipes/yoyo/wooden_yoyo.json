@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " ##",
+    "XX#",
+    "XX "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:string"
+    },
+    "X": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result": {
+    "item": "gateofbabylon:wooden_yoyo"
+  }
+}

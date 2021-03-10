@@ -55,28 +55,33 @@ public class EnchantmentHelperMixin {
 
             // Collect valid enchantments
             Registry.ENCHANTMENT.forEach(enchantment -> {
-                // This is where our primary logic-change is.
-                // Instead of asking the type for validity, we ask the enchantment.
-                // This allows our other hook in EnchantmentMixin to run.
-                if(!enchantment.isAcceptableItem(stack)) {
-                    return;
-                }
 
-                // Ensure the stack accepts the given enchantment.
-                if(((EnchantmentHandler) item).isInvalid(enchantment)) {
-                    return;
-                }
+                // Items can whitelist certain enchantments to always be valid.
+                if(!((EnchantmentHandler) item).isExplicitlyValid(enchantment)) {
 
-                // If the enchantment is not available in the general pool (Soul Speed),
-                // ignore it.
-                if(!enchantment.isAvailableForRandomSelection()) {
-                    return;
-                }
+                    // This is where our primary logic-change is.
+                    // Instead of asking the type for validity, we ask the enchantment.
+                    // This allows our other hook in EnchantmentMixin to run.
+                    if(!enchantment.isAcceptableItem(stack)) {
+                        return;
+                    }
 
-                // If the enchantment is a treasure enchantment
-                //  and we are not looking for treasure enchantments, ignore it.
-                if(enchantment.isTreasure() && !treasureAllowed) {
-                    return;
+                    // Ensure the stack accepts the given enchantment.
+                    if(((EnchantmentHandler) item).isInvalid(enchantment)) {
+                        return;
+                    }
+
+                    // If the enchantment is not available in the general pool (Soul Speed),
+                    // ignore it.
+                    if(!enchantment.isAvailableForRandomSelection()) {
+                        return;
+                    }
+
+                    // If the enchantment is a treasure enchantment
+                    //  and we are not looking for treasure enchantments, ignore it.
+                    if(enchantment.isTreasure() && !treasureAllowed) {
+                        return;
+                    }
                 }
 
                 // Add all valid enchantment-power entries to the list.

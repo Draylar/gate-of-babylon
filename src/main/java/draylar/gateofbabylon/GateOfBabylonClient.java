@@ -2,8 +2,10 @@ package draylar.gateofbabylon;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.datafixers.util.Pair;
+import draylar.gateofbabylon.client.BoomerangEntityRenderer;
 import draylar.gateofbabylon.client.SpearProjectileEntityRenderer;
 import draylar.gateofbabylon.client.YoyoEntityRenderer;
+import draylar.gateofbabylon.entity.BoomerangEntity;
 import draylar.gateofbabylon.entity.SpearProjectileEntity;
 import draylar.gateofbabylon.entity.YoyoEntity;
 import draylar.gateofbabylon.item.CustomBowItem;
@@ -56,6 +58,7 @@ public class GateOfBabylonClient implements ClientModInitializer {
         }));
 
         EntityRendererRegistry.INSTANCE.register(GOBEntities.YOYO, (entityRenderDispatcher, context) -> new YoyoEntityRenderer(entityRenderDispatcher));
+        EntityRendererRegistry.INSTANCE.register(GOBEntities.BOOMERANG, (entityRenderDispatcher, context) -> new BoomerangEntityRenderer(entityRenderDispatcher));
 
         ClientSidePacketRegistry.INSTANCE.register(SpearProjectileEntity.ENTITY_ID, (context, packet) -> {
             double x = packet.readDouble();
@@ -82,6 +85,20 @@ public class GateOfBabylonClient implements ClientModInitializer {
                 YoyoEntity yoyo = new YoyoEntity(MinecraftClient.getInstance().world, x, y, z);
                 yoyo.setEntityId(entityId);
                 MinecraftClient.getInstance().world.addEntity(entityId, yoyo);
+            });
+        });
+
+        ClientSidePacketRegistry.INSTANCE.register(BoomerangEntity.SPAWN_PACKET_ID, (context, packet) -> {
+            double x = packet.readDouble();
+            double y = packet.readDouble();
+            double z = packet.readDouble();
+
+            int entityId = packet.readInt();
+
+            context.getTaskQueue().execute(() -> {
+                BoomerangEntity boomerang = new BoomerangEntity(MinecraftClient.getInstance().world, x, y, z);
+                boomerang.setEntityId(entityId);
+                MinecraftClient.getInstance().world.addEntity(entityId, boomerang);
             });
         });
 

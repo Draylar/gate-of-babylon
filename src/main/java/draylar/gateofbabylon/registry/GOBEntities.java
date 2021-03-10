@@ -1,6 +1,7 @@
 package draylar.gateofbabylon.registry;
 
 import draylar.gateofbabylon.GateOfBabylon;
+import draylar.gateofbabylon.entity.BoomerangEntity;
 import draylar.gateofbabylon.entity.SpearProjectileEntity;
 import draylar.gateofbabylon.entity.YoyoEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
@@ -29,6 +30,15 @@ public class GOBEntities {
                     .trackedUpdateRate(1)
                     .forceTrackedVelocityUpdates(true)
                 .dimensions(EntityDimensions.fixed(.25f, .25f)).build());
+
+    public static final EntityType<BoomerangEntity> BOOMERANG = register(
+            "boomerang",
+            FabricEntityTypeBuilder
+                    .<BoomerangEntity>create(SpawnGroup.MISC, BoomerangEntity::new)
+                    .trackRangeBlocks(128)
+                    .trackedUpdateRate(1)
+                    .forceTrackedVelocityUpdates(true)
+                    .dimensions(EntityDimensions.fixed(.5f, .1f)).build());
 
     private static <T extends Entity> EntityType<T> register(String name, EntityType<T> entity) {
         return Registry.register(Registry.ENTITY_TYPE, GateOfBabylon.id(name), entity);

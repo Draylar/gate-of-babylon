@@ -24,6 +24,13 @@ public abstract class EnchantmentMixin {
         // If the stack being checked is from this mod, run our custom logic to determine
         // whether the given type is valid.
         if(stack.getItem() instanceof EnchantmentHandler) {
+            // Check for explicit whitelist
+            if(((EnchantmentHandler) stack.getItem()).isExplicitlyValid((Enchantment) (Object) this)) {
+                cir.setReturnValue(true);
+                return;
+            }
+
+            // Check for type-validity
             boolean contains = ((EnchantmentHandler) stack.getItem()).getEnchantmentTypes().contains(type);
             boolean itemAccepts = !((EnchantmentHandler) stack.getItem()).isInvalid((Enchantment) (Object) this);
 
