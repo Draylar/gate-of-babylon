@@ -87,8 +87,11 @@ public class CustomBowItem extends BowItem implements EnchantmentHandler {
                         // Apply damage from power enchantment
                         int j = EnchantmentHelper.getLevel(Enchantments.POWER, stack);
                         if (j > 0) {
-                            arrowEntity.setDamage(damageModifier * (arrowEntity.getDamage() + (double) j * 0.5D + 0.5D));
+                            arrowEntity.setDamage(arrowEntity.getDamage() + (double) j * 0.5D + 0.5D);
                         }
+
+                        // apply damage multiplier
+                        arrowEntity.setDamage(arrowEntity.getDamage() * damageModifier);
 
                         // Apply punch knockback
                         int k = EnchantmentHelper.getLevel(Enchantments.PUNCH, stack);
