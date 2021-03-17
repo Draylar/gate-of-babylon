@@ -156,6 +156,11 @@ public class YoyoEntity extends Entity {
     public void onCollision(LivingEntity entity) {
         ItemStack stack = getStack();
 
+        // do not collide with other
+        if(getOwner().isPresent() && entity.getUuid().equals(getOwner().get())) {
+            return;
+        }
+
         if(stack.getItem() instanceof YoyoItem) {
             world.playSound(null, getX(), getY(), getZ(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 0.5f, 1.0f);
             float attackDamage = ((YoyoItem) stack.getItem()).getMaterial().getAttackDamage() + EnchantmentHelper.getAttackDamage(stack, entity.getGroup());
