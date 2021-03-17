@@ -136,6 +136,8 @@ public class BoomerangEntity extends Entity {
             world.playSound(null, getX(), getY(), getZ(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.25f, 1.0f);
             remove();
             return;
+        } else if (getOwner().isPresent() && entity.getUuid().equals(getOwner().get())) {
+            return;
         }
 
         if(stack.getItem() instanceof BoomerangItem) {
