@@ -2,8 +2,8 @@ package draylar.gateofbabylon.entity;
 
 import draylar.gateofbabylon.GateOfBabylon;
 import draylar.gateofbabylon.item.BoomerangItem;
-import draylar.gateofbabylon.item.YoyoItem;
 import draylar.gateofbabylon.mixin.BlockSoundGroupAccessor;
+import draylar.gateofbabylon.registry.GOBDamageSources;
 import draylar.gateofbabylon.registry.GOBEntities;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
@@ -29,7 +29,6 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
@@ -132,7 +131,7 @@ public class BoomerangEntity extends Entity {
     public void onCollision(LivingEntity entity) {
         ItemStack stack = getStack();
 
-        if(getOwner().isPresent() && entity.getUuid().equals(getOwner().get()) && age > 10) {
+        if(getOwner().isPresent() && entity.getUuid().equals(getOwner().get()) && age > 3) {
             world.playSound(null, getX(), getY(), getZ(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.25f, 1.0f);
             remove();
             return;
@@ -156,7 +155,12 @@ public class BoomerangEntity extends Entity {
 
             // calculate final damage with enchantments and attack entity
             float attackDamage = baseDamage + EnchantmentHelper.getAttackDamage(stack, entity.getGroup());
-            boolean dmg = entity.damage(DamageSource.GENERIC, attackDamage);
+            boolean dmg;
+            if(getOwner().isPresent() && world.getPlayerByUuid(getOwner().get()) != null) {
+                dmg = entity.damage(GOBDamageSources.createBoomerangSource(world.getPlayerByUuid(getOwner().get())), attackDamage);
+            } else {
+                dmg = entity.damage(DamageSource.GENERIC, attackDamage);
+            }
 
             // Apply fire aspect
             int level = EnchantmentHelper.getLevel(Enchantments.FIRE_ASPECT, getStack());

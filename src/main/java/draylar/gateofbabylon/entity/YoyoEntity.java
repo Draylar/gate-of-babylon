@@ -3,13 +3,13 @@ package draylar.gateofbabylon.entity;
 import draylar.gateofbabylon.GateOfBabylon;
 import draylar.gateofbabylon.item.YoyoItem;
 import draylar.gateofbabylon.mixin.BlockSoundGroupAccessor;
+import draylar.gateofbabylon.registry.GOBDamageSources;
 import draylar.gateofbabylon.registry.GOBEntities;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
@@ -21,7 +21,6 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Packet;
@@ -29,7 +28,6 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -165,7 +163,12 @@ public class YoyoEntity extends Entity {
         if(stack.getItem() instanceof YoyoItem) {
             world.playSound(null, getX(), getY(), getZ(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 0.5f, 1.0f);
             float attackDamage = ((YoyoItem) stack.getItem()).getMaterial().getAttackDamage() + EnchantmentHelper.getAttackDamage(stack, entity.getGroup());
-            entity.damage(DamageSource.GENERIC, attackDamage);
+
+            if(getOwner().isPresent() && world.getPlayerByUuid(getOwner().get()) != null) {
+                entity.damage(GOBDamageSources.createYoyoSource(world.getPlayerByUuid(getOwner().get())), attackDamage);
+            } else {
+                entity.damage(DamageSource.GENERIC, attackDamage);
+            }
 
             // Apply fire aspect
             int level = EnchantmentHelper.getLevel(Enchantments.FIRE_ASPECT, getStack());
