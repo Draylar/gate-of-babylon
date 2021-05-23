@@ -10,6 +10,7 @@ import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.Item;
@@ -73,9 +74,12 @@ public class WaraxeItem extends AxeItem implements EnchantmentHandler {
             }
 
             // knock back nearby entities
-            world.getEntitiesByClass(HostileEntity.class, new Box(user.getBlockPos().add(-radius - 2, -1, -radius - 2), user.getBlockPos().add(radius + 2, 3, radius + 2)), entity -> true).forEach(entity -> {
-                entity.damage(DamageSource.player(player), hasSmashing ? getAttackDamage() * 1.5f : getAttackDamage());
-                entity.setVelocity(entity.getPos().subtract(player.getPos()).multiply(hasSmashing ? .6 : .5).add(0, .35, 0));
+            world.getEntitiesByClass(LivingEntity.class, new Box(user.getBlockPos().add(-radius - 2, -1, -radius - 2), user.getBlockPos().add(radius + 2, 3, radius + 2)), entity -> true).forEach(entity -> {
+                // Triggers for entities that aren't tameable, or that aren't tamed, or that aren't owned by the owner of the breath
+                if (!(entity instanceof TameableEntity) || !((TameableEntity) entity).isTamed() || !((TameableEntity) entity).getOwnerUuid().equals(player.getUuid())) {
+                    entity.damage(DamageSource.player(player), hasSmashing ? getAttackDamage() * 1.5f : getAttackDamage());
+                    entity.setVelocity(entity.getPos().subtract(player.getPos()).multiply(hasSmashing ? .6 : .5).add(0, .35, 0));
+                }
             });
 
             player.getItemCooldownManager().set(this, 20 * 5); // 20 * 5
