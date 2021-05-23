@@ -10,7 +10,7 @@
       "item": "minecraft:cobblestone"
     },
     "o": {
-      "item": "minecraft:iron_ingot"
+      "tag": "minecraft:stone_tool_materials"
     }
   },
   "result": {

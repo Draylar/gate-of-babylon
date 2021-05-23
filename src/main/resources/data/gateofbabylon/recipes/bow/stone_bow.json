@@ -7,7 +7,7 @@
   ],
   "key": {
     "#": {
-      "item": "minecraft:cobblestone"
+      "tag": "minecraft:stone_tool_materials"
     },
     "X": {
       "item": "minecraft:string"
