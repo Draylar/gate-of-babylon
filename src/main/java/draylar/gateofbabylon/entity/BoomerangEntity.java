@@ -85,11 +85,16 @@ public class BoomerangEntity extends Entity {
                 // turn towards user every tick
                 if(getOwner().isPresent()) {
                     PlayerEntity owner = world.getPlayerByUuid(getOwner().get());
-                    Vec3d ownerPos = owner.getPos();
-                    ownerPos = ownerPos.multiply(1, 0, 1).add(0, owner.getEyeY() - .2, 0);
-                    Vec3d thisPos = getPos();
-                    Vec3d difference = ownerPos.subtract(thisPos);
-                    setVelocity(difference.normalize());
+
+                    if(owner != null) {
+                        Vec3d ownerPos = owner.getPos();
+                        ownerPos = ownerPos.multiply(1, 0, 1).add(0, owner.getEyeY() - .2, 0);
+                        Vec3d thisPos = getPos();
+                        Vec3d difference = ownerPos.subtract(thisPos);
+                        setVelocity(difference.normalize());
+                    } else {
+                        remove();
+                    }
                 } else {
                     remove();
                 }
@@ -180,11 +185,16 @@ public class BoomerangEntity extends Entity {
                 // if we hit an entity and the boomerang does not have piercing, return back
                 if (piercing == 0) {
                     PlayerEntity owner = world.getPlayerByUuid(getOwner().get());
-                    Vec3d ownerPos = owner.getPos();
-                    ownerPos = ownerPos.multiply(1, 0, 1).add(0, owner.getEyeY() - .2, 0);
-                    Vec3d thisPos = getPos();
-                    Vec3d difference = ownerPos.subtract(thisPos);
-                    setVelocity(difference.normalize());
+
+                    if(owner != null) {
+                        Vec3d ownerPos = owner.getPos();
+                        ownerPos = ownerPos.multiply(1, 0, 1).add(0, owner.getEyeY() - .2, 0);
+                        Vec3d thisPos = getPos();
+                        Vec3d difference = ownerPos.subtract(thisPos);
+                        setVelocity(difference.normalize());
+                    } else {
+                        remove();
+                    }
                 }
             }
         }
