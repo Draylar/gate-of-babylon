@@ -42,8 +42,8 @@ public class BoomerangEntity extends Entity {
 
     public static final Identifier SPAWN_PACKET_ID = GateOfBabylon.id("boomerang_spawn_packet");
     private static final String OWNER_KEY = "Owner";
-    private static final TrackedData<Optional<UUID>> OWNER = DataTracker.registerData(YoyoEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
-    private static final TrackedData<ItemStack> STACK = DataTracker.registerData(YoyoEntity.class, TrackedDataHandlerRegistry.ITEM_STACK);
+    private static final TrackedData<Optional<UUID>> OWNER = DataTracker.registerData(BoomerangEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
+    private static final TrackedData<ItemStack> STACK = DataTracker.registerData(BoomerangEntity.class, TrackedDataHandlerRegistry.ITEM_STACK);
 
     // TODO: MAX PIERCING ENTITIES?
 

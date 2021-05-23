@@ -19,15 +19,15 @@ public class BoomerangEntityRenderer extends EntityRenderer<BoomerangEntity> {
     }
 
     @Override
-    public void render(BoomerangEntity yoyo, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
+    public void render(BoomerangEntity boomerang, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         matrices.push();
 
-        float lerpedAge = MathHelper.lerp(tickDelta, yoyo.age - 1, yoyo.age);
+        float lerpedAge = MathHelper.lerp(tickDelta, boomerang.age - 1, boomerang.age);
         matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
         matrices.multiply(Vector3f.POSITIVE_Z.getRadialQuaternion(lerpedAge));
 
         MinecraftClient.getInstance().getItemRenderer().renderItem(
-                yoyo.getStack(),
+                boomerang.getStack(),
                 ModelTransformation.Mode.FIXED,
                 light,
                 OverlayTexture.DEFAULT_UV,
