@@ -111,25 +111,16 @@ public class BoomerangEntity extends Entity {
         if (!world.isClient) {
             world.getEntitiesByClass(LivingEntity.class, new Box(getX() - .4f, getY() - .05f, getZ() - .4f, getX() + .4f, getY() + .05f, getZ() + .4f), entity -> true).forEach(this::onCollision);
 
-            // calculate distance between player and yoyo
-            if (getOwner().isPresent()) {
-                PlayerEntity owner = world.getPlayerByUuid(getOwner().get());
+            BlockState blockState = world.getBlockState(getBlockPos());
+            BlockState towards = world.getBlockState(new BlockPos(getPos().add(getVelocity().normalize())));
+            // Play collision sounds based on the block the Boomerang is flying into.
+            if (!towards.isAir() && towards.getFluidState().isEmpty()) {
+                world.playSound(null, getX(), getY(), getZ(), ((BlockSoundGroupAccessor) towards.getSoundGroup()).getHitSound(), SoundCategory.PLAYERS, 0.5f, 1.0f);
+            }
 
-                if (owner != null) {
-                    Vec3d rotationVector = owner.getRotationVector();
-                    Vec3d yoyoPosition = getPos();
-                    Vec3d target = yoyoPosition.add(rotationVector);
-
-                    BlockPos p = new BlockPos(target);
-                    BlockState blockState = world.getBlockState(p);
-                    if (!blockState.isAir()) {
-                        world.playSound(null, getX(), getY(), getZ(), ((BlockSoundGroupAccessor) blockState.getSoundGroup()).getHitSound(), SoundCategory.PLAYERS, 0.5f, 1.0f);
-                    }
-
-                    if (blockState.getMaterial().isReplaceable()) {
-                        world.breakBlock(p, true);
-                    }
-                }
+            // If the boomerang is inside a replaceable block (such as grass), break it.
+            if (blockState.getMaterial().isReplaceable() && !blockState.isAir() && blockState.getFluidState().isEmpty()) {
+                world.breakBlock(getBlockPos(), true);
             }
         }
     }
@@ -165,7 +156,7 @@ public class BoomerangEntity extends Entity {
             if(getOwner().isPresent() && world.getPlayerByUuid(getOwner().get()) != null) {
                 dmg = entity.damage(GOBDamageSources.createBoomerangSource(world.getPlayerByUuid(getOwner().get())), attackDamage);
 
-                // damage yoyo
+                // damage boomerang stack
                 stack.damage(1, random, (ServerPlayerEntity) world.getPlayerByUuid(getOwner().get()));
             } else {
                 dmg = entity.damage(DamageSource.GENERIC, attackDamage);
