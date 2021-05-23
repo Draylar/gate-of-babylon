@@ -25,6 +25,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
@@ -166,6 +167,9 @@ public class YoyoEntity extends Entity {
 
             if(getOwner().isPresent() && world.getPlayerByUuid(getOwner().get()) != null) {
                 entity.damage(GOBDamageSources.createYoyoSource(world.getPlayerByUuid(getOwner().get())), attackDamage);
+
+                // damage yoyo
+                stack.damage(1, random, (ServerPlayerEntity) world.getPlayerByUuid(getOwner().get()));
             } else {
                 entity.damage(DamageSource.GENERIC, attackDamage);
             }

@@ -6,6 +6,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ToolItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -15,12 +16,12 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class YoyoItem extends Item {
+public class YoyoItem extends ToolItem {
 
     private final ToolMaterial material;
 
     public YoyoItem(Settings settings, ToolMaterial material) {
-        super(settings);
+        super(material, settings);
         this.material = material;
     }
 
