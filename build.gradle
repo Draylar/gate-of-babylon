@@ -36,7 +36,7 @@ dependencies {
     modCompile "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
     modCompile "io.github.prospector:modmenu:1.14+"
 
-    include modImplementation("com.jamieswhiteshirt:reach-entity-attributes:1.1.0")
+    include modImplementation("com.jamieswhiteshirt:reach-entity-attributes:1.1.1")
 }
 
 processResources {
