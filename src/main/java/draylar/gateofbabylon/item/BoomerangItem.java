@@ -53,13 +53,13 @@ public class BoomerangItem extends ToolItem implements EnchantmentHandler {
                 new Box(user.getBlockPos().add(-25, -25, -25), user.getBlockPos().add(25, 25, 25)),
                 boomerang -> boomerang.isAlive() && boomerang.getOwner().isPresent() && boomerang.getOwner().get().equals(user.getUuid())));
 
-        // Yoyo was found, remove it and stop early.
+        // Boomerang was found, remove it and stop early.
         if(!found.isEmpty()) {
             return TypedActionResult.fail(user.getStackInHand(hand));
         }
 
         if(!world.isClient) {
-            BoomerangEntity boomerang = new BoomerangEntity(GOBEntities.YOYO, world);
+            BoomerangEntity boomerang = new BoomerangEntity(GOBEntities.BOOMERANG, world);
             boomerang.yaw = user.yaw;
             boomerang.pitch = user.pitch;
             boomerang.setVelocity(boomerang.getRotationVector());
