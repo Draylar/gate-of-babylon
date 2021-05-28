@@ -74,7 +74,7 @@ public class WaraxeItem extends AxeItem implements EnchantmentHandler {
             }
 
             // knock back nearby entities
-            world.getEntitiesByClass(LivingEntity.class, new Box(user.getBlockPos().add(-radius - 2, -1, -radius - 2), user.getBlockPos().add(radius + 2, 3, radius + 2)), entity -> true).forEach(entity -> {
+            world.getEntitiesByClass(LivingEntity.class, new Box(user.getBlockPos().add(-radius - 2, -1, -radius - 2), user.getBlockPos().add(radius + 2, 3, radius + 2)), entity -> entity != user).forEach(entity -> {
                 // Triggers for entities that aren't tameable, or that aren't tamed, or that aren't owned by the owner of the breath
                 if (!(entity instanceof TameableEntity) || !((TameableEntity) entity).isTamed() || !((TameableEntity) entity).getOwnerUuid().equals(player.getUuid())) {
                     entity.damage(DamageSource.player(player), hasSmashing ? getAttackDamage() * 1.5f : getAttackDamage());

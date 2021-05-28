@@ -120,7 +120,7 @@ public class KatanaItem extends SwordItem implements EnchantmentHandler {
                         }
 
                         // check for small box around the current position for enemies
-                        world.getEntitiesByClass(LivingEntity.class, new Box(currentPos.add(-2, -2, -2), currentPos.add(2, 2, 2)), entity -> !hitEntities.contains(entity.getUuid())).forEach(entity -> {
+                        world.getEntitiesByClass(LivingEntity.class, new Box(currentPos.add(-2, -2, -2), currentPos.add(2, 2, 2)), entity -> !hitEntities.contains(entity.getUuid()) && entity != user).forEach(entity -> {
                             // Triggers for entities that aren't tameable, or that aren't tamed, or that aren't owned by the owner of the breath
                             if (!(entity instanceof TameableEntity) || !((TameableEntity) entity).isTamed() || !((TameableEntity) entity).getOwnerUuid().equals(player.getUuid())) {
                                 // Apply enchantment effects
