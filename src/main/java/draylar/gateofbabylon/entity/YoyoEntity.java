@@ -42,7 +42,6 @@ import java.util.UUID;
 public class YoyoEntity extends Entity {
 
     public static final Identifier SPAWN_PACKET_ID = GateOfBabylon.id("yoyo_spawn_packet");
-    private static final String OWNER_KEY = "Owner";
     private static final TrackedData<Optional<UUID>> OWNER = DataTracker.registerData(YoyoEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
     private static final TrackedData<ItemStack> STACK = DataTracker.registerData(YoyoEntity.class, TrackedDataHandlerRegistry.ITEM_STACK);
 
