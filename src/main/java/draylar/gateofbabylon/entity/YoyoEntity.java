@@ -22,7 +22,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -124,12 +124,12 @@ public class YoyoEntity extends Entity {
     }
 
     @Override
-    public void readCustomDataFromTag(CompoundTag tag) {
+    protected void readCustomDataFromNbt(NbtCompound nbt) {
 
     }
 
     @Override
-    public void writeCustomDataToTag(CompoundTag tag) {
+    protected void writeCustomDataToNbt(NbtCompound nbt) {
 
     }
 
@@ -148,7 +148,7 @@ public class YoyoEntity extends Entity {
         packet.writeDouble(getX());
         packet.writeDouble(getY());
         packet.writeDouble(getZ());
-        packet.writeInt(getEntityId());
+        packet.writeInt(getId());
         return ServerPlayNetworking.createS2CPacket(SPAWN_PACKET_ID, packet);
     }
 

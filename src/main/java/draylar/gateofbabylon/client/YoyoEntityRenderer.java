@@ -1,25 +1,20 @@
 package draylar.gateofbabylon.client;
 
-import draylar.gateofbabylon.GateOfBabylon;
 import draylar.gateofbabylon.GateOfBabylonClient;
 import draylar.gateofbabylon.entity.YoyoEntity;
 import draylar.gateofbabylon.registry.GOBItems;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRenderer;
+import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Matrix4f;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.world.LightType;
 
 import java.util.HashMap;
@@ -40,8 +35,8 @@ public class YoyoEntityRenderer extends EntityRenderer<YoyoEntity> {
         ITEM_TO_MODEL.put(GOBItems.NETHERITE_YOYO, GateOfBabylonClient.netherite);
     }
 
-    public YoyoEntityRenderer(EntityRenderDispatcher dispatcher) {
-        super(dispatcher);
+    public YoyoEntityRenderer(EntityRendererFactory.Context ctx) {
+        super(ctx);
     }
 
     @Override
@@ -57,7 +52,7 @@ public class YoyoEntityRenderer extends EntityRenderer<YoyoEntity> {
         matrices.translate(0, .15, 0);
         matrices.multiply(dispatcher.getRotation());
 //        matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(90));
-        matrices.multiply(Vector3f.POSITIVE_X.getRadialQuaternion(lerpedAge));
+        matrices.multiply(Vec3f.POSITIVE_X.getRadialQuaternion(lerpedAge));
 
         BakedModel model = MinecraftClient.getInstance().getBakedModelManager().getModel(ITEM_TO_MODEL.get(yoyo.getStack().getItem()));
 
@@ -85,16 +80,16 @@ public class YoyoEntityRenderer extends EntityRenderer<YoyoEntity> {
         matrices.pop();
     }
 
-    private <E extends Entity> void renderString(Entity player, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, Entity yoyo) {
+    private <E extends Entity> void renderString(Entity player, float delta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, Entity yoyo) {
         matrixStack.push();
-        Vec3d lerpedYoyoPosition = yoyo.method_30951(f);
+        Vec3d lerpedYoyoPosition = yoyo.method_30951(delta);
         double d = 0;
-        Vec3d lerpedPlayerPosition = player.method_29919();
+        Vec3d lerpedPlayerPosition = player.getLerpedPos(delta);
         double e = Math.cos(d) * lerpedPlayerPosition.z + Math.sin(d) * lerpedPlayerPosition.x;
         double g = Math.sin(d) * lerpedPlayerPosition.z - Math.cos(d) * lerpedPlayerPosition.x;
-        double h = MathHelper.lerp((double)f, player.prevX, player.getX()) + e;
-        double i = MathHelper.lerp((double)f, player.prevY, player.getY()) + lerpedPlayerPosition.y;
-        double j = MathHelper.lerp((double)f, player.prevZ, player.getZ()) + g;
+        double h = MathHelper.lerp(delta, player.prevX, player.getX()) + e;
+        double i = MathHelper.lerp(delta, player.prevY, player.getY()) + lerpedPlayerPosition.y;
+        double j = MathHelper.lerp(delta, player.prevZ, player.getZ()) + g;
         matrixStack.translate(e, lerpedPlayerPosition.y, g);
         float k = (float)(lerpedYoyoPosition.x - h);
         float l = (float)(lerpedYoyoPosition.y - i);
@@ -105,8 +100,8 @@ public class YoyoEntityRenderer extends EntityRenderer<YoyoEntity> {
         float o = MathHelper.fastInverseSqrt(k * k + m * m) * 0.025F / 2.0F;
         float p = m * o;
         float q = k * o;
-        BlockPos blockPos = new BlockPos(player.getCameraPosVec(f));
-        BlockPos blockPos2 = new BlockPos(yoyo.getCameraPosVec(f));
+        BlockPos blockPos = new BlockPos(player.getCameraPosVec(delta));
+        BlockPos blockPos2 = new BlockPos(yoyo.getCameraPosVec(delta));
         int r = getYoyoBlockLight(player, blockPos);
         int s = getYoyoBlockLight(yoyo, blockPos2);
         int t = player.world.getLightLevel(LightType.SKY, blockPos);

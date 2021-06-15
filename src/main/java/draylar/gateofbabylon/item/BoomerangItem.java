@@ -60,8 +60,8 @@ public class BoomerangItem extends ToolItem implements EnchantmentHandler {
 
         if(!world.isClient) {
             BoomerangEntity boomerang = new BoomerangEntity(GOBEntities.BOOMERANG, world);
-            boomerang.yaw = user.yaw;
-            boomerang.pitch = user.pitch;
+            boomerang.setYaw(user.getYaw());
+            boomerang.setPitch(user.getPitch());
             boomerang.setVelocity(boomerang.getRotationVector());
             double y = user.getEyeY() - .2;
             boomerang.setPos(user.getX(), y, user.getZ());

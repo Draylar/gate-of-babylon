@@ -23,7 +23,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -94,16 +94,16 @@ public class BoomerangEntity extends Entity {
                         Vec3d difference = ownerPos.subtract(thisPos);
                         setVelocity(difference.normalize());
                     } else {
-                        remove();
+                        remove(RemovalReason.DISCARDED);
                     }
                 } else {
-                    remove();
+                    remove(RemovalReason.DISCARDED);
                 }
             }
 
             // delete after 10 seconds to prevent glitche
             if(age > 200) {
-                remove();
+                remove(RemovalReason.DISCARDED);
             }
         }
 
@@ -130,7 +130,7 @@ public class BoomerangEntity extends Entity {
 
         if(getOwner().isPresent() && entity.getUuid().equals(getOwner().get()) && age > 3) {
             world.playSound(null, getX(), getY(), getZ(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.25f, 1.0f);
-            remove();
+            remove(RemovalReason.DISCARDED);
             return;
         } else if (getOwner().isPresent() && entity.getUuid().equals(getOwner().get())) {
             return;
@@ -188,7 +188,7 @@ public class BoomerangEntity extends Entity {
                         Vec3d difference = ownerPos.subtract(thisPos);
                         setVelocity(difference.normalize());
                     } else {
-                        remove();
+                        remove(RemovalReason.DISCARDED);
                     }
                 }
             }
@@ -202,12 +202,12 @@ public class BoomerangEntity extends Entity {
     }
 
     @Override
-    protected void readCustomDataFromTag(CompoundTag tag) {
+    protected void readCustomDataFromNbt(NbtCompound nbt) {
 
     }
 
     @Override
-    protected void writeCustomDataToTag(CompoundTag tag) {
+    protected void writeCustomDataToNbt(NbtCompound nbt) {
 
     }
 
@@ -217,7 +217,7 @@ public class BoomerangEntity extends Entity {
         packet.writeDouble(getX());
         packet.writeDouble(getY());
         packet.writeDouble(getZ());
-        packet.writeInt(getEntityId());
+        packet.writeInt(getId());
         return ServerPlayNetworking.createS2CPacket(SPAWN_PACKET_ID, packet);
     }
 

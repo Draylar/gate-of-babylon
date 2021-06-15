@@ -1,15 +1,9 @@
 package draylar.gateofbabylon.entity;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.function.Predicate;
-
 import com.google.common.collect.Lists;
-
-import net.minecraft.entity.AreaEffectCloudEntity;
-import draylar.gateofbabylon.mixin.AreaEffectCloudEntityAccessor;
 import draylar.gateofbabylon.impl.AreaEffectCloudTicker;
+import draylar.gateofbabylon.mixin.AreaEffectCloudEntityAccessor;
+import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -19,6 +13,11 @@ import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.function.Predicate;
 
 public class DragonSlashBreathEntity extends AreaEffectCloudEntity {
 
@@ -78,7 +77,7 @@ public class DragonSlashBreathEntity extends AreaEffectCloudEntity {
          }
       } else {
          if (this.age >= ((AreaEffectCloudEntityAccessor)this).getWaitTime() + ((AreaEffectCloudEntityAccessor)this).getDuration()) {
-            this.remove();
+            this.remove(RemovalReason.DISCARDED);
             return;
          }
 
@@ -94,7 +93,7 @@ public class DragonSlashBreathEntity extends AreaEffectCloudEntity {
          if (((AreaEffectCloudEntityAccessor)this).getRadiusGrowth() != 0.0F) {
             f += ((AreaEffectCloudEntityAccessor)this).getRadiusGrowth();
             if (f < 0.5F) {
-               this.remove();
+               this.remove(RemovalReason.DISCARDED);
                return;
             }
 
@@ -163,7 +162,7 @@ public class DragonSlashBreathEntity extends AreaEffectCloudEntity {
                      if (((AreaEffectCloudEntityAccessor)this).getRadiusOnUse() != 0.0F) {
                         f += ((AreaEffectCloudEntityAccessor)this).getRadiusOnUse();
                         if (f < 0.5F) {
-                           this.remove();
+                           this.remove(RemovalReason.DISCARDED);
                            return;
                         }
 
@@ -173,7 +172,7 @@ public class DragonSlashBreathEntity extends AreaEffectCloudEntity {
                      if (((AreaEffectCloudEntityAccessor)this).getDurationOnUse() != 0) {
                         ((AreaEffectCloudEntityAccessor)this).setDuration(((AreaEffectCloudEntityAccessor)this).getDuration() + ((AreaEffectCloudEntityAccessor)this).getDurationOnUse());
                         if (((AreaEffectCloudEntityAccessor)this).getDuration() <= 0) {
-                           this.remove();
+                           this.remove(RemovalReason.DISCARDED);
                            return;
                         }
                      }

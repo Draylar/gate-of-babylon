@@ -2,9 +2,9 @@ package draylar.gateofbabylon.item;
 
 import draylar.gateofbabylon.entity.YoyoEntity;
 import draylar.gateofbabylon.registry.GOBEntities;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
 import net.minecraft.item.ToolMaterial;
@@ -41,7 +41,7 @@ public class YoyoItem extends ToolItem {
                     yoyo.retract();
 
                     // TOOD: retract instead of removing instantly?
-                    yoyo.remove();
+                    yoyo.remove(Entity.RemovalReason.DISCARDED);
                     yoyo.kill();
                 });
 
@@ -79,7 +79,7 @@ public class YoyoItem extends ToolItem {
                 yoyo.retract();
 
                 // TOOD: retract instead of removing instantly?
-                yoyo.remove();
+                yoyo.remove(Entity.RemovalReason.DISCARDED);
                 yoyo.kill();
             });
         }

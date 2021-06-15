@@ -4,16 +4,16 @@ import draylar.gateofbabylon.entity.SpearProjectileEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRenderer;
+import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3f;
 
 public class SpearProjectileEntityRenderer extends EntityRenderer<SpearProjectileEntity> {
 
@@ -21,14 +21,14 @@ public class SpearProjectileEntityRenderer extends EntityRenderer<SpearProjectil
     private final float scale;
     private final boolean lit;
 
-    public SpearProjectileEntityRenderer(EntityRenderDispatcher dispatcher, ItemRenderer itemRenderer, float scale, boolean lit) {
+    public SpearProjectileEntityRenderer(EntityRendererFactory.Context dispatcher, ItemRenderer itemRenderer, float scale, boolean lit) {
         super(dispatcher);
         this.itemRenderer = itemRenderer;
         this.scale = scale;
         this.lit = lit;
     }
 
-    public SpearProjectileEntityRenderer(EntityRenderDispatcher dispatcher, ItemRenderer itemRenderer) {
+    public SpearProjectileEntityRenderer(EntityRendererFactory.Context dispatcher, ItemRenderer itemRenderer) {
         this(dispatcher, itemRenderer, 1.0F, false);
     }
 
@@ -43,11 +43,11 @@ public class SpearProjectileEntityRenderer extends EntityRenderer<SpearProjectil
             matrices.push();
             matrices.scale(1.5F, 1.5F, 1.5F);
 
-            matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(MathHelper.lerp(tickDelta, entity.prevYaw, entity.yaw) - 90.0F));
-            matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(MathHelper.lerp(tickDelta, entity.prevPitch, entity.pitch) + 45.0F));
-            matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(180));
+            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(MathHelper.lerp(tickDelta, entity.prevYaw, entity.getYaw()) - 90.0F));
+            matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(MathHelper.lerp(tickDelta, entity.prevPitch, entity.getPitch()) + 45.0F));
+            matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(180));
 
-            MinecraftClient.getInstance().getItemRenderer().renderItem(entity.getStack(), ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers);
+            MinecraftClient.getInstance().getItemRenderer().renderItem(entity.getStack(), ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
 
             matrices.pop();
             super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);

@@ -19,7 +19,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -87,7 +87,7 @@ public class SpearProjectileEntity extends PersistentProjectileEntity {
                     this.dropStack(this.asItemStack(), 0.1F);
                 }
 
-                this.remove();
+                this.remove(RemovalReason.DISCARDED);
             } else if (i > 0) {
                 this.setNoClip(true);
                 Vec3d vec3d = new Vec3d(entity.getX() - this.getX(), entity.getEyeY() - this.getY(), entity.getZ() - this.getZ());
@@ -208,10 +208,10 @@ public class SpearProjectileEntity extends PersistentProjectileEntity {
     }
 
     @Override
-    public void readCustomDataFromTag(CompoundTag tag) {
-        super.readCustomDataFromTag(tag);
+    public void readCustomDataFromNbt(NbtCompound tag) {
+        super.readCustomDataFromNbt(tag);
         if (tag.contains("Stack", 10)) {
-            this.stack = ItemStack.fromTag(tag.getCompound("Stack"));
+            this.stack = ItemStack.fromNbt(tag.getCompound("Stack"));
         }
 
         this.dealtDamage = tag.getBoolean("DealtDamage");
@@ -219,9 +219,9 @@ public class SpearProjectileEntity extends PersistentProjectileEntity {
     }
 
     @Override
-    public void writeCustomDataToTag(CompoundTag tag) {
-        super.writeCustomDataToTag(tag);
-        tag.put("Stack", this.stack.toTag(new CompoundTag()));
+    public void writeCustomDataToNbt(NbtCompound tag) {
+        super.writeCustomDataToNbt(tag);
+        tag.put("Stack", this.stack.writeNbt(new NbtCompound()));
         tag.putBoolean("DealtDamage", this.dealtDamage);
     }
 
@@ -242,7 +242,7 @@ public class SpearProjectileEntity extends PersistentProjectileEntity {
         packet.writeDouble(this.getY());
         packet.writeDouble(this.getZ());
 
-        packet.writeInt(this.getEntityId());
+        packet.writeInt(this.getId());
 
         return ServerSidePacketRegistry.INSTANCE.toPacket(ENTITY_ID, packet);
     }

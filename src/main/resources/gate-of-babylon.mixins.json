@@ -17,8 +17,7 @@
     "PlayerEntityMixin"
   ],
   "client": [
-    "DrawableHelperAccessor",
-    "InGameHudMixin"
+    "DrawableHelperAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

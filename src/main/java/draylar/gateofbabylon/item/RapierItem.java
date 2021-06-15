@@ -1,6 +1,5 @@
 package draylar.gateofbabylon.item;
 
-import draylar.gateofbabylon.GateOfBabylon;
 import draylar.gateofbabylon.api.EnchantmentHandler;
 import draylar.gateofbabylon.api.LungeManipulator;
 import draylar.gateofbabylon.registry.GOBEnchantments;
@@ -29,7 +28,7 @@ public class RapierItem extends SwordItem implements EnchantmentHandler {
         ItemStack itemStack = user.getStackInHand(hand);
 
         if(((LungeManipulator) user).canLunge()) {
-            world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.NEUTRAL, 0.05F, 1.75F / (RANDOM.nextFloat() * 0.4F + 0.8F));
+            world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.NEUTRAL, 0.05F, 1.75F / (world.random.nextFloat() * 0.4F + 0.8F));
             user.getItemCooldownManager().set(this, 40);
 
             if (!world.isClient) {

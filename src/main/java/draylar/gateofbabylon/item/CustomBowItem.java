@@ -59,7 +59,7 @@ public class CustomBowItem extends BowItem implements EnchantmentHandler {
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         if (user instanceof PlayerEntity) {
             PlayerEntity playerEntity = (PlayerEntity)user;
-            boolean skipArrowCheck = playerEntity.abilities.creativeMode || EnchantmentHelper.getLevel(Enchantments.INFINITY, stack) > 0;
+            boolean skipArrowCheck = playerEntity.getAbilities().creativeMode || EnchantmentHelper.getLevel(Enchantments.INFINITY, stack) > 0;
             ItemStack arrowStack = playerEntity.getArrowType(stack);
 
             if (!arrowStack.isEmpty() || skipArrowCheck) {
@@ -76,7 +76,7 @@ public class CustomBowItem extends BowItem implements EnchantmentHandler {
                     if (!world.isClient) {
                         ArrowItem arrowItem = (ArrowItem) (arrowStack.getItem() instanceof ArrowItem ? arrowStack.getItem() : Items.ARROW);
                         PersistentProjectileEntity arrowEntity = arrowItem.createArrow(world, arrowStack, playerEntity);
-                        arrowEntity.setProperties(playerEntity, playerEntity.pitch, playerEntity.yaw, 0.0F, pullProgress * 3.0F, 1.0F);
+                        arrowEntity.setProperties(playerEntity, playerEntity.getPitch(), playerEntity.getYaw(), 0.0F, pullProgress * 3.0F, 1.0F);
                         ((ProjectileManipulator) arrowEntity).setOrigin(stack);
 
                         // Make Arrow crit if pull progress is fully complete
@@ -108,20 +108,20 @@ public class CustomBowItem extends BowItem implements EnchantmentHandler {
                         stack.damage(1, playerEntity, (p) -> p.sendToolBreakStatus(playerEntity.getActiveHand()));
 
                         // Set arrow pickup type based on source
-                        if (bl2 || playerEntity.abilities.creativeMode && (arrowStack.getItem() == Items.SPECTRAL_ARROW || arrowStack.getItem() == Items.TIPPED_ARROW)) {
+                        if (bl2 || playerEntity.getAbilities().creativeMode && (arrowStack.getItem() == Items.SPECTRAL_ARROW || arrowStack.getItem() == Items.TIPPED_ARROW)) {
                             arrowEntity.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
                         }
 
                         world.spawnEntity(arrowEntity);
                     }
 
-                    world.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (RANDOM.nextFloat() * 0.4F + 1.2F) + pullProgress * 0.5F);
+                    world.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (world.random.nextFloat() * 0.4F + 1.2F) + pullProgress * 0.5F);
 
                     // decrement source arrow stack
-                    if (!bl2 && !playerEntity.abilities.creativeMode) {
+                    if (!bl2 && !playerEntity.getAbilities().creativeMode) {
                         arrowStack.decrement(1);
                         if (arrowStack.isEmpty()) {
-                            playerEntity.inventory.removeOne(arrowStack);
+                            playerEntity.getInventory().removeOne(arrowStack);
                         }
                     }
 

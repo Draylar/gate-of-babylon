@@ -84,8 +84,8 @@ public class SpearItem extends ToolItem implements EnchantmentHandler {
 
                     // Create initial Spear entity
                     SpearProjectileEntity spearEntity = new SpearProjectileEntity(world, player, stack);
-                    spearEntity.setProperties(player, player.pitch, player.yaw, 0.0F, 2.5F, 1.0F);
-                    if (player.abilities.creativeMode) {
+                    spearEntity.setProperties(player, player.getPitch(), player.getYaw(), 0.0F, 2.5F, 1.0F);
+                    if (player.getAbilities().creativeMode) {
                         spearEntity.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
                     }
                     world.spawnEntity(spearEntity);
@@ -94,8 +94,8 @@ public class SpearItem extends ToolItem implements EnchantmentHandler {
                     world.playSoundFromEntity(null, spearEntity, SoundEvents.ITEM_TRIDENT_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
                     // Remove Spear from inventory after throw
-                    if (!player.abilities.creativeMode) {
-                        player.inventory.removeOne(stack);
+                    if (!player.getAbilities().creativeMode) {
+                        player.getInventory().removeOne(stack);
                     }
                 }
 
