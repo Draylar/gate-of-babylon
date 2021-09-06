@@ -46,6 +46,11 @@ public class BoomerangEntity extends Entity {
     private static final TrackedData<ItemStack> STACK = DataTracker.registerData(BoomerangEntity.class, TrackedDataHandlerRegistry.ITEM_STACK);
     private int lastLeverAge = 0;
 
+    // Data for temporary boomerangs (dispensers or other mechanics that shoot a Boomerang which only retracts once)
+    private boolean isTemporary = false;
+    private boolean hasTemporaryReturned = false;
+    private Vec3d temporaryOrigin = Vec3d.ZERO;
+
     // TODO: MAX PIERCING ENTITIES?
 
     public BoomerangEntity(EntityType<?> type, World world) {
@@ -93,6 +98,15 @@ public class BoomerangEntity extends Entity {
                         Vec3d thisPos = getPos();
                         Vec3d difference = ownerPos.subtract(thisPos);
                         setVelocity(difference.normalize());
+                    } else {
+                        remove(RemovalReason.DISCARDED);
+                    }
+                } else if (isTemporary) {
+                    if(!hasTemporaryReturned) {
+                        Vec3d thisPos = getPos();
+                        Vec3d difference = temporaryOrigin.subtract(thisPos);
+                        setVelocity(difference.normalize());
+                        hasTemporaryReturned = true;
                     } else {
                         remove(RemovalReason.DISCARDED);
                     }
@@ -191,7 +205,7 @@ public class BoomerangEntity extends Entity {
             }
 
             // do not interact when hitting the source player
-            if(!entity.getUuid().equals(getOwner().get())) {
+            if(getOwner().isEmpty() || !entity.getUuid().equals(getOwner().get())) {
                 int piercing = EnchantmentHelper.getLevel(Enchantments.PIERCING, getStack());
 
                 // knock back
@@ -201,7 +215,7 @@ public class BoomerangEntity extends Entity {
 
                 // if we hit an entity and the boomerang does not have piercing, return back
                 if (piercing == 0) {
-                    PlayerEntity owner = world.getPlayerByUuid(getOwner().get());
+                    PlayerEntity owner = getOwner().isEmpty() ? null : world.getPlayerByUuid(getOwner().get());
 
                     if(owner != null) {
                         Vec3d ownerPos = owner.getPos();
@@ -258,5 +272,10 @@ public class BoomerangEntity extends Entity {
     public Optional<PlayerEntity> getPlayerOwner() {
         // can we condense this
         return getOwner().isPresent() && world.getPlayerByUuid(getOwner().get()) != null ? Optional.ofNullable(world.getPlayerByUuid(getOwner().get())) : Optional.empty();
+    }
+
+    public void setTemporary() {
+        isTemporary = true;
+        temporaryOrigin = getPos();
     }
 }

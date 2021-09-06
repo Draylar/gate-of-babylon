@@ -59,7 +59,7 @@ public class BoomerangItem extends ToolItem implements EnchantmentHandler {
         }
 
         if(!world.isClient) {
-            BoomerangEntity boomerang = new BoomerangEntity(GOBEntities.BOOMERANG, world);
+            BoomerangEntity boomerang = createBoomerang(user.getStackInHand(hand), world);
             boomerang.setYaw(user.getYaw());
             boomerang.setPitch(user.getPitch());
             boomerang.setVelocity(boomerang.getRotationVector());
@@ -68,11 +68,16 @@ public class BoomerangItem extends ToolItem implements EnchantmentHandler {
             boomerang.updateTrackedPosition(user.getX(), y, user.getZ());
             boomerang.requestTeleport(user.getX(), y, user.getZ());
             boomerang.setOwner(user);
-            boomerang.setStack(user.getStackInHand(hand));
             world.spawnEntity(boomerang);
         }
 
         return TypedActionResult.success(user.getStackInHand(hand));
+    }
+
+    public BoomerangEntity createBoomerang(ItemStack stack, World world) {
+        BoomerangEntity boomerang = new BoomerangEntity(GOBEntities.BOOMERANG, world);
+        boomerang.setStack(stack);
+        return boomerang;
     }
 
     @Override
