@@ -1,14 +1,11 @@
 package draylar.gateofbabylon.entity;
 
-import draylar.gateofbabylon.GateOfBabylon;
 import draylar.gateofbabylon.item.YoyoItem;
 import draylar.gateofbabylon.mixin.BlockSoundGroupAccessor;
 import draylar.gateofbabylon.registry.GOBDamageSources;
 import draylar.gateofbabylon.registry.GOBEntities;
-import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -24,11 +21,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -41,7 +37,6 @@ import java.util.UUID;
 
 public class YoyoEntity extends Entity {
 
-    public static final Identifier SPAWN_PACKET_ID = GateOfBabylon.id("yoyo_spawn_packet");
     private static final TrackedData<Optional<UUID>> OWNER = DataTracker.registerData(YoyoEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
     private static final TrackedData<ItemStack> STACK = DataTracker.registerData(YoyoEntity.class, TrackedDataHandlerRegistry.ITEM_STACK);
 
@@ -144,12 +139,7 @@ public class YoyoEntity extends Entity {
 
     @Override
     public Packet<?> createSpawnPacket() {
-        PacketByteBuf packet = new PacketByteBuf(Unpooled.buffer());
-        packet.writeDouble(getX());
-        packet.writeDouble(getY());
-        packet.writeDouble(getZ());
-        packet.writeInt(getId());
-        return ServerPlayNetworking.createS2CPacket(SPAWN_PACKET_ID, packet);
+        return new EntitySpawnS2CPacket(this);
     }
 
     public void onCollision(LivingEntity entity) {

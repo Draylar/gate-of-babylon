@@ -36,48 +36,6 @@ public class GateOfBabylonClient implements ClientModInitializer {
         EntityRendererRegistry.INSTANCE.register(GOBEntities.YOYO, YoyoEntityRenderer::new);
         EntityRendererRegistry.INSTANCE.register(GOBEntities.BOOMERANG, BoomerangEntityRenderer::new);
 
-        ClientSidePacketRegistry.INSTANCE.register(SpearProjectileEntity.ENTITY_ID, (context, packet) -> {
-            double x = packet.readDouble();
-            double y = packet.readDouble();
-            double z = packet.readDouble();
-
-            int entityId = packet.readInt();
-
-            context.getTaskQueue().execute(() -> {
-                SpearProjectileEntity spearEntity = new SpearProjectileEntity(MinecraftClient.getInstance().world, x, y, z);
-                spearEntity.setId(entityId);
-                MinecraftClient.getInstance().world.addEntity(entityId, spearEntity);
-            });
-        });
-
-        ClientSidePacketRegistry.INSTANCE.register(YoyoEntity.SPAWN_PACKET_ID, (context, packet) -> {
-            double x = packet.readDouble();
-            double y = packet.readDouble();
-            double z = packet.readDouble();
-
-            int entityId = packet.readInt();
-
-            context.getTaskQueue().execute(() -> {
-                YoyoEntity yoyo = new YoyoEntity(MinecraftClient.getInstance().world, x, y, z);
-                yoyo.setId(entityId);
-                MinecraftClient.getInstance().world.addEntity(entityId, yoyo);
-            });
-        });
-
-        ClientSidePacketRegistry.INSTANCE.register(BoomerangEntity.SPAWN_PACKET_ID, (context, packet) -> {
-            double x = packet.readDouble();
-            double y = packet.readDouble();
-            double z = packet.readDouble();
-
-            int entityId = packet.readInt();
-
-            context.getTaskQueue().execute(() -> {
-                BoomerangEntity boomerang = new BoomerangEntity(MinecraftClient.getInstance().world, x, y, z);
-                boomerang.setId(entityId);
-                MinecraftClient.getInstance().world.addEntity(entityId, boomerang);
-            });
-        });
-
         registerBowPredicates(GOBItems.STONE_BOW);
         registerBowPredicates(GOBItems.IRON_BOW);
         registerBowPredicates(GOBItems.GOLDEN_BOW);
