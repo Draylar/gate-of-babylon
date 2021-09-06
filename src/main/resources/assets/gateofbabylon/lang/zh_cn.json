@@ -1,12 +1,15 @@
-  
 {
   "itemGroup.gateofbabylon.group": "王之财宝",
+  "gateofbabylon.bow_stats": "弓属性：",
+  "gateofbabylon.bow_damage": "%dx 伤害",
+  "gateofbabylon.bow_draw_speed": "%ds 拉弓速度",
 
   "enchantment.gateofbabylon.lunging": "刺击",
   "enchantment.gateofbabylon.smashing": "猛击",
   "enchantment.gateofbabylon.thunder_slash": "雷击",
   "enchantment.gateofbabylon.flame_slash": "炎斩",
   "enchantment.gateofbabylon.dragon_slash": "斩龙",
+  "enchantment.gateofbabylon.vampire_slash": "圣斩",
   "enchantment.gateofbabylon.quickdraw": "快速拉弓",
 
   "item.gateofbabylon.extended_stick": "长棍",
@@ -51,7 +54,7 @@
   "item.gateofbabylon.golden_waraxe": "金战斧",
   "item.gateofbabylon.diamond_waraxe": "钻石战斧",
   "item.gateofbabylon.netherite_waraxe": "下界合金战斧",
-  
+
   "item.gateofbabylon.wooden_katana": "木武士刀",
   "item.gateofbabylon.stone_katana": "石武士刀",
   "item.gateofbabylon.iron_katana": "铁武士刀",
@@ -64,11 +67,28 @@
   "item.gateofbabylon.golden_bow": "金弓",
   "item.gateofbabylon.diamond_bow": "钻石弓",
   "item.gateofbabylon.netherite_bow": "下界合金弓",
-  
+
   "item.gateofbabylon.wooden_haladie": "木双刃剑",
   "item.gateofbabylon.stone_haladie": "石双刃剑",
   "item.gateofbabylon.iron_haladie": "铁双刃剑",
   "item.gateofbabylon.golden_haladie": "金双刃剑",
   "item.gateofbabylon.diamond_haladie": "钻石双刃剑",
-  "item.gateofbabylon.netherite_haladie": "下界合金双刃剑"
+  "item.gateofbabylon.netherite_haladie": "下界合金双刃剑",
+
+  "item.gateofbabylon.wooden_yoyo": "木悠悠球",
+  "item.gateofbabylon.stone_yoyo": "石悠悠球",
+  "item.gateofbabylon.iron_yoyo": "铁悠悠球",
+  "item.gateofbabylon.golden_yoyo": "黄金悠悠球",
+  "item.gateofbabylon.diamond_yoyo": "钻石悠悠球",
+  "item.gateofbabylon.netherite_yoyo": "下界合金悠悠球",
+
+  "item.gateofbabylon.wooden_boomerang": "木回旋镖",
+  "item.gateofbabylon.stone_boomerang": "石回旋镖",
+  "item.gateofbabylon.iron_boomerang": "铁回旋镖",
+  "item.gateofbabylon.golden_boomerang": "黄金回旋镖",
+  "item.gateofbabylon.diamond_boomerang": "钻石回旋镖",
+  "item.gateofbabylon.netherite_boomerang": "下界合金回旋镖",
+
+  "death.attack.boomerang": "%s被%s的回旋镖斩碎了",
+  "death.attack.yoyo": "%s被%s用悠悠球砸死了"
 }
