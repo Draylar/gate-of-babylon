@@ -6,6 +6,7 @@ import draylar.gateofbabylon.client.YoyoEntityRenderer;
 import draylar.gateofbabylon.entity.BoomerangEntity;
 import draylar.gateofbabylon.entity.SpearProjectileEntity;
 import draylar.gateofbabylon.entity.YoyoEntity;
+import draylar.gateofbabylon.impl.client.ShieldUsePredicate;
 import draylar.gateofbabylon.item.CustomBowItem;
 import draylar.gateofbabylon.registry.GOBEntities;
 import draylar.gateofbabylon.registry.GOBItems;
@@ -42,20 +43,11 @@ public class GateOfBabylonClient implements ClientModInitializer {
         registerBowPredicates(GOBItems.DIAMOND_BOW);
         registerBowPredicates(GOBItems.NETHERITE_BOW);
 
-        FabricModelPredicateProviderRegistry.register(GOBItems.STONE_SHIELD, new Identifier("blocking"), (stack, world, entity, seed)
-                -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F);
-
-        FabricModelPredicateProviderRegistry.register(GOBItems.IRON_SHIELD, new Identifier("blocking"), (stack, world, entity, seed)
-                -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F);
-
-        FabricModelPredicateProviderRegistry.register(GOBItems.GOLDEN_SHIELD, new Identifier("blocking"), (stack, world, entity, seed)
-                -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F);
-
-        FabricModelPredicateProviderRegistry.register(GOBItems.DIAMOND_SHIELD, new Identifier("blocking"), (stack, world, entity, seed)
-                -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F);
-
-        FabricModelPredicateProviderRegistry.register(GOBItems.NETHERITE_SHIELD, new Identifier("blocking"), (stack, world, entity, seed)
-                -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F);
+        FabricModelPredicateProviderRegistry.register(GOBItems.STONE_SHIELD, new Identifier("blocking"), new ShieldUsePredicate());
+        FabricModelPredicateProviderRegistry.register(GOBItems.IRON_SHIELD, new Identifier("blocking"), new ShieldUsePredicate());
+        FabricModelPredicateProviderRegistry.register(GOBItems.GOLDEN_SHIELD, new Identifier("blocking"), new ShieldUsePredicate());
+        FabricModelPredicateProviderRegistry.register(GOBItems.DIAMOND_SHIELD, new Identifier("blocking"), new ShieldUsePredicate());
+        FabricModelPredicateProviderRegistry.register(GOBItems.NETHERITE_SHIELD, new Identifier("blocking"), new ShieldUsePredicate());
 
         // register models
         ModelLoadingRegistry.INSTANCE.registerAppender(((resourceManager, consumer) -> {
