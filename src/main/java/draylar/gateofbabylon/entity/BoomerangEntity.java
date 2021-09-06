@@ -2,6 +2,7 @@ package draylar.gateofbabylon.entity;
 
 import draylar.gateofbabylon.GateOfBabylon;
 import draylar.gateofbabylon.item.BoomerangItem;
+import draylar.gateofbabylon.mixin.AbstractButtonBlockAccessor;
 import draylar.gateofbabylon.mixin.BlockSoundGroupAccessor;
 import draylar.gateofbabylon.registry.GOBDamageSources;
 import draylar.gateofbabylon.registry.GOBEntities;
@@ -9,7 +10,9 @@ import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.block.AbstractButtonBlock;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.LeverBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
@@ -34,6 +37,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -45,6 +49,7 @@ public class BoomerangEntity extends Entity {
     private static final String OWNER_KEY = "Owner";
     private static final TrackedData<Optional<UUID>> OWNER = DataTracker.registerData(BoomerangEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
     private static final TrackedData<ItemStack> STACK = DataTracker.registerData(BoomerangEntity.class, TrackedDataHandlerRegistry.ITEM_STACK);
+    private int lastLeverAge = 0;
 
     // TODO: MAX PIERCING ENTITIES?
 
@@ -111,16 +116,38 @@ public class BoomerangEntity extends Entity {
         if (!world.isClient) {
             world.getEntitiesByClass(LivingEntity.class, new Box(getX() - .4f, getY() - .05f, getZ() - .4f, getX() + .4f, getY() + .05f, getZ() + .4f), entity -> true).forEach(this::onCollision);
 
-            BlockState blockState = world.getBlockState(getBlockPos());
-            BlockState towards = world.getBlockState(new BlockPos(getPos().add(getVelocity().normalize())));
+            BlockPos insidePos = getBlockPos();
+            BlockPos towardsPos = new BlockPos(getPos().add(getVelocity().normalize()));
+            BlockState insideState = world.getBlockState(getBlockPos());
+            BlockState towardsState = world.getBlockState(towardsPos);
+
             // Play collision sounds based on the block the Boomerang is flying into.
-            if (!towards.isAir() && towards.getFluidState().isEmpty()) {
-                world.playSound(null, getX(), getY(), getZ(), ((BlockSoundGroupAccessor) towards.getSoundGroup()).getHitSound(), SoundCategory.PLAYERS, 0.5f, 1.0f);
+            if (!towardsState.isAir() && towardsState.getFluidState().isEmpty()) {
+                world.playSound(null, getX(), getY(), getZ(), ((BlockSoundGroupAccessor) towardsState.getSoundGroup()).getHitSound(), SoundCategory.PLAYERS, 0.5f, 1.0f);
+            }
+
+            // If the boomerang is inside a button, press it.
+            if(insideState.getBlock() instanceof AbstractButtonBlock button) {
+                if (!insideState.get(AbstractButtonBlock.POWERED)) {
+                    button.powerOn(insideState, world, insidePos);
+                    world.playSound(null, insidePos, ((AbstractButtonBlockAccessor) button).callGetClickSound(true), SoundCategory.BLOCKS, 0.3F, 0.6F);
+                    world.emitGameEvent(this, GameEvent.BLOCK_PRESS, insidePos);
+                }
+            }
+
+            // Flip levers!
+            int timeSinceLastLever = age - lastLeverAge;
+            if((lastLeverAge == 0 || timeSinceLastLever >= 20) && insideState.getBlock() instanceof LeverBlock lever) {
+                lever.togglePower(insideState, world, insidePos);
+                float f = insideState.get(LeverBlock.POWERED) ? 0.6F : 0.5F;
+                world.playSound(null, insidePos, SoundEvents.BLOCK_LEVER_CLICK, SoundCategory.BLOCKS, 0.3F, f);
+                world.emitGameEvent(this, insideState.get(LeverBlock.POWERED) ? GameEvent.BLOCK_SWITCH : GameEvent.BLOCK_UNSWITCH, insidePos);
+                lastLeverAge = age;
             }
 
             // If the boomerang is inside a replaceable block (such as grass), break it.
-            if (blockState.getMaterial().isReplaceable() && !blockState.isAir() && blockState.getFluidState().isEmpty()) {
-                world.breakBlock(getBlockPos(), true);
+            if (insideState.getMaterial().isReplaceable() && !insideState.isAir() && insideState.getFluidState().isEmpty()) {
+                world.breakBlock(insidePos, true);
             }
         }
     }
