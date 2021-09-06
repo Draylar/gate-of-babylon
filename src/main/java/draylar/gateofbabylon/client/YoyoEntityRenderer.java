@@ -27,12 +27,12 @@ public class YoyoEntityRenderer extends EntityRenderer<YoyoEntity> {
     private static final Map<Item, ModelIdentifier> ITEM_TO_MODEL = new HashMap<>();
 
     static {
-        ITEM_TO_MODEL.put(GOBItems.WOODEN_YOYO, GateOfBabylonClient.wooden);
-        ITEM_TO_MODEL.put(GOBItems.STONE_YOYO, GateOfBabylonClient.stone);
-        ITEM_TO_MODEL.put(GOBItems.IRON_YOYO, GateOfBabylonClient.iron);
-        ITEM_TO_MODEL.put(GOBItems.GOLDEN_YOYO, GateOfBabylonClient.golden);
-        ITEM_TO_MODEL.put(GOBItems.DIAMOND_YOYO, GateOfBabylonClient.diamond);
-        ITEM_TO_MODEL.put(GOBItems.NETHERITE_YOYO, GateOfBabylonClient.netherite);
+        ITEM_TO_MODEL.put(GOBItems.WOODEN_YOYO, GateOfBabylonClient.WOODEN_YOYO_MODEL);
+        ITEM_TO_MODEL.put(GOBItems.STONE_YOYO, GateOfBabylonClient.STONE_YOYO_MODEL);
+        ITEM_TO_MODEL.put(GOBItems.IRON_YOYO, GateOfBabylonClient.IRON_YOYO_MODEL);
+        ITEM_TO_MODEL.put(GOBItems.GOLDEN_YOYO, GateOfBabylonClient.GOLDEN_YOYO_MODEL);
+        ITEM_TO_MODEL.put(GOBItems.DIAMOND_YOYO, GateOfBabylonClient.DIAMOND_YOYO_MODEL);
+        ITEM_TO_MODEL.put(GOBItems.NETHERITE_YOYO, GateOfBabylonClient.NETHERITE_YOYO_MODEL);
     }
 
     public YoyoEntityRenderer(EntityRendererFactory.Context ctx) {
