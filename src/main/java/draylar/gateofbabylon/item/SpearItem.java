@@ -84,7 +84,7 @@ public class SpearItem extends ToolItem implements EnchantmentHandler {
 
                     // Create initial Spear entity
                     SpearProjectileEntity spearEntity = new SpearProjectileEntity(world, player, stack);
-                    spearEntity.setProperties(player, player.getPitch(), player.getYaw(), 0.0F, 2.5F, 1.0F);
+                    spearEntity.setVelocity(player, player.getPitch(), player.getYaw(), 0.0F, 2.5F, 1.0F);
                     if (player.getAbilities().creativeMode) {
                         spearEntity.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
                     }

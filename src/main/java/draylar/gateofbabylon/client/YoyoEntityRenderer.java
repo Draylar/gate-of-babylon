@@ -82,7 +82,7 @@ public class YoyoEntityRenderer extends EntityRenderer<YoyoEntity> {
 
     private <E extends Entity> void renderString(Entity player, float delta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, Entity yoyo) {
         matrixStack.push();
-        Vec3d lerpedYoyoPosition = yoyo.method_30951(delta);
+        Vec3d lerpedYoyoPosition = yoyo.getLerpedPos(delta);
         double d = 0;
         Vec3d lerpedPlayerPosition = player.getLerpedPos(delta);
         double e = Math.cos(d) * lerpedPlayerPosition.z + Math.sin(d) * lerpedPlayerPosition.x;
@@ -96,7 +96,7 @@ public class YoyoEntityRenderer extends EntityRenderer<YoyoEntity> {
         float m = (float)(lerpedYoyoPosition.z - j);
         float n = 0.025F;
         VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getLeash());
-        Matrix4f matrix4f = matrixStack.peek().getModel();
+        Matrix4f matrix4f = matrixStack.peek().getPositionMatrix();
         float o = MathHelper.fastInverseSqrt(k * k + m * m) * 0.025F / 2.0F;
         float p = m * o;
         float q = k * o;

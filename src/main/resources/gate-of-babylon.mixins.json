@@ -7,7 +7,6 @@
     "AreaEffectCloudEntityAccessor",
     "AreaEffectCloudEntityMixin",
     "BlockSoundGroupAccessor",
-    "ClientPlayerEntityYoyoUsageMixin",
     "EnchantmentHelperMixin",
     "EnchantmentMixin",
     "FallingBlockEntityAccessor",
@@ -18,7 +17,7 @@
     "PlayerEntityMixin"
   ],
   "client": [
-    "DrawableHelperAccessor"
+    "ClientPlayerEntityYoyoUsageMixin"
   ],
   "injectors": {
     "defaultRequire": 1

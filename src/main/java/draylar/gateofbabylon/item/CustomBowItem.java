@@ -76,7 +76,7 @@ public class CustomBowItem extends BowItem implements EnchantmentHandler {
                     if (!world.isClient) {
                         ArrowItem arrowItem = (ArrowItem) (arrowStack.getItem() instanceof ArrowItem ? arrowStack.getItem() : Items.ARROW);
                         PersistentProjectileEntity arrowEntity = arrowItem.createArrow(world, arrowStack, playerEntity);
-                        arrowEntity.setProperties(playerEntity, playerEntity.getPitch(), playerEntity.getYaw(), 0.0F, pullProgress * 3.0F, 1.0F);
+                        arrowEntity.setVelocity(playerEntity, playerEntity.getPitch(), playerEntity.getYaw(), 0.0F, pullProgress * 3.0F, 1.0F);
                         ((ProjectileManipulator) arrowEntity).setOrigin(stack);
 
                         // Make Arrow crit if pull progress is fully complete
