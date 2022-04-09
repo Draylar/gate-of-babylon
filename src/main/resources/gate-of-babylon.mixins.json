@@ -10,7 +10,6 @@
     "EnchantmentHelperMixin",
     "EnchantmentMixin",
     "FallingBlockEntityAccessor",
-    "FallingBlockEntityMixin",
     "MobEntityMixin",
     "PersistentProjectileEntityMixin",
     "PlayerEntityLungeMixin",

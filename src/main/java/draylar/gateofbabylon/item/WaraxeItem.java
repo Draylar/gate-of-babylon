@@ -96,7 +96,7 @@ public class WaraxeItem extends AxeItem implements EnchantmentHandler {
     }
 
     public void spawnEntity(ServerWorld world, Vec3d pos, LivingEntity source, BlockState state) {
-        FallingBlockEntity spawn = new FallingBlockEntity(world, pos.getX(), pos.getY(), pos.getZ(), state);
+        FallingBlockEntity spawn = FallingBlockEntityAccessor.createFallingBlockEntity(world, pos.getX(), pos.getY(), pos.getZ(), state);
 
         // setup velocity
         Vec3d difference = pos.subtract(source.getPos()).multiply(.1);
