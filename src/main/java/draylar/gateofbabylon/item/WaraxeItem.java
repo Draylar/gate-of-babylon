@@ -66,7 +66,7 @@ public class WaraxeItem extends AxeItem implements EnchantmentHandler {
                             level++;
                         }
 
-                        if(world.getBlockState(new BlockPos(newPos).up()).isAir()) {
+                        if(world.getBlockState(new BlockPos(newPos).up()).isAir() && !world.getBlockState(new BlockPos(newPos)).isAir()) {
                             spawnEntity((ServerWorld) world, newPos.add(0, 1, 0), user, world.getBlockState(new BlockPos(newPos)));
                         }
                     }
