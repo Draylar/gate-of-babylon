@@ -90,5 +90,13 @@
   "item.gateofbabylon.netherite_boomerang": "Netherite Boomerang",
 
   "death.attack.boomerang": "%s was sliced up by %s's Boomerang",
-  "death.attack.yoyo": "%s was whacked by %s's Yo-yo"
+  "death.attack.yoyo": "%s was whacked by %s's Yo-yo",
+
+  "enchantment.gateofbabylon.lunging.desc": "Increases lunging range of rapier by 30% per level",
+  "enchantment.gateofbabylon.thunder_slash.desc": "Summons lighting when you hit an entity with a slash attack",
+  "enchantment.gateofbabylon.dragon_slash.desc": "Leaves a trail of dragon breath behind you when you slash",
+  "enchantment.gateofbabylon.vampire_slash.desc": "Heals you for a single heart for each entity hit with a slash attack",
+  "enchantment.gateofbabylon.flame_slash.desc": "Sets entities on fire when you hit them with a slash attack",
+  "enchantment.gateofbabylon.quickdraw.desc": "Decreases draw speed up to 0.5s",
+  "enchantment.gateofbabylon.smashing.desc": "Increases range, damage, and knockback of the Waraxes shockwave"
 }
