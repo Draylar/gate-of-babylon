@@ -7,6 +7,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.registry.Registry;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,7 +17,6 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @Mixin(EnchantmentHelper.class)
 public class EnchantmentHelperMixin {
@@ -26,10 +26,10 @@ public class EnchantmentHelperMixin {
             at = @At(value = "INVOKE", target = "Ljava/util/List;isEmpty()Z", ordinal = 0),
             locals = LocalCapture.CAPTURE_FAILHARD
     )
-    private static void generateEnchantments(Random random, ItemStack stack, int level, boolean treasureAllowed, CallbackInfoReturnable<List> cir, List list, Item item, int i, float f, List<EnchantmentLevelEntry> list2) {
+    private static void generateEnchantments(Random random, ItemStack stack, int level, boolean treasureAllowed, CallbackInfoReturnable<List<EnchantmentLevelEntry>> cir, List<EnchantmentLevelEntry> list, Item item, int i, float f, List<EnchantmentLevelEntry> list2) {
         List<EnchantmentLevelEntry> newEnchantments = new ArrayList<>();
 
-        list2.forEach(enchantmentLevelEntry -> {
+        list.forEach(enchantmentLevelEntry -> {
             if (enchantmentLevelEntry.enchantment instanceof ValidatingEnchantment) {
                 if (enchantmentLevelEntry.enchantment.isAcceptableItem(stack)) {
                     newEnchantments.add(enchantmentLevelEntry);
