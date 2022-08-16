@@ -4,12 +4,12 @@
   "gateofbabylon.bow_damage": "%dx 伤害",
   "gateofbabylon.bow_draw_speed": "%ds 拉弓速度",
 
-  "enchantment.gateofbabylon.lunging": "刺击",
+  "enchantment.gateofbabylon.lunging": "突刺",
   "enchantment.gateofbabylon.smashing": "猛击",
-  "enchantment.gateofbabylon.thunder_slash": "雷击",
+  "enchantment.gateofbabylon.thunder_slash": "雷斩",
   "enchantment.gateofbabylon.flame_slash": "炎斩",
-  "enchantment.gateofbabylon.dragon_slash": "斩龙",
-  "enchantment.gateofbabylon.vampire_slash": "圣斩",
+  "enchantment.gateofbabylon.dragon_slash": "龙斩",
+  "enchantment.gateofbabylon.vampire_slash": "血斩",
   "enchantment.gateofbabylon.quickdraw": "快速拉弓",
 
   "item.gateofbabylon.extended_stick": "长棍",
