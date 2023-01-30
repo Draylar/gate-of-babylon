@@ -29,7 +29,7 @@ public class EnchantmentHelperMixin {
     private static void generateEnchantments(Random random, ItemStack stack, int level, boolean treasureAllowed, CallbackInfoReturnable<List<EnchantmentLevelEntry>> cir, List<EnchantmentLevelEntry> list, Item item, int i, float f, List<EnchantmentLevelEntry> list2) {
         List<EnchantmentLevelEntry> newEnchantments = new ArrayList<>();
 
-        list.forEach(enchantmentLevelEntry -> {
+        list2.forEach(enchantmentLevelEntry -> {
             if (enchantmentLevelEntry.enchantment instanceof ValidatingEnchantment) {
                 if (enchantmentLevelEntry.enchantment.isAcceptableItem(stack)) {
                     newEnchantments.add(enchantmentLevelEntry);
