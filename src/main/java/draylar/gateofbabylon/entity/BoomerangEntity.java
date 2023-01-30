@@ -140,7 +140,7 @@ public class BoomerangEntity extends Entity {
                 if (!insideState.get(AbstractButtonBlock.POWERED)) {
                     button.powerOn(insideState, world, insidePos);
                     world.playSound(null, insidePos, ((AbstractButtonBlockAccessor) button).callGetClickSound(true), SoundCategory.BLOCKS, 0.3F, 0.6F);
-                    world.emitGameEvent(this, GameEvent.BLOCK_PRESS, insidePos);
+                    world.emitGameEvent(this, GameEvent.BLOCK_ACTIVATE, insidePos);
                 }
             }
 
@@ -150,7 +150,7 @@ public class BoomerangEntity extends Entity {
                 lever.togglePower(insideState, world, insidePos);
                 float f = insideState.get(LeverBlock.POWERED) ? 0.6F : 0.5F;
                 world.playSound(null, insidePos, SoundEvents.BLOCK_LEVER_CLICK, SoundCategory.BLOCKS, 0.3F, f);
-                world.emitGameEvent(this, insideState.get(LeverBlock.POWERED) ? GameEvent.BLOCK_SWITCH : GameEvent.BLOCK_UNSWITCH, insidePos);
+                world.emitGameEvent(this, insideState.get(LeverBlock.POWERED) ? GameEvent.BLOCK_ACTIVATE : GameEvent.BLOCK_DEACTIVATE, insidePos);
                 lastLeverAge = age;
             }
 

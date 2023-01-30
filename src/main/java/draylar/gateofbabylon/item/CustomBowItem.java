@@ -14,9 +14,7 @@ import net.minecraft.particle.ParticleEffect;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -155,9 +153,9 @@ public class CustomBowItem extends BowItem implements EnchantmentHandler {
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
-        tooltip.add(LiteralText.EMPTY);
-        tooltip.add(new TranslatableText("gateofbabylon.bow_stats").formatted(Formatting.GRAY));
-        tooltip.add(new LiteralText(" ").append(new TranslatableText("gateofbabylon.bow_damage", damageModifier).formatted(Formatting.DARK_GREEN)));
-        tooltip.add(new LiteralText(" ").append(new TranslatableText("gateofbabylon.bow_draw_speed", (double) maxDrawTime / 20).formatted(Formatting.DARK_GREEN)));
+        tooltip.add(Text.empty());
+        tooltip.add(Text.translatable("gateofbabylon.bow_stats").formatted(Formatting.GRAY));
+        tooltip.add(Text.translatable(" ").append(Text.translatable("gateofbabylon.bow_damage", damageModifier).formatted(Formatting.DARK_GREEN)));
+        tooltip.add(Text.literal(" ").append(Text.translatable("gateofbabylon.bow_draw_speed", (double) maxDrawTime / 20).formatted(Formatting.DARK_GREEN)));
     }
 }
