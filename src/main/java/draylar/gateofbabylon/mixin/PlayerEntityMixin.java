@@ -52,8 +52,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         if (this.activeItemStack.getItem() instanceof CustomShieldItem) {
 
             // Increment 'used' stat for the current shield item on server
-            if (!this.world.isClient) {
-                this.incrementStat(Stats.USED.getOrCreateStat(this.activeItemStack.getItem()));
+            if (!getWorld().isClient) {
+                incrementStat(Stats.USED.getOrCreateStat(this.activeItemStack.getItem()));
             }
 
             // Only reduce shield durability if the incoming damage is greater than 3
@@ -65,13 +65,13 @@ public abstract class PlayerEntityMixin extends LivingEntity {
                 // Play FX
                 if (this.activeItemStack.isEmpty()) {
                     if (activeHand == Hand.MAIN_HAND) {
-                        this.equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+                        equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
                     } else {
-                        this.equipStack(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
+                        equipStack(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
                     }
 
-                    this.activeItemStack = ItemStack.EMPTY;
-                    this.playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.8F, 0.8F + this.world.random.nextFloat() * 0.4F);
+                    activeItemStack = ItemStack.EMPTY;
+                    playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.8F, 0.8F + getWorld().random.nextFloat() * 0.4F);
                 }
             }
         }
@@ -97,7 +97,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
             at = @At("RETURN"))
     private void onAttack(Entity target, CallbackInfo ci) {
         // If we are holding a Haladie, enter double-attack logic.
-        if(getMainHandStack().getItem() instanceof HaladieItem && !world.isClient) {
+        if(getMainHandStack().getItem() instanceof HaladieItem && !getWorld().isClient) {
             // If we have NOT already attacked, reset the enemies i-frames and attack again.
             if(!gob_hasHaladieAttacked) {
                 target.timeUntilRegen = 0;

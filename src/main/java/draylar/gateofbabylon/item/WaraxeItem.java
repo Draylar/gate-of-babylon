@@ -61,13 +61,13 @@ public class WaraxeItem extends AxeItem implements EnchantmentHandler {
                         Vec3d newPos = user.getPos().add(x, -2, z);
                         int level = 0;
 
-                        while(!world.getBlockState(new BlockPos(newPos).up()).isAir() && level < 5) {
+                        while(!world.getBlockState(BlockPos.ofFloored(newPos).up()).isAir() && level < 5) {
                             newPos = newPos.add(0, 1, 0);
                             level++;
                         }
 
-                        if(world.getBlockState(new BlockPos(newPos).up()).isAir()) {
-                            spawnEntity((ServerWorld) world, newPos.add(0, 1, 0), user, world.getBlockState(new BlockPos(newPos)));
+                        if(world.getBlockState(BlockPos.ofFloored(newPos).up()).isAir()) {
+                            spawnEntity((ServerWorld) world, newPos.add(0, 1, 0), user, world.getBlockState(BlockPos.ofFloored(newPos)));
                         }
                     }
                 }
@@ -77,7 +77,7 @@ public class WaraxeItem extends AxeItem implements EnchantmentHandler {
             world.getEntitiesByClass(LivingEntity.class, new Box(user.getBlockPos().add(-radius - 2, -1, -radius - 2), user.getBlockPos().add(radius + 2, 3, radius + 2)), entity -> entity != user).forEach(entity -> {
                 // Triggers for entities that aren't tameable, or that aren't tamed, or that aren't owned by the owner of the breath
                 if (!(entity instanceof TameableEntity) || !((TameableEntity) entity).isTamed() || !((TameableEntity) entity).getOwnerUuid().equals(player.getUuid())) {
-                    entity.damage(DamageSource.player(player), hasSmashing ? getAttackDamage() * 1.5f : getAttackDamage());
+                    entity.damage(entity.getWorld().getDamageSources().playerAttack(player), hasSmashing ? getAttackDamage() * 1.5f : getAttackDamage());
                     entity.setVelocity(entity.getPos().subtract(player.getPos()).multiply(hasSmashing ? .6 : .5).add(0, .35, 0));
                 }
             });

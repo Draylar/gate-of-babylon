@@ -9,8 +9,9 @@ import draylar.gateofbabylon.enchantment.QuickDrawEnchantment;
 import draylar.gateofbabylon.enchantment.SmashingEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.registry.Registry;
 
 public class GOBEnchantments {
 
@@ -23,7 +24,7 @@ public class GOBEnchantments {
     public static final QuickDrawEnchantment QUICKDRAW = register("quickdraw", new QuickDrawEnchantment());
 
     private static <T extends Enchantment> T register(String name, T enchantment) {
-        return Registry.register(Registry.ENCHANTMENT, GateOfBabylon.id(name), enchantment);
+        return Registry.register(Registries.ENCHANTMENT, GateOfBabylon.id(name), enchantment);
     }
 
     public static void init() {

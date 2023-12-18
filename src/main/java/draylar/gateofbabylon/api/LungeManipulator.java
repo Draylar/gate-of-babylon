@@ -1,6 +1,6 @@
 package draylar.gateofbabylon.api;
 
 public interface LungeManipulator {
-    boolean canLunge();
-    void setLunged();
+    boolean gateOfBabylon$canLunge();
+    void gateOfBabylon$setLunged();
 }

@@ -2,7 +2,6 @@ package draylar.gateofbabylon.entity;
 
 import draylar.gateofbabylon.item.YoyoItem;
 import draylar.gateofbabylon.mixin.BlockSoundGroupAccessor;
-import draylar.gateofbabylon.registry.GOBDamageSources;
 import draylar.gateofbabylon.registry.GOBEntities;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -13,15 +12,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
-import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -60,9 +56,9 @@ public class YoyoEntity extends Entity {
         lastRenderZ = prevZ;
 
         // :)
-        if(!world.isClient) {
+        if(!getWorld().isClient) {
             if(dataTracker.get(OWNER).isPresent()) {
-                PlayerEntity owner = world.getPlayerByUuid(dataTracker.get(OWNER).get());
+                PlayerEntity owner = getWorld().getPlayerByUuid(dataTracker.get(OWNER).get());
 
                 if (owner != null) {
                     HitResult ray = owner.raycast(5, 0, false);
@@ -82,26 +78,26 @@ public class YoyoEntity extends Entity {
         }
 
         // collision
-        if(!world.isClient) {
-            world.getEntitiesByClass(LivingEntity.class, new Box(getX() - .25f, getY() - .25f, getZ() - .25f, getX() + .25f, getY() + .25f, getZ() + .25f), entity -> true).forEach(this::onCollision);
+        if(!getWorld().isClient) {
+            getWorld().getEntitiesByClass(LivingEntity.class, new Box(getX() - .25f, getY() - .25f, getZ() - .25f, getX() + .25f, getY() + .25f, getZ() + .25f), entity -> true).forEach(this::onCollision);
 
             // calculate distance between player and yoyo
             if(getOwner().isPresent()) {
-                PlayerEntity owner = world.getPlayerByUuid(getOwner().get());
+                PlayerEntity owner = getWorld().getPlayerByUuid(getOwner().get());
 
                 if(owner != null) {
                     Vec3d rotationVector = owner.getRotationVector();
                     Vec3d yoyoPosition = getPos();
                     Vec3d target = yoyoPosition.add(rotationVector);
 
-                    BlockPos p = new BlockPos(target);
-                    BlockState blockState = world.getBlockState(p);
+                    BlockPos p = BlockPos.ofFloored(target);
+                    BlockState blockState = getWorld().getBlockState(p);
                     if(!blockState.isAir()) {
-                        world.playSound(null, getX(), getY(), getZ(), ((BlockSoundGroupAccessor) blockState.getSoundGroup()).getHitSound(), SoundCategory.PLAYERS, 0.5f, 1.0f);
+                        getWorld().playSound(null, getX(), getY(), getZ(), ((BlockSoundGroupAccessor) blockState.getSoundGroup()).getHitSound(), SoundCategory.PLAYERS, 0.5f, 1.0f);
                     }
 
-                    if(blockState.getMaterial().isReplaceable()) {
-                        world.breakBlock(p, true);
+                    if(blockState.isReplaceable()) {
+                        getWorld().breakBlock(p, true);
                     }
                 }
             }
@@ -137,11 +133,6 @@ public class YoyoEntity extends Entity {
         return dataTracker.get(OWNER);
     }
 
-    @Override
-    public Packet<?> createSpawnPacket() {
-        return new EntitySpawnS2CPacket(this);
-    }
-
     public void onCollision(LivingEntity entity) {
         ItemStack stack = getStack();
 
@@ -151,16 +142,16 @@ public class YoyoEntity extends Entity {
         }
 
         if(stack.getItem() instanceof YoyoItem) {
-            world.playSound(null, getX(), getY(), getZ(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 0.5f, 1.0f);
+            getWorld().playSound(null, getX(), getY(), getZ(), SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 0.5f, 1.0f);
             float attackDamage = ((YoyoItem) stack.getItem()).getMaterial().getAttackDamage() + EnchantmentHelper.getAttackDamage(stack, entity.getGroup());
 
-            if(getOwner().isPresent() && world.getPlayerByUuid(getOwner().get()) != null) {
-                entity.damage(GOBDamageSources.createYoyoSource(world.getPlayerByUuid(getOwner().get())), attackDamage);
+            if(getOwner().isPresent() && getWorld().getPlayerByUuid(getOwner().get()) != null) {
+                entity.damage(getDamageSources().playerAttack(getWorld().getPlayerByUuid(getOwner().get())), attackDamage);
 
                 // damage yoyo
-                stack.damage(1, random, (ServerPlayerEntity) world.getPlayerByUuid(getOwner().get()));
+                stack.damage(1, random, (ServerPlayerEntity) getWorld().getPlayerByUuid(getOwner().get()));
             } else {
-                entity.damage(DamageSource.GENERIC, attackDamage);
+                entity.damage(getDamageSources().generic(), attackDamage);
             }
 
             // Apply fire aspect

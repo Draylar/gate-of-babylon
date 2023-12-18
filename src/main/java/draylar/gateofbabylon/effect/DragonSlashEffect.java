@@ -13,6 +13,6 @@ public class DragonSlashEffect extends InstantStatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        entity.damage(DamageSource.MAGIC, 4 << amplifier);
+        entity.damage(entity.getDamageSources().magic(), 4 << amplifier);
     }
 }

@@ -7,10 +7,11 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 
 public class BoomerangEntityRenderer extends EntityRenderer<BoomerangEntity> {
 
@@ -23,16 +24,17 @@ public class BoomerangEntityRenderer extends EntityRenderer<BoomerangEntity> {
         matrices.push();
 
         float lerpedAge = MathHelper.lerp(tickDelta, boomerang.age - 1, boomerang.age);
-        matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
-        matrices.multiply(Vec3f.POSITIVE_Z.getRadialQuaternion(lerpedAge));
+        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90));
+        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(lerpedAge));
 
         MinecraftClient.getInstance().getItemRenderer().renderItem(
                 boomerang.getStack(),
-                ModelTransformation.Mode.FIXED,
+                ModelTransformationMode.FIXED,
                 light,
                 OverlayTexture.DEFAULT_UV,
                 matrices,
                 vertexConsumers,
+                boomerang.getWorld(),
                 0
         );
 

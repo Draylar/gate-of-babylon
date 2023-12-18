@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Enchantment.class)
 public abstract class EnchantmentMixin {
 
-    @Shadow @Final public EnchantmentTarget type;
+    @Shadow @Final public EnchantmentTarget target;
 
     @Inject(
             method = "isAcceptableItem",
@@ -31,7 +31,7 @@ public abstract class EnchantmentMixin {
             }
 
             // Check for type-validity
-            boolean contains = ((EnchantmentHandler) stack.getItem()).getEnchantmentTypes().contains(type);
+            boolean contains = ((EnchantmentHandler) stack.getItem()).getEnchantmentTypes().contains(target);
             boolean itemAccepts = !((EnchantmentHandler) stack.getItem()).isInvalid((Enchantment) (Object) this);
 
             // Only abort-mission early if we deem the stack to be valid for this enchantment.

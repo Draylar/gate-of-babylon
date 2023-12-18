@@ -14,8 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityLungeMixin extends LivingEntity implements LungeManipulator {
 
-    @Unique
-    private boolean gob_hasLunged = false;
+    @Unique private boolean gob$hasLunged = false;
 
     protected PlayerEntityLungeMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
@@ -25,19 +24,21 @@ public abstract class PlayerEntityLungeMixin extends LivingEntity implements Lun
             method = "tick",
             at = @At("HEAD")
     )
-    private void onTick(CallbackInfo ci) {
-        if (gob_hasLunged && isOnGround()) {
-            gob_hasLunged = false;
+    private void gateOfBabylon$onPlayerTick(CallbackInfo ci) {
+        if (gob$hasLunged && isOnGround()) {
+            gob$hasLunged = false;
         }
     }
 
+    @Unique
     @Override
-    public void setLunged() {
-        gob_hasLunged = true;
+    public void gateOfBabylon$setLunged() {
+        gob$hasLunged = true;
     }
 
+    @Unique
     @Override
-    public boolean canLunge() {
-        return !gob_hasLunged;
+    public boolean gateOfBabylon$canLunge() {
+        return !gob$hasLunged;
     }
 }

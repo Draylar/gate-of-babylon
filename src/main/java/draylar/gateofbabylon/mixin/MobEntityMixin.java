@@ -33,7 +33,7 @@ public abstract class MobEntityMixin extends LivingEntity {
 
             if (this.random.nextFloat() < efficiency) {
                 player.getItemCooldownManager().set(Items.SHIELD, 100);
-                this.world.sendEntityStatus(player, (byte) 30);
+                getWorld().sendEntityStatus(player, (byte) 30);
             }
         }
     }

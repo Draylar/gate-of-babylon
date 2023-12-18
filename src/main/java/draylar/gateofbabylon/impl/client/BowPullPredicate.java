@@ -1,14 +1,13 @@
 package draylar.gateofbabylon.impl.client;
 
 import draylar.gateofbabylon.item.CustomBowItem;
-import net.minecraft.client.item.UnclampedModelPredicateProvider;
+import net.minecraft.client.item.ClampedModelPredicateProvider;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("ClassCanBeRecord")
-public class BowPullPredicate implements UnclampedModelPredicateProvider {
+public class BowPullPredicate implements ClampedModelPredicateProvider {
 
     private final CustomBowItem bow;
 

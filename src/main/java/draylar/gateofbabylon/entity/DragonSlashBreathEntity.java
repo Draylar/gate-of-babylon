@@ -27,10 +27,12 @@ public class DragonSlashBreathEntity extends AreaEffectCloudEntity {
    
    @Override
    public void tick() {
-      ((AreaEffectCloudTicker)this).superTick();
-      boolean bl = this.isWaiting();
-      float f = this.getRadius();
-      if (this.world.isClient) {
+      ((AreaEffectCloudTicker) this).superTick();
+
+      boolean bl = isWaiting();
+      float effectRadius = getRadius();
+
+      if (getWorld().isClient) {
          ParticleEffect particleEffect = this.getParticleType();
          float h;
          float j;
@@ -50,18 +52,18 @@ public class DragonSlashBreathEntity extends AreaEffectCloudEntity {
                      m = l >> 16 & 255;
                      n = l >> 8 & 255;
                      o = l & 255;
-                     this.world.addImportantParticle(particleEffect, this.getX() + (double)j, this.getY(), this.getZ() + (double)k, (double)((float)m / 255.0F), (double)((float)n / 255.0F), (double)((float)o / 255.0F));
+                     this.getWorld().addImportantParticle(particleEffect, this.getX() + (double)j, this.getY(), this.getZ() + (double)k, (double)((float)m / 255.0F), (double)((float)n / 255.0F), (double)((float)o / 255.0F));
                   } else {
-                     this.world.addImportantParticle(particleEffect, this.getX() + (double)j, this.getY(), this.getZ() + (double)k, 0.0D, 0.0D, 0.0D);
+                     this.getWorld().addImportantParticle(particleEffect, this.getX() + (double)j, this.getY(), this.getZ() + (double)k, 0.0D, 0.0D, 0.0D);
                   }
                }
             }
          } else {
-            float p = 3.1415927F * f * f;
+            float p = 3.1415927F * effectRadius * effectRadius;
 
             for(int q = 0; (float)q < p; ++q) {
                h = this.random.nextFloat() * 6.2831855F;
-               j = MathHelper.sqrt(this.random.nextFloat()) * f;
+               j = MathHelper.sqrt(this.random.nextFloat()) * effectRadius;
                k = MathHelper.cos(h) * j;
                float u = MathHelper.sin(h) * j;
                if (particleEffect.getType() == ParticleTypes.ENTITY_EFFECT) {
@@ -69,9 +71,9 @@ public class DragonSlashBreathEntity extends AreaEffectCloudEntity {
                   n = m >> 16 & 255;
                   o = m >> 8 & 255;
                   int y = m & 255;
-                  this.world.addImportantParticle(particleEffect, this.getX() + (double)k, this.getY(), this.getZ() + (double)u, (double)((float)n / 255.0F), (double)((float)o / 255.0F), (double)((float)y / 255.0F));
+                  this.getWorld().addImportantParticle(particleEffect, this.getX() + (double)k, this.getY(), this.getZ() + (double)u, (double)((float)n / 255.0F), (double)((float)o / 255.0F), (double)((float)y / 255.0F));
                } else {
-                  this.world.addImportantParticle(particleEffect, this.getX() + (double)k, this.getY(), this.getZ() + (double)u, (0.5D - this.random.nextDouble()) * 0.15D, 0.009999999776482582D, (0.5D - this.random.nextDouble()) * 0.15D);
+                  this.getWorld().addImportantParticle(particleEffect, this.getX() + (double)k, this.getY(), this.getZ() + (double)u, (0.5D - this.random.nextDouble()) * 0.15D, 0.009999999776482582D, (0.5D - this.random.nextDouble()) * 0.15D);
                }
             }
          }
@@ -91,13 +93,13 @@ public class DragonSlashBreathEntity extends AreaEffectCloudEntity {
          }
 
          if (((AreaEffectCloudEntityAccessor)this).getRadiusGrowth() != 0.0F) {
-            f += ((AreaEffectCloudEntityAccessor)this).getRadiusGrowth();
-            if (f < 0.5F) {
+            effectRadius += ((AreaEffectCloudEntityAccessor)this).getRadiusGrowth();
+            if (effectRadius < 0.5F) {
                this.remove(RemovalReason.DISCARDED);
                return;
             }
 
-            this.setRadius(f);
+            this.setRadius(effectRadius);
          }
 
          if (this.age % 5 == 0) {
@@ -124,7 +126,7 @@ public class DragonSlashBreathEntity extends AreaEffectCloudEntity {
             } else {
                // Triggers for entities that aren't tameable, or that aren't tamed, or that aren't owned by the owner of the breath
                Predicate<MobEntity> mobCheck = (entity) -> !(entity instanceof TameableEntity) || !((TameableEntity) entity).isTamed() || !((TameableEntity) entity).getOwnerUuid().equals(this.getOwner().getUuid());
-               List<MobEntity> list2 = this.world.getEntitiesByClass(MobEntity.class, this.getBoundingBox(), mobCheck);
+               List<MobEntity> list2 = this.getWorld().getEntitiesByClass(MobEntity.class, this.getBoundingBox(), mobCheck);
                if (!list2.isEmpty()) {
                   Iterator var25 = list2.iterator();
 
@@ -145,7 +147,7 @@ public class DragonSlashBreathEntity extends AreaEffectCloudEntity {
                         double d = livingEntity.getX() - this.getX();
                         double e = livingEntity.getZ() - this.getZ();
                         z = d * d + e * e;
-                     } while(z > (double)(f * f));
+                     } while(z > (double)(effectRadius * effectRadius));
 
                      ((AreaEffectCloudEntityAccessor)this).getAffectedEntities().put(livingEntity, this.age + ((AreaEffectCloudEntityAccessor)this).getReapplicationDelay());
                      Iterator var14 = list.iterator();
@@ -160,13 +162,13 @@ public class DragonSlashBreathEntity extends AreaEffectCloudEntity {
                      }
 
                      if (((AreaEffectCloudEntityAccessor)this).getRadiusOnUse() != 0.0F) {
-                        f += ((AreaEffectCloudEntityAccessor)this).getRadiusOnUse();
-                        if (f < 0.5F) {
+                        effectRadius += ((AreaEffectCloudEntityAccessor)this).getRadiusOnUse();
+                        if (effectRadius < 0.5F) {
                            this.remove(RemovalReason.DISCARDED);
                            return;
                         }
 
-                        this.setRadius(f);
+                        this.setRadius(effectRadius);
                      }
 
                      if (((AreaEffectCloudEntityAccessor)this).getDurationOnUse() != 0) {

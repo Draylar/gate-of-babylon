@@ -7,8 +7,8 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.util.registry.Registry;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -54,7 +54,7 @@ public class EnchantmentHelperMixin {
             List<EnchantmentLevelEntry> entries = Lists.newArrayList();
 
             // Collect valid enchantments
-            Registry.ENCHANTMENT.forEach(enchantment -> {
+            Registries.ENCHANTMENT.forEach(enchantment -> {
 
                 // Items can whitelist certain enchantments to always be valid.
                 if(!((EnchantmentHandler) item).isExplicitlyValid(enchantment)) {

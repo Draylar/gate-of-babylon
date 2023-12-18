@@ -55,25 +55,24 @@ public class CustomBowItem extends BowItem implements EnchantmentHandler {
 
     @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-        if (user instanceof PlayerEntity) {
-            PlayerEntity playerEntity = (PlayerEntity)user;
+        if (user instanceof PlayerEntity playerEntity) {
             boolean skipArrowCheck = playerEntity.getAbilities().creativeMode || EnchantmentHelper.getLevel(Enchantments.INFINITY, stack) > 0;
-            ItemStack arrowStack = playerEntity.getArrowType(stack);
+            ItemStack arrowProjectile = playerEntity.getProjectileType(stack);
 
-            if (!arrowStack.isEmpty() || skipArrowCheck) {
-                if (arrowStack.isEmpty()) {
-                    arrowStack = new ItemStack(Items.ARROW);
+            if (!arrowProjectile.isEmpty() || skipArrowCheck) {
+                if (arrowProjectile.isEmpty()) {
+                    arrowProjectile = new ItemStack(Items.ARROW);
                 }
 
                 int currentUseTime = this.getMaxUseTime(stack) - remainingUseTicks;
                 float pullProgress = getPullProgress(stack, this, currentUseTime);
 
                 if ((double) pullProgress >= 0.1D) {
-                    boolean bl2 = skipArrowCheck && arrowStack.getItem() == Items.ARROW;
+                    boolean bl2 = skipArrowCheck && arrowProjectile.getItem() == Items.ARROW;
 
                     if (!world.isClient) {
-                        ArrowItem arrowItem = (ArrowItem) (arrowStack.getItem() instanceof ArrowItem ? arrowStack.getItem() : Items.ARROW);
-                        PersistentProjectileEntity arrowEntity = arrowItem.createArrow(world, arrowStack, playerEntity);
+                        ArrowItem arrowItem = (ArrowItem) (arrowProjectile.getItem() instanceof ArrowItem ? arrowProjectile.getItem() : Items.ARROW);
+                        PersistentProjectileEntity arrowEntity = arrowItem.createArrow(world, arrowProjectile, playerEntity);
                         arrowEntity.setVelocity(playerEntity, playerEntity.getPitch(), playerEntity.getYaw(), 0.0F, pullProgress * 3.0F, 1.0F);
                         ((ProjectileManipulator) arrowEntity).setOrigin(stack);
 
@@ -106,7 +105,7 @@ public class CustomBowItem extends BowItem implements EnchantmentHandler {
                         stack.damage(1, playerEntity, (p) -> p.sendToolBreakStatus(playerEntity.getActiveHand()));
 
                         // Set arrow pickup type based on source
-                        if (bl2 || playerEntity.getAbilities().creativeMode && (arrowStack.getItem() == Items.SPECTRAL_ARROW || arrowStack.getItem() == Items.TIPPED_ARROW)) {
+                        if (bl2 || playerEntity.getAbilities().creativeMode && (arrowProjectile.getItem() == Items.SPECTRAL_ARROW || arrowProjectile.getItem() == Items.TIPPED_ARROW)) {
                             arrowEntity.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
                         }
 
@@ -117,9 +116,9 @@ public class CustomBowItem extends BowItem implements EnchantmentHandler {
 
                     // decrement source arrow stack
                     if (!bl2 && !playerEntity.getAbilities().creativeMode) {
-                        arrowStack.decrement(1);
-                        if (arrowStack.isEmpty()) {
-                            playerEntity.getInventory().removeOne(arrowStack);
+                        arrowProjectile.decrement(1);
+                        if (arrowProjectile.isEmpty()) {
+                            playerEntity.getInventory().removeOne(arrowProjectile);
                         }
                     }
 

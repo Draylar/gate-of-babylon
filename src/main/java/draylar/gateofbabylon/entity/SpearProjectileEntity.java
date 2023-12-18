@@ -18,7 +18,7 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -28,6 +28,7 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 public class SpearProjectileEntity extends PersistentProjectileEntity {
 
@@ -78,7 +79,7 @@ public class SpearProjectileEntity extends PersistentProjectileEntity {
         if ((this.dealtDamage || this.isNoClip()) && entity != null) {
             int i = (Byte)this.dataTracker.get(LOYALTY);
             if (i > 0 && !this.isOwnerAlive()) {
-                if (!this.world.isClient && this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED) {
+                if (!this.getWorld().isClient && this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED) {
                     this.dropStack(this.asItemStack(), 0.1F);
                 }
 
@@ -87,7 +88,7 @@ public class SpearProjectileEntity extends PersistentProjectileEntity {
                 this.setNoClip(true);
                 Vec3d vec3d = new Vec3d(entity.getX() - this.getX(), entity.getEyeY() - this.getY(), entity.getZ() - this.getZ());
                 this.setPos(this.getX(), this.getY() + vec3d.y * 0.015D * (double)i, this.getZ());
-                if (this.world.isClient) {
+                if (this.getWorld().isClient) {
                     this.lastRenderY = this.getY();
                 }
 
@@ -118,8 +119,11 @@ public class SpearProjectileEntity extends PersistentProjectileEntity {
         return this.stack.copy();
     }
 
+    /**
+     * @return the {@link ItemStack} tracked by this {@link SpearProjectileEntity}
+     */
     public ItemStack getStack() {
-        return world.isClient ? dataTracker.get(STACK) : stack;
+        return getWorld().isClient ? dataTracker.get(STACK) : stack;
     }
 
     @Environment(EnvType.CLIENT)
@@ -144,7 +148,7 @@ public class SpearProjectileEntity extends PersistentProjectileEntity {
         }
 
         Entity spearOwner = this.getOwner();
-        DamageSource damageSource = DamageSource.trident(this, (spearOwner == null ? this : spearOwner));
+        DamageSource damageSource = getDamageSources().trident(this, (spearOwner == null ? this : spearOwner));
         this.dealtDamage = true;
         SoundEvent hitSound = SoundEvents.ITEM_TRIDENT_HIT;
         if (target.damage(damageSource, damage)) {
@@ -170,23 +174,25 @@ public class SpearProjectileEntity extends PersistentProjectileEntity {
         }
 
 
-        this.setVelocity(this.getVelocity().multiply(-0.01D, -0.1D, -0.01D));
-        float volume = 1.0F;
+        setVelocity(getVelocity().multiply(-0.01D, -0.1D, -0.01D));
+        float impactVolume = 1.0F;
 
-        // Handle channeling
-        if (this.world instanceof ServerWorld && this.world.isThundering() && EnchantmentHelper.hasChanneling(this.stack)) {
+        // Handle channeling. If the channeling effect summons lighting, we adjust the spear's collision hit sound to the trident thunder SFX.
+        if (getWorld() instanceof ServerWorld && getWorld().isThundering() && EnchantmentHelper.hasChanneling(this.stack)) {
             BlockPos blockPos = target.getBlockPos();
-            if (this.world.isSkyVisible(blockPos)) {
-                LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(this.world);
-                lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(blockPos));
-                lightningEntity.setChanneler(spearOwner instanceof ServerPlayerEntity ? (ServerPlayerEntity)spearOwner : null);
-                this.world.spawnEntity(lightningEntity);
-                hitSound = SoundEvents.ITEM_TRIDENT_THUNDER;
-                volume = 5.0F;
+            if (getWorld().isSkyVisible(blockPos)) {
+                @Nullable LightningEntity lightning = EntityType.LIGHTNING_BOLT.create(getWorld());
+                if(lightning != null) {
+                    lightning.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(blockPos));
+                    lightning.setChanneler(spearOwner instanceof ServerPlayerEntity ? (ServerPlayerEntity) spearOwner : null);
+                    getWorld().spawnEntity(lightning);
+                    hitSound = SoundEvents.ITEM_TRIDENT_THUNDER;
+                    impactVolume = 5.0F;
+                }
             }
         }
 
-        this.playSound(hitSound, volume, 1.0F);
+        playSound(hitSound, impactVolume, 1.0F);
     }
 
     @Override
@@ -227,11 +233,6 @@ public class SpearProjectileEntity extends PersistentProjectileEntity {
             super.age();
         }
 
-    }
-
-    @Override
-    public Packet<?> createSpawnPacket() {
-        return new EntitySpawnS2CPacket(this);
     }
 
     @Override

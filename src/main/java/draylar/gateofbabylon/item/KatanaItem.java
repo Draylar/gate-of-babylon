@@ -129,7 +129,7 @@ public class KatanaItem extends SwordItem implements EnchantmentHandler {
                                 }
 
                                 // Damage entity with stack's power
-                                entity.damage(DamageSource.player((PlayerEntity) user), 1.25f * (EnchantmentHelper.getAttackDamage(stack, entity.getGroup()) + attackDamage));
+                                entity.damage(entity.getDamageSources().playerAttack((PlayerEntity) user), 1.25f * (EnchantmentHelper.getAttackDamage(stack, entity.getGroup()) + attackDamage));
 
                                 world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), GOBSounds.KATANA_SWOOP, SoundCategory.PLAYERS, 2F, 1.5F + (float) world.random.nextDouble() * .5f);
                                 world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 0.5F, 1.5F + (float) world.random.nextDouble() * .5f);
@@ -168,6 +168,6 @@ public class KatanaItem extends SwordItem implements EnchantmentHandler {
         Vec3d cameraPosVec = from.getCameraPosVec(tickDelta);
         Vec3d rotationVec = from.getRotationVec(tickDelta);
         Vec3d vec3d3 = cameraPosVec.add(rotationVec.x * maxDistance, 0 * maxDistance - 1.5, rotationVec.z * maxDistance);
-        return from.world.raycast(new RaycastContext(cameraPosVec, vec3d3, RaycastContext.ShapeType.OUTLINE, includeFluids ? RaycastContext.FluidHandling.ANY : RaycastContext.FluidHandling.NONE, from));
+        return from.getWorld().raycast(new RaycastContext(cameraPosVec, vec3d3, RaycastContext.ShapeType.OUTLINE, includeFluids ? RaycastContext.FluidHandling.ANY : RaycastContext.FluidHandling.NONE, from));
     }
 }

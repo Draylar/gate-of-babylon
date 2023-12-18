@@ -27,7 +27,7 @@ public class RapierItem extends SwordItem implements EnchantmentHandler {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
 
-        if(((LungeManipulator) user).canLunge()) {
+        if(((LungeManipulator) user).gateOfBabylon$canLunge()) {
             world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.NEUTRAL, 0.05F, 1.75F / (world.random.nextFloat() * 0.4F + 0.8F));
             user.getItemCooldownManager().set(this, 40);
 
@@ -41,7 +41,7 @@ public class RapierItem extends SwordItem implements EnchantmentHandler {
                 user.velocityModified = true;
             }
 
-            ((LungeManipulator) user).setLunged();
+            ((LungeManipulator) user).gateOfBabylon$setLunged();
             user.incrementStat(Stats.USED.getOrCreateStat(this));
             return TypedActionResult.success(itemStack);
         }

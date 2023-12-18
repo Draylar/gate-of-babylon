@@ -16,6 +16,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.*;
 import net.minecraft.world.LightType;
+import org.joml.Matrix4f;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,14 +53,14 @@ public class YoyoEntityRenderer extends EntityRenderer<YoyoEntity> {
         matrices.translate(0, .15, 0);
         matrices.multiply(dispatcher.getRotation());
 //        matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(90));
-        matrices.multiply(Vec3f.POSITIVE_X.getRadialQuaternion(lerpedAge));
+        matrices.multiply(RotationAxis.POSITIVE_X.rotation(lerpedAge));
 
         BakedModel model = MinecraftClient.getInstance().getBakedModelManager().getModel(ITEM_TO_MODEL.get(yoyo.getStack().getItem()));
 
         if(model != null) {
             MatrixStack.Entry entry = matrices.peek();
             VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getSolid());
-            model.getQuads(null, null, yoyo.world.random).forEach(quad -> {
+            model.getQuads(null, null, yoyo.getWorld().random).forEach(quad -> {
                 consumer.quad(entry, quad, 1.0f, 1.0f, 1.0f, light, OverlayTexture.DEFAULT_UV);
             });
         }
@@ -70,7 +71,7 @@ public class YoyoEntityRenderer extends EntityRenderer<YoyoEntity> {
         Optional<UUID> owner = yoyo.getOwner();
 
         if(owner.isPresent()) {
-            PlayerEntity player = yoyo.world.getPlayerByUuid(owner.get());
+            PlayerEntity player = yoyo.getWorld().getPlayerByUuid(owner.get());
 
             if (player != null) {
                 renderString(yoyo, tickDelta, matrices, vertexConsumers, player);
@@ -97,21 +98,21 @@ public class YoyoEntityRenderer extends EntityRenderer<YoyoEntity> {
         float n = 0.025F;
         VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getLeash());
         Matrix4f matrix4f = matrixStack.peek().getPositionMatrix();
-        float o = MathHelper.fastInverseSqrt(k * k + m * m) * 0.025F / 2.0F;
-        float p = m * o;
-        float q = k * o;
-        BlockPos blockPos = new BlockPos(player.getCameraPosVec(delta));
-        BlockPos blockPos2 = new BlockPos(yoyo.getCameraPosVec(delta));
+        double o = MathHelper.fastInverseSqrt(k * k + m * m) * 0.025F / 2.0F;
+        double p = m * o;
+        double q = k * o;
+        BlockPos blockPos = BlockPos.ofFloored(player.getCameraPosVec(delta));
+        BlockPos blockPos2 = BlockPos.ofFloored(yoyo.getCameraPosVec(delta));
         int r = getYoyoBlockLight(player, blockPos);
         int s = getYoyoBlockLight(yoyo, blockPos2);
-        int t = player.world.getLightLevel(LightType.SKY, blockPos);
-        int u = player.world.getLightLevel(LightType.SKY, blockPos2);
+        int t = player.getWorld().getLightLevel(LightType.SKY, blockPos);
+        int u = player.getWorld().getLightLevel(LightType.SKY, blockPos2);
         renderSide(vertexConsumer, matrix4f, k, l, m, r, s, t, u, 0.025F, 0.025F, p, q);
         renderSide(vertexConsumer, matrix4f, k, l, m, r, s, t, u, 0.025F, 0.0F, p, q);
         matrixStack.pop();
     }
 
-    public static void renderSide(VertexConsumer vertexConsumer, Matrix4f matrix4f, float f, float g, float h, int i, int j, int k, int l, float m, float n, float o, float p) {
+    public static void renderSide(VertexConsumer vertexConsumer, Matrix4f matrix4f, float f, float g, float h, int i, int j, int k, int l, float m, float n, double o, double p) {
         for(int r = 0; r < 24; ++r) {
             float s = (float)r / 23.0F;
             int t = (int)MathHelper.lerp(s, (float)i, (float)j);
@@ -123,7 +124,7 @@ public class YoyoEntityRenderer extends EntityRenderer<YoyoEntity> {
 
     }
 
-    public static void addVertexPair(VertexConsumer vertexConsumer, Matrix4f matrix4f, int i, float f, float g, float h, float j, float k, int l, int m, boolean bl, float n, float o) {
+    public static void addVertexPair(VertexConsumer vertexConsumer, Matrix4f matrix4f, int i, float f, float g, float h, float j, float k, int l, int m, boolean bl, double n, double o) {
         float p = 0.5F;
         float q = 0.4F;
         float r = 0.3F;
@@ -138,18 +139,18 @@ public class YoyoEntityRenderer extends EntityRenderer<YoyoEntity> {
         float u = g > 0.0F ? g * s * s : g - g * (1.0F - s) * (1.0F - s);
         float v = h * s;
         if (!bl) {
-            vertexConsumer.vertex(matrix4f, t + n, u + j - k, v - o).color(1.0f, 1.0f, 1.0f, 1.0F).light(i).next();
+            vertexConsumer.vertex(matrix4f, (float) (t + n), u + j - k, (float) (v - o)).color(1.0f, 1.0f, 1.0f, 1.0F).light(i).next();
         }
 
-        vertexConsumer.vertex(matrix4f, t - n, u + k, v + o).color(1.0f, 1.0f, 1.0f, 1.0F).light(i).next();
+        vertexConsumer.vertex(matrix4f, (float) (t - n), u + k, (float) (v + o)).color(1.0f, 1.0f, 1.0f, 1.0F).light(i).next();
         if (bl) {
-            vertexConsumer.vertex(matrix4f, t + n, u + j - k, v - o).color(1.0f, 1.0f, 1.0f, 1.0F).light(i).next();
+            vertexConsumer.vertex(matrix4f, (float) (t + n), u + j - k, (float) (v - o)).color(1.0f, 1.0f, 1.0f, 1.0F).light(i).next();
         }
 
     }
 
     public int getYoyoBlockLight(Entity entity, BlockPos blockPos) {
-        return entity.isOnFire() ? 15 : entity.world.getLightLevel(LightType.BLOCK, blockPos);
+        return entity.isOnFire() ? 15 : entity.getWorld().getLightLevel(LightType.BLOCK, blockPos);
     }
 
     @Override
